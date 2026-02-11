@@ -45,6 +45,7 @@ from .gen_postprocessor import GENPostprocessor
 from .relation_postprocessor import RelationPostprocessor
 from .grood import GrOODPostprocessor
 from .vra_postprocessor import VRAPostprocessor
+from .rff_postprocessor import RFFPostprocessor
 
 
 def get_postprocessor(config: Config):
@@ -94,6 +95,7 @@ def get_postprocessor(config: Config):
         't2fnorm': T2FNormPostprocessor,
         'grood': GrOODPostprocessor,
         'vra': VRAPostprocessor,
+        'rff': RFFPostprocessor,
     }
 
     return postprocessors[config.postprocessor.name](config)
