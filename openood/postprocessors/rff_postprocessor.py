@@ -43,6 +43,10 @@ class RFFPostprocessor(BasePostprocessor):
         self.threshold = None  # Scalar threshold
         self.feature_dim = None
 
+        # Stored features for hyperparameter search (avoid re-extraction)
+        self.X_fit = None
+        self.X_cal = None
+
         self.setup_flag = False
 
     def _sample_rff_params(self, feature_dim):
@@ -82,6 +86,33 @@ class RFFPostprocessor(BasePostprocessor):
         proj = x @ omega.T + b  # [batch_size, D]
         return np.sqrt(2.0 / self.D) * torch.cos(proj)
 
+    def _compute_rff_embedding(self):
+        """
+        Recompute RFF parameters and mean embedding using stored features.
+        Called when hyperparameters change.
+        """
+        if self.X_fit is None:
+            return  # Features not yet extracted
+
+        # Sample new RFF parameters with current sigma
+        self._sample_rff_params(self.feature_dim)
+
+        # Compute mean embedding from fitting set
+        phi_fit = self._phi_numpy(self.X_fit)  # [n_fit, D]
+        self.mu_hat = phi_fit.mean(axis=0)  # [D]
+
+        # Compute calibration scores and set threshold
+        phi_cal = self._phi_numpy(self.X_cal)  # [n_cal, D]
+        cal_scores = phi_cal @ self.mu_hat  # [n_cal]
+
+        # Threshold at alpha quantile (low scores are OOD)
+        self.threshold = np.percentile(cal_scores, self.alpha * 100)
+
+        # Convert to torch tensors for inference
+        self.omega_torch = torch.from_numpy(self.omega).float()
+        self.b_torch = torch.from_numpy(self.b).float()
+        self.mu_hat_torch = torch.from_numpy(self.mu_hat).float()
+
     def setup(self, net: nn.Module, id_loader_dict, ood_loader_dict):
         """
         Setup phase: compute RFF parameters, mean embedding, and threshold.
@@ -105,55 +136,39 @@ class RFFPostprocessor(BasePostprocessor):
 
         net.eval()
 
-        # Step 1: Extract all training features
-        all_features = []
-        with torch.no_grad():
-            for batch in tqdm(id_loader_dict['train'],
-                              desc='Extracting features',
-                              position=0,
-                              leave=True):
-                data = batch['data'].cuda()
-                data = data.float()
+        # Step 1: Extract all training features (only if not already done)
+        if self.X_fit is None:
+            all_features = []
+            with torch.no_grad():
+                for batch in tqdm(id_loader_dict['train'],
+                                  desc='Extracting features',
+                                  position=0,
+                                  leave=True):
+                    data = batch['data'].cuda()
+                    data = data.float()
 
-                _, feature = net(data, return_feature=True)
-                all_features.append(feature.cpu().numpy())
+                    _, feature = net(data, return_feature=True)
+                    all_features.append(feature.cpu().numpy())
 
-        all_features = np.concatenate(all_features, axis=0)
-        n_samples, feature_dim = all_features.shape
-        print(f'Extracted {n_samples} features of dimension {feature_dim}')
+            all_features = np.concatenate(all_features, axis=0)
+            n_samples, self.feature_dim = all_features.shape
+            print(f'Extracted {n_samples} features of dimension {self.feature_dim}')
 
-        # Step 2: Split into fitting and calibration sets
-        n_cal = int(n_samples * self.cal_ratio)
-        indices = np.random.permutation(n_samples)
-        cal_indices = indices[:n_cal]
-        fit_indices = indices[n_cal:]
+            # Step 2: Split into fitting and calibration sets
+            n_cal = int(n_samples * self.cal_ratio)
+            indices = np.random.permutation(n_samples)
+            cal_indices = indices[:n_cal]
+            fit_indices = indices[n_cal:]
 
-        X_fit = all_features[fit_indices]
-        X_cal = all_features[cal_indices]
-        print(f'Split: {len(fit_indices)} fitting, {len(cal_indices)} calibration')
+            self.X_fit = all_features[fit_indices]
+            self.X_cal = all_features[cal_indices]
+            print(f'Split: {len(fit_indices)} fitting, {len(cal_indices)} calibration')
 
-        # Step 3: Sample RFF parameters
-        self._sample_rff_params(feature_dim)
+        # Step 3-5: Sample RFF params and compute embedding
+        self._compute_rff_embedding()
 
-        # Step 4: Compute mean embedding from fitting set
-        phi_fit = self._phi_numpy(X_fit)  # [n_fit, D]
-        self.mu_hat = phi_fit.mean(axis=0)  # [D]
         print(f'Mean embedding computed, norm: {np.linalg.norm(self.mu_hat):.4f}')
-
-        # Step 5: Compute calibration scores and set threshold
-        phi_cal = self._phi_numpy(X_cal)  # [n_cal, D]
-        cal_scores = phi_cal @ self.mu_hat  # [n_cal]
-
-        # Threshold at alpha quantile (low scores are OOD)
-        self.threshold = np.percentile(cal_scores, self.alpha * 100)
-        print(f'Calibration scores - min: {cal_scores.min():.4f}, '
-              f'max: {cal_scores.max():.4f}, mean: {cal_scores.mean():.4f}')
         print(f'Threshold set at {self.alpha * 100:.1f}% percentile: {self.threshold:.4f}')
-
-        # Convert to torch tensors for inference
-        self.omega_torch = torch.from_numpy(self.omega).float()
-        self.b_torch = torch.from_numpy(self.b).float()
-        self.mu_hat_torch = torch.from_numpy(self.mu_hat).float()
 
         self.setup_flag = True
         print('RFF setup complete.\n')
@@ -183,15 +198,15 @@ class RFFPostprocessor(BasePostprocessor):
     def set_hyperparam(self, hyperparam: list):
         """
         Update hyperparameters for APS (Automatic Parameter Search) mode.
-
-        Note: Changing sigma or D requires re-running setup to recompute
-        the RFF parameters and mean embedding.
+        Recomputes RFF parameters and mean embedding using stored features.
         """
         self.sigma = hyperparam[0]
         if len(hyperparam) > 1:
             self.D = int(hyperparam[1])
-        # Reset setup flag to force recomputation
-        self.setup_flag = False
+
+        # Recompute RFF embedding with new hyperparameters
+        if self.X_fit is not None:
+            self._compute_rff_embedding()
 
     def get_hyperparam(self):
         """Return current hyperparameters."""
