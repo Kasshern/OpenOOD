@@ -1,6 +1,5 @@
 from typing import Any
 
-import numpy as np
 import torch
 import torch.nn as nn
 from tqdm import tqdm
@@ -34,94 +33,99 @@ class RFFPostprocessor(BasePostprocessor):
         self.sigma = self.args.sigma          # Kernel bandwidth
         self.D = self.args.D                  # RFF dimension
         self.alpha = self.args.alpha          # Target FPR for threshold
-        self.cal_ratio = self.args.cal_ratio  # Calibration split ratio
+
+        # Feature space: 'penultimate', 'all', or 'input'
+        self.feature_space = getattr(self.args, 'feature_space', 'penultimate')
 
         # Learned parameters (set during setup)
-        self.omega = None      # [D, feature_dim] - RFF frequencies
-        self.b = None          # [D] - RFF phases
-        self.mu_hat = None     # [D] - Mean embedding
-        self.threshold = None  # Scalar threshold
+        self.omega = None       # [D, feature_dim] - RFF frequencies
+        self.b = None           # [D] - RFF phases
+        self.mu_hat = None      # [D] - Mean embedding
+        self.threshold = None   # Scalar threshold
         self.feature_dim = None
 
         # Stored features for hyperparameter search (avoid re-extraction)
-        self.X_fit = None
-        self.X_cal = None
+        self.X_train = None     # Training features for mean embedding
+        self.X_val = None       # Validation features for threshold
 
         self.setup_flag = False
 
-    def _sample_rff_params(self, feature_dim):
+    def _extract_features(self, net: nn.Module, data: torch.Tensor) -> torch.Tensor:
+        """
+        Extract features based on configured feature space.
+
+        Args:
+            net: Neural network model
+            data: Input batch [batch_size, C, H, W]
+
+        Returns:
+            features: [batch_size, feature_dim]
+        """
+        if self.feature_space == 'input':
+            return torch.flatten(data, start_dim=1)
+
+        logits, all_features = net(data, return_feature_list=True)
+
+        if self.feature_space == 'all':
+            # Concatenate flattened features from all layers
+            return torch.cat([f.flatten(start_dim=1) for f in all_features], dim=1)
+        else:
+            # Penultimate layer features (default)
+            return all_features[-1].view(all_features[-1].size(0), -1)
+
+    def _sample_rff_params(self, feature_dim: int, device: torch.device):
         """Sample Random Fourier Feature parameters for Gaussian kernel."""
         self.feature_dim = feature_dim
         # Ω ~ N(0, σ^{-2} I) for Gaussian kernel
-        self.omega = np.random.randn(self.D, feature_dim) / self.sigma
+        self.omega = (torch.randn(self.D, feature_dim) / self.sigma).to(device)
         # b ~ Uniform[0, 2π]
-        self.b = np.random.uniform(0, 2 * np.pi, self.D)
+        self.b = (torch.rand(self.D) * 2 * torch.pi).to(device)
 
-    def _phi_numpy(self, x):
+    def _phi(self, x: torch.Tensor) -> torch.Tensor:
         """
-        Compute RFF feature map using numpy.
+        Compute RFF feature map.
         φ(x)_j = √(2/D) · cos(Ω_j^T x + b_j)
 
         Args:
-            x: [batch_size, feature_dim] numpy array
-        Returns:
-            [batch_size, D] numpy array
-        """
-        proj = x @ self.omega.T + self.b  # [batch_size, D]
-        return np.sqrt(2.0 / self.D) * np.cos(proj)
-
-    def _phi_torch(self, x):
-        """
-        Compute RFF feature map using torch tensors.
-
-        Args:
             x: [batch_size, feature_dim] torch tensor
+
         Returns:
             [batch_size, D] torch tensor
         """
         device = x.device
-        omega = self.omega_torch.to(device)
-        b = self.b_torch.to(device)
+        omega = self.omega.to(device)
+        b = self.b.to(device)
 
         proj = x @ omega.T + b  # [batch_size, D]
-        return np.sqrt(2.0 / self.D) * torch.cos(proj)
+        return torch.sqrt(torch.tensor(2.0 / self.D, device=device)) * torch.cos(proj)
 
-    def _compute_rff_embedding(self):
+    def _compute_rff_embedding(self, device: torch.device):
         """
         Recompute RFF parameters and mean embedding using stored features.
-        Called when hyperparameters change.
+        Called when hyperparameters change during APS.
         """
-        if self.X_fit is None:
-            return  # Features not yet extracted
+        if self.X_train is None:
+            return
 
         # Sample new RFF parameters with current sigma
-        self._sample_rff_params(self.feature_dim)
+        self._sample_rff_params(self.feature_dim, device)
 
-        # Compute mean embedding from fitting set
-        phi_fit = self._phi_numpy(self.X_fit)  # [n_fit, D]
-        self.mu_hat = phi_fit.mean(axis=0)  # [D]
+        # Compute mean embedding from training set
+        phi_train = self._phi(self.X_train)  # [n_train, D]
+        self.mu_hat = phi_train.mean(dim=0)  # [D]
 
-        # Compute calibration scores and set threshold
-        phi_cal = self._phi_numpy(self.X_cal)  # [n_cal, D]
-        cal_scores = phi_cal @ self.mu_hat  # [n_cal]
+        # Compute threshold from validation set
+        phi_val = self._phi(self.X_val)  # [n_val, D]
+        val_scores = phi_val @ self.mu_hat  # [n_val]
 
         # Threshold at alpha quantile (low scores are OOD)
-        self.threshold = np.percentile(cal_scores, self.alpha * 100)
-
-        # Convert to torch tensors for inference
-        self.omega_torch = torch.from_numpy(self.omega).float()
-        self.b_torch = torch.from_numpy(self.b).float()
-        self.mu_hat_torch = torch.from_numpy(self.mu_hat).float()
+        self.threshold = torch.quantile(val_scores, self.alpha)
 
     def setup(self, net: nn.Module, id_loader_dict, ood_loader_dict):
         """
         Setup phase: compute RFF parameters, mean embedding, and threshold.
 
-        Following the paper's Algorithm 1:
-        1. Split training data into fitting and calibration sets
-        2. Sample RFF parameters (Ω, b)
-        3. Compute mean embedding μ̂ from fitting set
-        4. Compute calibration scores and set threshold τ
+        Uses training data for mean embedding and validation data for threshold.
         """
         if self.setup_flag:
             return
@@ -131,44 +135,44 @@ class RFFPostprocessor(BasePostprocessor):
         print(f'  sigma (bandwidth): {self.sigma}')
         print(f'  D (RFF dimension): {self.D}')
         print(f'  alpha (target FPR): {self.alpha}')
-        print(f'  cal_ratio: {self.cal_ratio}')
+        print(f'  feature_space: {self.feature_space}')
         print('=' * 50)
 
         net.eval()
+        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-        # Step 1: Extract all training features (only if not already done)
-        if self.X_fit is None:
-            all_features = []
+        # Extract features only if not already done (for APS reuse)
+        if self.X_train is None:
+            # Extract training features for mean embedding
+            train_features = []
             with torch.no_grad():
                 for batch in tqdm(id_loader_dict['train'],
-                                  desc='Extracting features',
-                                  position=0,
-                                  leave=True):
-                    data = batch['data'].cuda()
-                    data = data.float()
+                                  desc='Extracting train features'):
+                    data = batch['data'].to(device).float()
+                    features = self._extract_features(net, data)
+                    train_features.append(features)
 
-                    _, feature = net(data, return_feature=True)
-                    all_features.append(feature.cpu().numpy())
+            self.X_train = torch.cat(train_features, dim=0)
+            self.feature_dim = self.X_train.shape[1]
+            print(f'Extracted {self.X_train.shape[0]} train features of dim {self.feature_dim}')
 
-            all_features = np.concatenate(all_features, axis=0)
-            n_samples, self.feature_dim = all_features.shape
-            print(f'Extracted {n_samples} features of dimension {self.feature_dim}')
+            # Extract validation features for threshold calibration
+            val_features = []
+            with torch.no_grad():
+                for batch in tqdm(id_loader_dict['val'],
+                                  desc='Extracting val features'):
+                    data = batch['data'].to(device).float()
+                    features = self._extract_features(net, data)
+                    val_features.append(features)
 
-            # Step 2: Split into fitting and calibration sets
-            n_cal = int(n_samples * self.cal_ratio)
-            indices = np.random.permutation(n_samples)
-            cal_indices = indices[:n_cal]
-            fit_indices = indices[n_cal:]
+            self.X_val = torch.cat(val_features, dim=0)
+            print(f'Extracted {self.X_val.shape[0]} val features for threshold')
 
-            self.X_fit = all_features[fit_indices]
-            self.X_cal = all_features[cal_indices]
-            print(f'Split: {len(fit_indices)} fitting, {len(cal_indices)} calibration')
+        # Compute RFF embedding and threshold
+        self._compute_rff_embedding(device)
 
-        # Step 3-5: Sample RFF params and compute embedding
-        self._compute_rff_embedding()
-
-        print(f'Mean embedding computed, norm: {np.linalg.norm(self.mu_hat):.4f}')
-        print(f'Threshold set at {self.alpha * 100:.1f}% percentile: {self.threshold:.4f}')
+        print(f'Mean embedding norm: {torch.linalg.norm(self.mu_hat):.4f}')
+        print(f'Threshold at {self.alpha * 100:.1f}%: {self.threshold:.4f}')
 
         self.setup_flag = True
         print('RFF setup complete.\n')
@@ -182,15 +186,22 @@ class RFFPostprocessor(BasePostprocessor):
             pred: predicted class labels [batch_size]
             conf: attention mass scores [batch_size] (higher = more in-distribution)
         """
-        # Get predictions and features
-        output, feature = net(data, return_feature=True)
-        _, pred = torch.max(torch.softmax(output, dim=1), dim=1)
+        # Get predictions
+        if self.feature_space == 'input':
+            output = net(data)
+            features = torch.flatten(data, start_dim=1)
+        else:
+            output, all_features = net(data, return_feature_list=True)
+            if self.feature_space == 'all':
+                features = torch.cat([f.flatten(start_dim=1) for f in all_features], dim=1)
+            else:
+                features = all_features[-1].view(all_features[-1].size(0), -1)
 
-        # Compute RFF features
-        phi_x = self._phi_torch(feature)  # [batch_size, D]
+        _, pred = torch.max(output, dim=1)
 
-        # Compute attention mass: m(x) = μ̂^T φ(x)
-        mu_hat = self.mu_hat_torch.to(feature.device)
+        # Compute RFF features and attention mass
+        phi_x = self._phi(features)  # [batch_size, D]
+        mu_hat = self.mu_hat.to(features.device)
         conf = phi_x @ mu_hat  # [batch_size]
 
         return pred, conf
@@ -205,8 +216,9 @@ class RFFPostprocessor(BasePostprocessor):
             self.D = int(hyperparam[1])
 
         # Recompute RFF embedding with new hyperparameters
-        if self.X_fit is not None:
-            self._compute_rff_embedding()
+        if self.X_train is not None:
+            device = self.X_train.device
+            self._compute_rff_embedding(device)
 
     def get_hyperparam(self):
         """Return current hyperparameters."""
