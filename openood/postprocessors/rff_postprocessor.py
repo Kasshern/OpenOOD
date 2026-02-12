@@ -12,8 +12,8 @@ class RFFPostprocessor(BasePostprocessor):
     Kernel Attention OOD Detection using Random Fourier Features.
 
     This method approximates a Gaussian kernel mean embedding for dataset-free
-    inference. The OOD score is the "attention mass" = μ̂^T φ(x), where μ̂ is
-    the mean embedding of the training distribution and φ(x) is the RFF map.
+    inference. The OOD score is the "attention mass" = max_c(μ̂_c^T φ(x)), where
+    μ̂_c is the per-class mean embedding and φ(x) is the RFF map.
 
     For universal kernels (e.g., Gaussian), the attention mass vanishes outside
     the in-distribution support, providing principled OOD guarantees.
@@ -37,16 +37,22 @@ class RFFPostprocessor(BasePostprocessor):
         # Feature space: 'penultimate', 'all', or 'input'
         self.feature_space = getattr(self.args, 'feature_space', 'penultimate')
 
+        # Whether to L2 normalize features (makes sigma transferable across datasets)
+        self.normalize = getattr(self.args, 'normalize', True)
+
         # Learned parameters (set during setup)
-        self.omega = None       # [D, feature_dim] - RFF frequencies
-        self.b = None           # [D] - RFF phases
-        self.mu_hat = None      # [D] - Mean embedding
-        self.threshold = None   # Scalar threshold
+        self.omega = None        # [D, feature_dim] - RFF frequencies
+        self.b = None            # [D] - RFF phases
+        self.mu_hat = None       # [num_classes, D] - Per-class mean embeddings
+        self.num_classes = None  # Number of classes
+        self.threshold = None    # Scalar threshold
         self.feature_dim = None
 
-        # Stored features for hyperparameter search (avoid re-extraction)
-        self.X_train = None     # Training features for mean embedding
-        self.X_val = None       # Validation features for threshold
+        # Stored features and labels for hyperparameter search (avoid re-extraction)
+        self.X_train = None      # Training features for mean embedding
+        self.y_train = None      # Training labels
+        self.X_val = None        # Validation features for threshold
+        self.y_val = None        # Validation labels
 
         self.setup_flag = False
 
@@ -62,16 +68,20 @@ class RFFPostprocessor(BasePostprocessor):
             features: [batch_size, feature_dim]
         """
         if self.feature_space == 'input':
-            return torch.flatten(data, start_dim=1)
-
-        logits, all_features = net(data, return_feature_list=True)
-
-        if self.feature_space == 'all':
+            features = torch.flatten(data, start_dim=1)
+        elif self.feature_space == 'all':
             # Concatenate flattened features from all layers
-            return torch.cat([f.flatten(start_dim=1) for f in all_features], dim=1)
+            _, all_features = net(data, return_feature_list=True)
+            features = torch.cat([f.flatten(start_dim=1) for f in all_features], dim=1)
         else:
-            # Penultimate layer features (default)
-            return all_features[-1].view(all_features[-1].size(0), -1)
+            # Penultimate layer features (default) - use return_feature=True like KNN/VIM
+            _, features = net(data, return_feature=True)
+
+        # L2 normalize features if enabled (makes sigma transferable across datasets)
+        if self.normalize:
+            features = torch.nn.functional.normalize(features, p=2, dim=1)
+
+        return features
 
     def _sample_rff_params(self, feature_dim: int, device: torch.device):
         """Sample Random Fourier Feature parameters for Gaussian kernel."""
@@ -101,7 +111,7 @@ class RFFPostprocessor(BasePostprocessor):
 
     def _compute_rff_embedding(self, device: torch.device):
         """
-        Recompute RFF parameters and mean embedding using stored features.
+        Recompute RFF parameters and per-class mean embeddings using stored features.
         Called when hyperparameters change during APS.
         """
         if self.X_train is None:
@@ -110,20 +120,27 @@ class RFFPostprocessor(BasePostprocessor):
         # Sample new RFF parameters with current sigma
         self._sample_rff_params(self.feature_dim, device)
 
-        # Compute mean embedding from training set
+        # Compute RFF features for all training samples
         phi_train = self._phi(self.X_train)  # [n_train, D]
-        self.mu_hat = phi_train.mean(dim=0)  # [D]
 
-        # Compute threshold from validation set
+        # Compute per-class mean embeddings
+        self.mu_hat = torch.zeros(self.num_classes, self.D, device=device)
+        for c in range(self.num_classes):
+            mask = (self.y_train == c)
+            if mask.sum() > 0:
+                self.mu_hat[c] = phi_train[mask].mean(dim=0)
+
+        # Compute validation scores: max similarity to any class centroid
         phi_val = self._phi(self.X_val)  # [n_val, D]
-        val_scores = phi_val @ self.mu_hat  # [n_val]
+        # [n_val, num_classes] -> max over classes -> [n_val]
+        val_scores = (phi_val @ self.mu_hat.T).max(dim=1).values
 
         # Threshold at alpha quantile (low scores are OOD)
         self.threshold = torch.quantile(val_scores, self.alpha)
 
     def setup(self, net: nn.Module, id_loader_dict, ood_loader_dict):
         """
-        Setup phase: compute RFF parameters, mean embedding, and threshold.
+        Setup phase: compute RFF parameters, per-class mean embeddings, and threshold.
 
         Uses training data for mean embedding and validation data for threshold.
         """
@@ -136,6 +153,7 @@ class RFFPostprocessor(BasePostprocessor):
         print(f'  D (RFF dimension): {self.D}')
         print(f'  alpha (target FPR): {self.alpha}')
         print(f'  feature_space: {self.feature_space}')
+        print(f'  normalize: {self.normalize}')
         print('=' * 50)
 
         net.eval()
@@ -143,35 +161,46 @@ class RFFPostprocessor(BasePostprocessor):
 
         # Extract features only if not already done (for APS reuse)
         if self.X_train is None:
-            # Extract training features for mean embedding
+            # Extract training features and labels for mean embedding
             train_features = []
+            train_labels = []
             with torch.no_grad():
                 for batch in tqdm(id_loader_dict['train'],
                                   desc='Extracting train features'):
                     data = batch['data'].to(device).float()
+                    labels = batch['label'].to(device)
                     features = self._extract_features(net, data)
                     train_features.append(features)
+                    train_labels.append(labels)
 
             self.X_train = torch.cat(train_features, dim=0)
+            self.y_train = torch.cat(train_labels, dim=0)
             self.feature_dim = self.X_train.shape[1]
+            self.num_classes = int(self.y_train.max().item()) + 1
             print(f'Extracted {self.X_train.shape[0]} train features of dim {self.feature_dim}')
+            print(f'  Feature norm (mean): {torch.linalg.norm(self.X_train, dim=1).mean():.4f}')
+            print(f'  Number of classes: {self.num_classes}')
 
-            # Extract validation features for threshold calibration
+            # Extract validation features and labels for threshold calibration
             val_features = []
+            val_labels = []
             with torch.no_grad():
                 for batch in tqdm(id_loader_dict['val'],
                                   desc='Extracting val features'):
                     data = batch['data'].to(device).float()
+                    labels = batch['label'].to(device)
                     features = self._extract_features(net, data)
                     val_features.append(features)
+                    val_labels.append(labels)
 
             self.X_val = torch.cat(val_features, dim=0)
+            self.y_val = torch.cat(val_labels, dim=0)
             print(f'Extracted {self.X_val.shape[0]} val features for threshold')
 
         # Compute RFF embedding and threshold
         self._compute_rff_embedding(device)
 
-        print(f'Mean embedding norm: {torch.linalg.norm(self.mu_hat):.4f}')
+        print(f'Per-class embedding norms (mean): {torch.linalg.norm(self.mu_hat, dim=1).mean():.4f}')
         print(f'Threshold at {self.alpha * 100:.1f}%: {self.threshold:.4f}')
 
         self.setup_flag = True
@@ -186,23 +215,30 @@ class RFFPostprocessor(BasePostprocessor):
             pred: predicted class labels [batch_size]
             conf: attention mass scores [batch_size] (higher = more in-distribution)
         """
-        # Get predictions
+        # Get predictions and features
         if self.feature_space == 'input':
             output = net(data)
             features = torch.flatten(data, start_dim=1)
-        else:
+        elif self.feature_space == 'all':
             output, all_features = net(data, return_feature_list=True)
-            if self.feature_space == 'all':
-                features = torch.cat([f.flatten(start_dim=1) for f in all_features], dim=1)
-            else:
-                features = all_features[-1].view(all_features[-1].size(0), -1)
+            features = torch.cat([f.flatten(start_dim=1) for f in all_features], dim=1)
+        else:
+            # Penultimate layer features (default) - use return_feature=True like KNN/VIM
+            output, features = net(data, return_feature=True)
+
+        # L2 normalize features if enabled
+        if self.normalize:
+            features = torch.nn.functional.normalize(features, p=2, dim=1)
 
         _, pred = torch.max(output, dim=1)
 
-        # Compute RFF features and attention mass
+        # Compute RFF features
         phi_x = self._phi(features)  # [batch_size, D]
-        mu_hat = self.mu_hat.to(features.device)
-        conf = phi_x @ mu_hat  # [batch_size]
+
+        # Compute attention mass: max_c(μ̂_c^T φ(x))
+        mu_hat = self.mu_hat.to(features.device)  # [num_classes, D]
+        class_scores = phi_x @ mu_hat.T  # [batch_size, num_classes]
+        conf = class_scores.max(dim=1).values  # [batch_size]
 
         return pred, conf
 
