@@ -198,6 +198,15 @@ for subfolder in sorted(glob(os.path.join(root, 's*'))):
                   'wb') as f:
             pickle.dump(evaluator.scores, f, pickle.HIGHEST_PROTOCOL)
 
+    # save RFF diagnostics if available
+    if hasattr(evaluator.postprocessor, 'diagnose') and \
+            evaluator.postprocessor.diagnose:
+        diag_dir = os.path.join(subfolder, 'diagnostics')
+        os.makedirs(diag_dir, exist_ok=True)
+        save_path = os.path.join(diag_dir, f'{postprocessor_name}.npz')
+        evaluator.postprocessor.save_diagnostics(save_path)
+        evaluator.postprocessor.reset_diagnostics()
+
 # compute mean metrics over training runs
 all_metrics = np.stack(all_metrics, axis=0)
 metrics_mean = np.mean(all_metrics, axis=0)

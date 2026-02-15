@@ -1,5 +1,6 @@
 from typing import Any
 
+import numpy as np
 import torch
 import torch.nn as nn
 from tqdm import tqdm
@@ -54,6 +55,15 @@ class RFFPostprocessor(BasePostprocessor):
         self.y_train = None      # Training labels
         self.X_val = None        # Validation features for threshold
         self.y_val = None        # Validation labels
+
+        # Diagnostic mode: track class score distributions
+        self.diagnose = getattr(self.args, 'diagnose', False)
+        self._diag_accum = {
+            'n_above_threshold': [],
+            'max_score': [],
+            'margin': [],
+            'mean_score': [],
+        }
 
         self.setup_flag = False
 
@@ -253,7 +263,52 @@ class RFFPostprocessor(BasePostprocessor):
         class_scores = class_scores / torch.sqrt(var_hat)  # variance-weighted
         conf = class_scores.max(dim=1).values  # [batch_size]
 
+        # Accumulate diagnostics if enabled
+        if self.diagnose and self.threshold is not None:
+            sorted_scores = class_scores.sort(dim=1, descending=True).values
+            self._diag_accum['n_above_threshold'].append(
+                (class_scores > self.threshold).sum(dim=1).cpu())
+            self._diag_accum['max_score'].append(sorted_scores[:, 0].cpu())
+            self._diag_accum['margin'].append(
+                (sorted_scores[:, 0] - sorted_scores[:, 1]).cpu())
+            self._diag_accum['mean_score'].append(
+                class_scores.mean(dim=1).cpu())
+
         return pred, conf
+
+    def save_diagnostics(self, save_path: str):
+        """Save accumulated diagnostic statistics to .npz file and print summary."""
+        diag = {}
+        for key, val_list in self._diag_accum.items():
+            if val_list:
+                diag[key] = torch.cat(val_list).numpy()
+
+        if not diag:
+            return
+
+        np.savez(save_path, **diag)
+        self._print_diag_summary(diag, save_path)
+
+    def _print_diag_summary(self, diag: dict, label: str = ''):
+        """Print aggregate diagnostic summary."""
+        n_above = diag['n_above_threshold']
+        margin = diag['margin']
+        max_score = diag['max_score']
+        n = len(n_above)
+
+        print(f'\n--- RFF Diagnostics ({n} samples) {label} ---')
+        print(f'  Classes above threshold: '
+              f'mean={n_above.mean():.1f}, '
+              f'zero={100 * (n_above == 0).mean():.1f}%, '
+              f'one={100 * (n_above == 1).mean():.1f}%, '
+              f'multi(>1)={100 * (n_above > 1).mean():.1f}%')
+        print(f'  Max score: mean={max_score.mean():.4f}, std={max_score.std():.4f}')
+        print(f'  Margin (max-2nd): mean={margin.mean():.4f}, std={margin.std():.4f}')
+
+    def reset_diagnostics(self):
+        """Reset diagnostic accumulators for next dataset."""
+        for key in self._diag_accum:
+            self._diag_accum[key] = []
 
     def set_hyperparam(self, hyperparam: list):
         """
