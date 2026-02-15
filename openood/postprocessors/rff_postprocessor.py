@@ -44,6 +44,7 @@ class RFFPostprocessor(BasePostprocessor):
         self.omega = None        # [D, feature_dim] - RFF frequencies
         self.b = None            # [D] - RFF phases
         self.mu_hat = None       # [num_classes, D] - Per-class mean embeddings
+        self.var_hat = None      # [num_classes] - Per-class score variance
         self.num_classes = None  # Number of classes
         self.threshold = None    # Scalar threshold
         self.feature_dim = None
@@ -130,10 +131,19 @@ class RFFPostprocessor(BasePostprocessor):
             if mask.sum() > 0:
                 self.mu_hat[c] = phi_train[mask].mean(dim=0)
 
-        # Compute validation scores: max similarity to any class centroid
+        # Compute per-class score variance for normalization
+        self.var_hat = torch.ones(self.num_classes, device=device)
+        for c in range(self.num_classes):
+            mask = (self.y_train == c)
+            if mask.sum() > 1:
+                scores_c = phi_train[mask] @ self.mu_hat[c]  # [n_c]
+                self.var_hat[c] = scores_c.var().clamp(min=1e-8)
+
+        # Compute validation scores: variance-weighted max similarity
         phi_val = self._phi(self.X_val)  # [n_val, D]
-        # [n_val, num_classes] -> max over classes -> [n_val]
-        val_scores = (phi_val @ self.mu_hat.T).max(dim=1).values
+        val_class_scores = phi_val @ self.mu_hat.T  # [n_val, num_classes]
+        val_class_scores = val_class_scores / torch.sqrt(self.var_hat)
+        val_scores = val_class_scores.max(dim=1).values
 
         # Threshold at alpha quantile (low scores are OOD)
         self.threshold = torch.quantile(val_scores, self.alpha)
@@ -201,6 +211,7 @@ class RFFPostprocessor(BasePostprocessor):
         self._compute_rff_embedding(device)
 
         print(f'Per-class embedding norms (mean): {torch.linalg.norm(self.mu_hat, dim=1).mean():.4f}')
+        print(f'Per-class score variance (mean): {self.var_hat.mean():.6f}')
         print(f'Threshold at {self.alpha * 100:.1f}%: {self.threshold:.4f}')
 
         self.setup_flag = True
@@ -235,9 +246,11 @@ class RFFPostprocessor(BasePostprocessor):
         # Compute RFF features
         phi_x = self._phi(features)  # [batch_size, D]
 
-        # Compute attention mass: max_c(μ̂_c^T φ(x))
+        # Compute variance-weighted attention mass: max_c(μ̂_c^T φ(x) / √Var_c)
         mu_hat = self.mu_hat.to(features.device)  # [num_classes, D]
+        var_hat = self.var_hat.to(features.device)  # [num_classes]
         class_scores = phi_x @ mu_hat.T  # [batch_size, num_classes]
+        class_scores = class_scores / torch.sqrt(var_hat)  # variance-weighted
         conf = class_scores.max(dim=1).values  # [batch_size]
 
         return pred, conf
