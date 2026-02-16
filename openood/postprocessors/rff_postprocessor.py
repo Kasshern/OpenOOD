@@ -44,13 +44,17 @@ class RFFPostprocessor(BasePostprocessor):
         # Scoring mode: 'max' = max class score, 'margin' = max - 2nd max
         self.score_mode = getattr(self.args, 'score_mode', 'max')
 
+        # Whether to normalize class scores by per-class variance
+        self.variance_weighted = getattr(self.args, 'variance_weighted', True)
+
         # Learned parameters (set during setup)
         self.omega = None        # [D, feature_dim] - RFF frequencies
         self.b = None            # [D] - RFF phases
         self.mu_hat = None       # [num_classes, D] - Per-class mean embeddings
         self.var_hat = None      # [num_classes] - Per-class score variance
         self.num_classes = None  # Number of classes
-        self.threshold = None    # Scalar threshold
+        self.threshold = None    # Scalar threshold (for current score_mode)
+        self.max_threshold = None  # Max-based threshold (for diagnostics)
         self.feature_dim = None
 
         # Stored features and labels for hyperparameter search (avoid re-extraction)
@@ -146,24 +150,30 @@ class RFFPostprocessor(BasePostprocessor):
 
         # Compute per-class score variance for normalization
         self.var_hat = torch.ones(self.num_classes, device=device)
-        for c in range(self.num_classes):
-            mask = (self.y_train == c)
-            if mask.sum() > 1:
-                scores_c = phi_train[mask] @ self.mu_hat[c]  # [n_c]
-                self.var_hat[c] = scores_c.var().clamp(min=1e-8)
+        if self.variance_weighted:
+            for c in range(self.num_classes):
+                mask = (self.y_train == c)
+                if mask.sum() > 1:
+                    scores_c = phi_train[mask] @ self.mu_hat[c]  # [n_c]
+                    self.var_hat[c] = scores_c.var().clamp(min=1e-8)
 
-        # Compute validation scores: variance-weighted similarity
+        # Compute validation class scores
         phi_val = self._phi(self.X_val)  # [n_val, D]
         val_class_scores = phi_val @ self.mu_hat.T  # [n_val, num_classes]
-        val_class_scores = val_class_scores / torch.sqrt(self.var_hat)
+        if self.variance_weighted:
+            val_class_scores = val_class_scores / torch.sqrt(self.var_hat)
 
+        # Always compute max-based threshold for diagnostics
+        self.max_threshold = torch.quantile(
+            val_class_scores.max(dim=1).values, self.alpha)
+
+        # Compute scoring threshold based on score_mode
         if self.score_mode == 'margin':
             sorted_val = val_class_scores.sort(dim=1, descending=True).values
             val_scores = sorted_val[:, 0] - sorted_val[:, 1]
         else:
             val_scores = val_class_scores.max(dim=1).values
 
-        # Threshold at alpha quantile (low scores are OOD)
         self.threshold = torch.quantile(val_scores, self.alpha)
 
     def setup(self, net: nn.Module, id_loader_dict, ood_loader_dict):
@@ -183,6 +193,7 @@ class RFFPostprocessor(BasePostprocessor):
         print(f'  feature_space: {self.feature_space}')
         print(f'  normalize: {self.normalize}')
         print(f'  score_mode: {self.score_mode}')
+        print(f'  variance_weighted: {self.variance_weighted}')
         print('=' * 50)
 
         net.eval()
@@ -230,8 +241,10 @@ class RFFPostprocessor(BasePostprocessor):
         self._compute_rff_embedding(device)
 
         print(f'Per-class embedding norms (mean): {torch.linalg.norm(self.mu_hat, dim=1).mean():.4f}')
-        print(f'Per-class score variance (mean): {self.var_hat.mean():.6f}')
-        print(f'Threshold at {self.alpha * 100:.1f}%: {self.threshold:.4f}')
+        if self.variance_weighted:
+            print(f'Per-class score variance (mean): {self.var_hat.mean():.6f}')
+        print(f'Threshold ({self.score_mode}) at {self.alpha * 100:.1f}%: {self.threshold:.4f}')
+        print(f'Max threshold (for diagnostics) at {self.alpha * 100:.1f}%: {self.max_threshold:.4f}')
 
         self.setup_flag = True
         print('RFF setup complete.\n')
@@ -265,11 +278,12 @@ class RFFPostprocessor(BasePostprocessor):
         # Compute RFF features
         phi_x = self._phi(features)  # [batch_size, D]
 
-        # Compute variance-weighted class scores
+        # Compute class scores
         mu_hat = self.mu_hat.to(features.device)  # [num_classes, D]
-        var_hat = self.var_hat.to(features.device)  # [num_classes]
         class_scores = phi_x @ mu_hat.T  # [batch_size, num_classes]
-        class_scores = class_scores / torch.sqrt(var_hat)  # variance-weighted
+        if self.variance_weighted:
+            var_hat = self.var_hat.to(features.device)  # [num_classes]
+            class_scores = class_scores / torch.sqrt(var_hat)
 
         # Compute confidence based on score mode
         if self.score_mode == 'margin':
@@ -279,10 +293,11 @@ class RFFPostprocessor(BasePostprocessor):
             conf = class_scores.max(dim=1).values
 
         # Accumulate diagnostics if enabled
-        if self.diagnose and self.threshold is not None:
+        if self.diagnose and self.max_threshold is not None:
             sorted_scores = class_scores.sort(dim=1, descending=True).values
+            # Use max-based threshold for class counting (meaningful regardless of score_mode)
             self._diag_accum['n_above_threshold'].append(
-                (class_scores > self.threshold).sum(dim=1).cpu())
+                (class_scores > self.max_threshold).sum(dim=1).cpu())
             self._diag_accum['max_score'].append(sorted_scores[:, 0].cpu())
             self._diag_accum['margin'].append(
                 (sorted_scores[:, 0] - sorted_scores[:, 1]).cpu())
