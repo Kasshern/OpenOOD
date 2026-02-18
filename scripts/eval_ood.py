@@ -4,6 +4,7 @@ sys.path.append(ROOT_DIR)
 import numpy as np
 import pandas as pd
 import argparse
+import hashlib
 import pickle
 import collections
 from glob import glob
@@ -34,6 +35,16 @@ def update(d, u):
         else:
             d[k] = v
     return d
+
+
+def _get_postprocessor_config_hash(config_root, postprocessor_name):
+    """Hash the postprocessor yml so config changes bust the pkl cache."""
+    config_path = os.path.join(config_root, 'postprocessors',
+                               f'{postprocessor_name}.yml')
+    if os.path.exists(config_path):
+        with open(config_path, 'rb') as f:
+            return hashlib.md5(f.read()).hexdigest()[:8]
+    return 'default'
 
 
 parser = argparse.ArgumentParser()
@@ -81,14 +92,17 @@ if len(glob(os.path.join(root, 's*'))) == 0:
 
 # iterate through training runs
 all_metrics = []
+_cfg_hash = _get_postprocessor_config_hash(
+    os.path.join(ROOT_DIR, 'configs'), postprocessor_name)
+pp_pkl_name = f'{postprocessor_name}_{_cfg_hash}.pkl'
+scores_pkl_name = f'{postprocessor_name}_{_cfg_hash}_scores.pkl'
 for subfolder in sorted(glob(os.path.join(root, 's*'))):
     # load pre-setup postprocessor if exists
     if os.path.isfile(
-            os.path.join(subfolder, 'postprocessors',
-                         f'{postprocessor_name}.pkl')):
+            os.path.join(subfolder, 'postprocessors', pp_pkl_name)):
         with open(
-                os.path.join(subfolder, 'postprocessors',
-                             f'{postprocessor_name}.pkl'), 'rb') as f:
+                os.path.join(subfolder, 'postprocessors', pp_pkl_name),
+                'rb') as f:
             postprocessor = pickle.load(f)
     else:
         postprocessor = None
@@ -164,9 +178,9 @@ for subfolder in sorted(glob(os.path.join(root, 's*'))):
 
     # load pre-computed scores if exist
     if os.path.isfile(
-            os.path.join(subfolder, 'scores', f'{postprocessor_name}.pkl')):
+            os.path.join(subfolder, 'scores', scores_pkl_name)):
         with open(
-                os.path.join(subfolder, 'scores', f'{postprocessor_name}.pkl'),
+                os.path.join(subfolder, 'scores', scores_pkl_name),
                 'rb') as f:
             scores = pickle.load(f)
         update(evaluator.scores, scores)
@@ -179,10 +193,8 @@ for subfolder in sorted(glob(os.path.join(root, 's*'))):
         if not os.path.exists(pp_save_root):
             os.makedirs(pp_save_root)
 
-        if not os.path.isfile(
-                os.path.join(pp_save_root, f'{postprocessor_name}.pkl')):
-            with open(os.path.join(pp_save_root, f'{postprocessor_name}.pkl'),
-                      'wb') as f:
+        if not os.path.isfile(os.path.join(pp_save_root, pp_pkl_name)):
+            with open(os.path.join(pp_save_root, pp_pkl_name), 'wb') as f:
                 pickle.dump(evaluator.postprocessor, f,
                             pickle.HIGHEST_PROTOCOL)
 
@@ -194,8 +206,7 @@ for subfolder in sorted(glob(os.path.join(root, 's*'))):
         score_save_root = os.path.join(subfolder, 'scores')
         if not os.path.exists(score_save_root):
             os.makedirs(score_save_root)
-        with open(os.path.join(score_save_root, f'{postprocessor_name}.pkl'),
-                  'wb') as f:
+        with open(os.path.join(score_save_root, scores_pkl_name), 'wb') as f:
             pickle.dump(evaluator.scores, f, pickle.HIGHEST_PROTOCOL)
 
     # save RFF diagnostics if available
