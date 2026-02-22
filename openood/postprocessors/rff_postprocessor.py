@@ -400,10 +400,18 @@ class RFFPostprocessor(BasePostprocessor):
 
         kernel_vals = (phi[idx_i] * phi[idx_j]).sum(dim=1).numpy()
 
+        x_clip = np.percentile(kernel_vals, 99)
+        n_clipped = int((kernel_vals > x_clip).sum())
+
         fig, ax = plt.subplots(figsize=(6, 4))
         ax.hist(kernel_vals, bins=60, color='steelblue', edgecolor='white', alpha=0.85)
         ax.axvline(kernel_vals.mean(), color='red', linestyle='--',
                    label=f'mean={kernel_vals.mean():.3f}')
+        ax.set_xlim(left=kernel_vals.min() - 0.01, right=x_clip)
+        if n_clipped > 0:
+            ax.annotate(f'{n_clipped} pairs clipped (>{x_clip:.2f})',
+                        xy=(0.97, 0.95), xycoords='axes fraction',
+                        ha='right', va='top', fontsize=8, color='gray')
         ax.set_xlabel('k(xᵢ, xⱼ) = φ(xᵢ)ᵀ φ(xⱼ)')
         ax.set_ylabel('Count')
         ax.set_title('RFF Approximate Kernel Value Distribution (Random Train Pairs)')
@@ -427,15 +435,27 @@ class RFFPostprocessor(BasePostprocessor):
         labels = list(self._debug_phi_stats.keys())
         means  = [self._debug_phi_stats[l]['mean'] for l in labels]
         stds   = [self._debug_phi_stats[l]['std']  for l in labels]
-
-        fig, ax = plt.subplots(figsize=(max(6, len(labels) * 0.9), 4))
         x = list(range(len(labels)))
-        ax.bar(x, means, yerr=stds, capsize=4, color='cornflowerblue',
-               edgecolor='white', alpha=0.9)
-        ax.set_xticks(x)
-        ax.set_xticklabels(labels, rotation=30, ha='right')
-        ax.set_ylabel('φ(x) value (mean ± std)')
-        ax.set_title('RFF Feature φ(x) Consistency Across Splits')
+        expected_std = float(np.sqrt(1.0 / self.D))
+
+        fig, (ax_mean, ax_std) = plt.subplots(
+            2, 1, figsize=(max(6, len(labels) * 0.9), 6), sharex=True)
+
+        ax_mean.bar(x, means, color='cornflowerblue', edgecolor='white', alpha=0.85)
+        ax_mean.axhline(0, color='black', linewidth=0.8, linestyle='--')
+        ax_mean.set_ylim(-0.002, 0.002)
+        ax_mean.set_ylabel('φ(x) mean')
+        ax_mean.set_title('RFF Feature φ(x) Consistency Across Splits')
+
+        ax_std.bar(x, stds, color='salmon', edgecolor='white', alpha=0.85)
+        ax_std.axhline(expected_std, color='black', linewidth=0.8, linestyle='--',
+                       label=f'expected √(1/D)={expected_std:.4f}')
+        ax_std.set_ylim(0.025, 0.035)
+        ax_std.set_ylabel('φ(x) std')
+        ax_std.legend(fontsize=8)
+        ax_std.set_xticks(x)
+        ax_std.set_xticklabels(labels, rotation=30, ha='right')
+
         plt.tight_layout()
         plt.savefig(os.path.join(save_dir, 'rff_phi_consistency.png'), dpi=150)
         plt.close()
@@ -459,8 +479,12 @@ class RFFPostprocessor(BasePostprocessor):
             color = 'royalblue' if tag == id_tag else palette[i]
             lw = 2.5 if tag == id_tag else 1.5
             label = f'{tag} (ID)' if tag == id_tag else tag
-            sns.kdeplot(scores, ax=ax, label=label, color=color, linewidth=lw,
-                        fill=(tag == id_tag), alpha=0.15 if tag == id_tag else 0)
+            if tag == id_tag:
+                sns.kdeplot(scores, ax=ax, label=label, color=color,
+                            linewidth=lw, fill=True, alpha=0.2)
+            else:
+                sns.kdeplot(scores, ax=ax, label=label, color=color,
+                            linewidth=lw, fill=False, alpha=0.85)
 
         ax.set_xlabel('OOD Score (higher = more in-distribution)')
         ax.set_ylabel('Density')
