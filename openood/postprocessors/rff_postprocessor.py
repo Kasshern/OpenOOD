@@ -1,3 +1,4 @@
+import os
 from typing import Any
 
 import numpy as np
@@ -6,6 +7,13 @@ import torch.nn as nn
 from tqdm import tqdm
 
 from .base_postprocessor import BasePostprocessor
+
+try:
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+    _PLOTTING_AVAILABLE = True
+except ImportError:
+    _PLOTTING_AVAILABLE = False
 
 
 class RFFPostprocessor(BasePostprocessor):
@@ -62,6 +70,15 @@ class RFFPostprocessor(BasePostprocessor):
         self.y_train = None      # Training labels
         self.X_val = None        # Validation features for threshold
         self.y_val = None        # Validation labels
+
+        # Debug mode: φ(x) consistency, score distributions, kernel plots
+        self.debug = getattr(self.args, 'debug', False)
+        self._current_dataset_tag = None       # set externally before each inference
+        self._debug_phi_stats = {}             # {tag: {'mean': float, 'std': float}}
+        self._debug_score_accum = {}           # {tag: [conf_tensors...]}
+        self._debug_phi_batch_means = {}       # {tag: [batch_mean,...]}
+        self._debug_phi_batch_stds = {}        # {tag: [batch_std,...]}
+        self._phi_train_for_kernel = None      # stored during setup for kernel plot
 
         # Diagnostic mode: track class score distributions
         self.diagnose = getattr(self.args, 'diagnose', False)
@@ -141,6 +158,13 @@ class RFFPostprocessor(BasePostprocessor):
         # Compute RFF features for all training samples
         phi_train = self._phi(self.X_train)  # [n_train, D]
 
+        if self.debug:
+            self._debug_phi_stats['train'] = {
+                'mean': phi_train.mean().item(),
+                'std':  phi_train.std().item(),
+            }
+            self._phi_train_for_kernel = phi_train.detach().cpu()
+
         # Compute per-class mean embeddings
         self.mu_hat = torch.zeros(self.num_classes, self.D, device=device)
         for c in range(self.num_classes):
@@ -159,6 +183,12 @@ class RFFPostprocessor(BasePostprocessor):
 
         # Compute validation class scores
         phi_val = self._phi(self.X_val)  # [n_val, D]
+
+        if self.debug:
+            self._debug_phi_stats['val'] = {
+                'mean': phi_val.mean().item(),
+                'std':  phi_val.std().item(),
+            }
         val_class_scores = phi_val @ self.mu_hat.T  # [n_val, num_classes]
         if self.variance_weighted:
             val_class_scores = val_class_scores / torch.sqrt(self.var_hat)
@@ -278,6 +308,13 @@ class RFFPostprocessor(BasePostprocessor):
         # Compute RFF features
         phi_x = self._phi(features)  # [batch_size, D]
 
+        if self.debug and self._current_dataset_tag is not None:
+            tag = self._current_dataset_tag
+            if tag not in self._debug_score_accum:
+                self.set_dataset_tag(tag)
+            self._debug_phi_batch_means[tag].append(phi_x.mean().item())
+            self._debug_phi_batch_stds[tag].append(phi_x.std().item())
+
         # Compute class scores
         mu_hat = self.mu_hat.to(features.device)  # [num_classes, D]
         class_scores = phi_x @ mu_hat.T  # [batch_size, num_classes]
@@ -291,6 +328,9 @@ class RFFPostprocessor(BasePostprocessor):
             conf = sorted_scores[:, 0] - sorted_scores[:, 1]  # max - 2nd max
         else:
             conf = class_scores.max(dim=1).values
+
+        if self.debug and self._current_dataset_tag is not None:
+            self._debug_score_accum[self._current_dataset_tag].append(conf.cpu())
 
         # Accumulate diagnostics if enabled
         if self.diagnose and self.max_threshold is not None:
@@ -339,6 +379,108 @@ class RFFPostprocessor(BasePostprocessor):
         """Reset diagnostic accumulators for next dataset."""
         for key in self._diag_accum:
             self._diag_accum[key] = []
+
+    def set_dataset_tag(self, tag: str):
+        """Called from evaluator before inference on each dataset."""
+        self._current_dataset_tag = tag
+        if tag not in self._debug_score_accum:
+            self._debug_score_accum[tag] = []
+            self._debug_phi_batch_means[tag] = []
+            self._debug_phi_batch_stds[tag] = []
+
+    def _plot_kernel_distribution(self, save_dir: str):
+        """Plot histogram of k(xᵢ,xⱼ) = φ(xᵢ)ᵀφ(xⱼ) for random train pairs."""
+        phi = self._phi_train_for_kernel  # [n_train, D]
+        n = phi.shape[0]
+        n_pairs = min(2000, n * (n - 1) // 2)
+        idx_i = torch.randint(0, n, (n_pairs,))
+        idx_j = torch.randint(0, n, (n_pairs,))
+        same = (idx_i == idx_j)
+        idx_j[same] = (idx_j[same] + 1) % n  # ensure i ≠ j
+
+        kernel_vals = (phi[idx_i] * phi[idx_j]).sum(dim=1).numpy()
+
+        fig, ax = plt.subplots(figsize=(6, 4))
+        ax.hist(kernel_vals, bins=60, color='steelblue', edgecolor='white', alpha=0.85)
+        ax.axvline(kernel_vals.mean(), color='red', linestyle='--',
+                   label=f'mean={kernel_vals.mean():.3f}')
+        ax.set_xlabel('k(xᵢ, xⱼ) = φ(xᵢ)ᵀ φ(xⱼ)')
+        ax.set_ylabel('Count')
+        ax.set_title('RFF Approximate Kernel Value Distribution (Random Train Pairs)')
+        ax.legend()
+        plt.tight_layout()
+        plt.savefig(os.path.join(save_dir, 'rff_kernel_distribution.png'), dpi=150)
+        plt.close()
+        print(f'  Kernel dist: mean={kernel_vals.mean():.4f}, '
+              f'std={kernel_vals.std():.4f}, '
+              f'min={kernel_vals.min():.4f}, max={kernel_vals.max():.4f}')
+
+    def _plot_phi_consistency(self, save_dir: str):
+        """Bar chart of φ(x) mean ± std across train/val/test-ID/OOD splits."""
+        for tag, means in self._debug_phi_batch_means.items():
+            if means:
+                self._debug_phi_stats[tag] = {
+                    'mean': float(np.mean(means)),
+                    'std':  float(np.mean(self._debug_phi_batch_stds[tag])),
+                }
+
+        labels = list(self._debug_phi_stats.keys())
+        means  = [self._debug_phi_stats[l]['mean'] for l in labels]
+        stds   = [self._debug_phi_stats[l]['std']  for l in labels]
+
+        fig, ax = plt.subplots(figsize=(max(6, len(labels) * 0.9), 4))
+        x = list(range(len(labels)))
+        ax.bar(x, means, yerr=stds, capsize=4, color='cornflowerblue',
+               edgecolor='white', alpha=0.9)
+        ax.set_xticks(x)
+        ax.set_xticklabels(labels, rotation=30, ha='right')
+        ax.set_ylabel('φ(x) value (mean ± std)')
+        ax.set_title('RFF Feature φ(x) Consistency Across Splits')
+        plt.tight_layout()
+        plt.savefig(os.path.join(save_dir, 'rff_phi_consistency.png'), dpi=150)
+        plt.close()
+        print('  φ(x) stats per split:')
+        for label in labels:
+            s = self._debug_phi_stats[label]
+            print(f'    {label:15s}: mean={s["mean"]:.5f}, std={s["std"]:.5f}')
+
+    def _plot_score_distributions(self, save_dir: str):
+        """Overlapping KDE of OOD scores: ID test vs each OOD dataset."""
+        if not self._debug_score_accum:
+            return
+        fig, ax = plt.subplots(figsize=(8, 5))
+        id_tag = 'id_test'
+        palette = sns.color_palette('tab10', n_colors=len(self._debug_score_accum))
+
+        for i, (tag, tensors) in enumerate(self._debug_score_accum.items()):
+            if not tensors:
+                continue
+            scores = torch.cat(tensors).numpy()
+            color = 'royalblue' if tag == id_tag else palette[i]
+            lw = 2.5 if tag == id_tag else 1.5
+            label = f'{tag} (ID)' if tag == id_tag else tag
+            sns.kdeplot(scores, ax=ax, label=label, color=color, linewidth=lw,
+                        fill=(tag == id_tag), alpha=0.15 if tag == id_tag else 0)
+
+        ax.set_xlabel('OOD Score (higher = more in-distribution)')
+        ax.set_ylabel('Density')
+        ax.set_title('ID vs OOD Score Distributions')
+        ax.legend(fontsize=8)
+        plt.tight_layout()
+        plt.savefig(os.path.join(save_dir, 'rff_score_distributions.png'), dpi=150)
+        plt.close()
+
+    def save_debug_plots(self, save_dir: str):
+        """Generate and save all three debug plots to save_dir."""
+        if not _PLOTTING_AVAILABLE:
+            print('matplotlib/seaborn not available — skipping debug plots.')
+            return
+        os.makedirs(save_dir, exist_ok=True)
+        print(f'\n--- RFF Debug Plots → {save_dir} ---')
+        if self._phi_train_for_kernel is not None:
+            self._plot_kernel_distribution(save_dir)
+        self._plot_phi_consistency(save_dir)
+        self._plot_score_distributions(save_dir)
 
     def set_hyperparam(self, hyperparam: list):
         """

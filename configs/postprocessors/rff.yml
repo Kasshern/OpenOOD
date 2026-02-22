@@ -8,6 +8,7 @@ postprocessor:
     feature_space: penultimate  # Options: 'penultimate', 'all', 'input'
     normalize: True         # L2 normalize features (recommended for cross-dataset transfer)
     diagnose: True          # Track class score distributions (saves to .npz files)
+    debug: False            # Save φ(x) consistency, score distribution, and kernel plots
     score_mode: margin      # 'max' = max class score, 'margin' = max - 2nd max
     variance_weighted: True # Normalize class scores by per-class variance
   postprocessor_sweep:

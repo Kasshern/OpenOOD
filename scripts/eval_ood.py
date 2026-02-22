@@ -218,6 +218,12 @@ for subfolder in sorted(glob(os.path.join(root, 's*'))):
         evaluator.postprocessor.save_diagnostics(save_path)
         evaluator.postprocessor.reset_diagnostics()
 
+    # save RFF debug plots if enabled
+    if hasattr(evaluator.postprocessor, 'debug') and \
+            evaluator.postprocessor.debug:
+        diag_dir = os.path.join(subfolder, 'diagnostics')
+        evaluator.postprocessor.save_debug_plots(diag_dir)
+
 # compute mean metrics over training runs
 all_metrics = np.stack(all_metrics, axis=0)
 metrics_mean = np.mean(all_metrics, axis=0)

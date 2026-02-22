@@ -258,6 +258,8 @@ class Evaluator:
             if self.scores['id']['test'] is None:
                 print(f'Performing inference on {self.id_name} test set...',
                       flush=True)
+                if hasattr(self.postprocessor, 'set_dataset_tag'):
+                    self.postprocessor.set_dataset_tag('id_test')
                 id_pred, id_conf, id_gt = self.postprocessor.inference(
                     self.net, self.dataloader_dict['id']['test'], progress)
                 self.scores['id']['test'] = [id_pred, id_conf, id_gt]
@@ -339,6 +341,8 @@ class Evaluator:
             if self.scores['ood'][ood_split][dataset_name] is None:
                 print(f'Performing inference on {dataset_name} dataset...',
                       flush=True)
+                if hasattr(self.postprocessor, 'set_dataset_tag'):
+                    self.postprocessor.set_dataset_tag(dataset_name)
                 ood_pred, ood_conf, ood_gt = self.postprocessor.inference(
                     self.net, ood_dl, progress)
                 self.scores['ood'][ood_split][dataset_name] = [
