@@ -1,0 +1,15 @@
+postprocessor:
+  name: rff
+  APS_mode: True
+  postprocessor_args:
+    sigma: 0.5
+    D: 1024
+    alpha: 0.05
+    feature_space: penultimate
+    normalize: True
+    diagnose: True
+    debug: False
+    score_mode: margin
+    variance_weighted: False
+  postprocessor_sweep:
+    sigma: [0.1, 0.2, 0.5, 1.0, 2.0, 5.0]
