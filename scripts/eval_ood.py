@@ -222,6 +222,22 @@ for subfolder in sorted(glob(os.path.join(root, 's*'))):
     if hasattr(evaluator.postprocessor, 'debug') and \
             evaluator.postprocessor.debug:
         diag_dir = os.path.join(subfolder, 'diagnostics')
+        os.makedirs(diag_dir, exist_ok=True)
+        # Backfill score accumulator from evaluator.scores
+        # (postprocess() is skipped when scores are pre-loaded from cache)
+        pp = evaluator.postprocessor
+        if evaluator.scores['id']['test'] is not None:
+            _, id_conf, _ = evaluator.scores['id']['test']
+            pp.set_dataset_tag('id_test')
+            if not pp._debug_score_accum['id_test']:
+                pp._debug_score_accum['id_test'] = [torch.tensor(id_conf)]
+        for split in ['near', 'far']:
+            for dname, cached in evaluator.scores['ood'][split].items():
+                if cached is not None:
+                    _, conf, _ = cached
+                    pp.set_dataset_tag(dname)
+                    if not pp._debug_score_accum[dname]:
+                        pp._debug_score_accum[dname] = [torch.tensor(conf)]
         evaluator.postprocessor.save_debug_plots(diag_dir)
 
 # compute mean metrics over training runs

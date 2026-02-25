@@ -422,6 +422,13 @@ class RFFPostprocessor(BasePostprocessor):
         print(f'  Kernel dist: mean={kernel_vals.mean():.4f}, '
               f'std={kernel_vals.std():.4f}, '
               f'min={kernel_vals.min():.4f}, max={kernel_vals.max():.4f}')
+        return {
+            'mean': float(kernel_vals.mean()),
+            'std': float(kernel_vals.std()),
+            'min': float(kernel_vals.min()),
+            'max': float(kernel_vals.max()),
+            'n_pairs': int(n_pairs),
+        }
 
     def _plot_phi_consistency(self, save_dir: str):
         """Bar chart of φ(x) mean ± std across train/val/test-ID/OOD splits."""
@@ -463,6 +470,7 @@ class RFFPostprocessor(BasePostprocessor):
         for label in labels:
             s = self._debug_phi_stats[label]
             print(f'    {label:15s}: mean={s["mean"]:.5f}, std={s["std"]:.5f}')
+        return self._debug_phi_stats
 
     def _plot_score_distributions(self, save_dir: str):
         """Overlapping KDE of OOD scores: ID test vs each OOD dataset."""
@@ -494,6 +502,21 @@ class RFFPostprocessor(BasePostprocessor):
         plt.savefig(os.path.join(save_dir, 'rff_score_distributions.png'), dpi=150)
         plt.close()
 
+        score_stats = {}
+        print('  Score dist:')
+        for tag, tensors in self._debug_score_accum.items():
+            if not tensors:
+                continue
+            scores = torch.cat(tensors).numpy()
+            score_stats[tag] = {
+                'mean': float(scores.mean()),
+                'std': float(scores.std()),
+                'n': int(len(scores)),
+            }
+            s = score_stats[tag]
+            print(f'    {tag:15s}: mean={s["mean"]:.4f}, std={s["std"]:.4f}, n={s["n"]}')
+        return score_stats
+
     def save_debug_plots(self, save_dir: str):
         """Generate and save all three debug plots to save_dir."""
         if not _PLOTTING_AVAILABLE:
@@ -501,10 +524,34 @@ class RFFPostprocessor(BasePostprocessor):
             return
         os.makedirs(save_dir, exist_ok=True)
         print(f'\n--- RFF Debug Plots → {save_dir} ---')
+
+        kernel_stats = None
         if self._phi_train_for_kernel is not None:
-            self._plot_kernel_distribution(save_dir)
-        self._plot_phi_consistency(save_dir)
-        self._plot_score_distributions(save_dir)
+            kernel_stats = self._plot_kernel_distribution(save_dir)
+        phi_stats = self._plot_phi_consistency(save_dir)
+        score_stats = self._plot_score_distributions(save_dir)
+
+        # Write all numerical stats to a single CSV
+        import csv
+        rows = []
+        if kernel_stats is not None:
+            for stat, value in kernel_stats.items():
+                rows.append(('kernel_dist', 'train_pairs', stat, value))
+        if phi_stats:
+            for tag, stats in phi_stats.items():
+                for stat, value in stats.items():
+                    rows.append(('phi_consistency', tag, stat, value))
+        if score_stats:
+            for tag, stats in score_stats.items():
+                for stat, value in stats.items():
+                    rows.append(('score_dist', tag, stat, value))
+
+        csv_path = os.path.join(save_dir, 'rff_debug_stats.csv')
+        with open(csv_path, 'w', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(['check', 'tag', 'stat', 'value'])
+            writer.writerows(rows)
+        print(f'  Debug stats → {csv_path}')
 
     def set_hyperparam(self, hyperparam: list):
         """
