@@ -8,7 +8,7 @@ postprocessor:
     feature_space: penultimate
     normalize: True
     diagnose: True
-    debug: False
+    debug: True
     score_mode: max
     variance_weighted: True
   postprocessor_sweep:
