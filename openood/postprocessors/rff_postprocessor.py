@@ -561,6 +561,8 @@ class RFFPostprocessor(BasePostprocessor):
         self.sigma = hyperparam[0]
         if len(hyperparam) > 1:
             self.D = int(hyperparam[1])
+        if len(hyperparam) > 2:
+            self.alpha = float(hyperparam[2])
 
         # Recompute RFF embedding with new hyperparameters
         if self.X_train is not None:
@@ -569,4 +571,4 @@ class RFFPostprocessor(BasePostprocessor):
 
     def get_hyperparam(self):
         """Return current hyperparameters."""
-        return [self.sigma, self.D]
+        return [self.sigma, self.D, self.alpha]
