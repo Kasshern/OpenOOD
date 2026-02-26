@@ -24,7 +24,7 @@ DATASETS=("cifar10" "cifar100" "imagenet200")
 ROOTS=(
     "./results/cifar10_resnet18_32x32_base_e100_lr0.1_default"
     "./results/cifar100_resnet18_32x32_base_e100_lr0.1_default"
-    "./results/imagenet200_res18_v1.5"
+    "./results/imagenet200_resnet18_224x224_base_e90_lr0.1_default"
 )
 
 DATASET=${DATASETS[$SLURM_ARRAY_TASK_ID]}

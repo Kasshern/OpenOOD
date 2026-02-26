@@ -3,7 +3,7 @@
 
 set -e
 
-CHECKPOINT_ROOT="./results/imagenet200_res18_v1.5"
+CHECKPOINT_ROOT="./results/imagenet200_resnet18_224x224_base_e90_lr0.1_default"
 OUTPUT_DIR="./benchmark_results/imagenet200"
 mkdir -p $OUTPUT_DIR
 

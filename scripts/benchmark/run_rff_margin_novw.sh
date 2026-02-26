@@ -9,7 +9,7 @@ VARIANT="rff_margin_novw"
 DATASETS=(
     "cifar10   ./results/cifar10_resnet18_32x32_base_e100_lr0.1_default"
     "cifar100  ./results/cifar100_resnet18_32x32_base_e100_lr0.1_default"
-    "imagenet200 ./results/imagenet200_res18_v1.5"
+    "imagenet200 ./results/imagenet200_resnet18_224x224_base_e90_lr0.1_default"
 )
 
 echo "=== RFF grid search: $VARIANT | $(date) ==="

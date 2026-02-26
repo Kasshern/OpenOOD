@@ -30,5 +30,5 @@ echo "  ./data/images_classic/        - CIFAR-10, CIFAR-100, TIN, MNIST, SVHN, e
 echo "  ./data/images_largescale/     - ImageNet-related datasets"
 echo "  ./results/cifar10_res18_v1.5/ - CIFAR-10 checkpoint"
 echo "  ./results/cifar100_res18_v1.5/ - CIFAR-100 checkpoint"
-echo "  ./results/imagenet200_res18_v1.5/ - ImageNet-200 checkpoint"
+echo "  ./results/imagenet200_resnet18_224x224_base_e90_lr0.1_default/ - ImageNet-200 checkpoint"
 echo "  ./results/imagenet_res50_v1.5/ - ImageNet-1K checkpoint"

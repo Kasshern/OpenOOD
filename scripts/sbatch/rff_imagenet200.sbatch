@@ -20,7 +20,7 @@ cd ~/scratch/openood/src/OpenOOD
 
 VARIANTS=("rff_max_vw" "rff_max_novw" "rff_margin_vw" "rff_margin_novw")
 VARIANT=${VARIANTS[$SLURM_ARRAY_TASK_ID]}
-CHECKPOINT_ROOT="./results/imagenet200_res18_v1.5"
+CHECKPOINT_ROOT="./results/imagenet200_resnet18_224x224_base_e90_lr0.1_default"
 
 echo "=== RFF ImageNet-200 | variant=$VARIANT | $(date) ==="
 

@@ -26,7 +26,7 @@ METHODS=(
 )
 
 METHOD=${METHODS[$SLURM_ARRAY_TASK_ID]}
-CHECKPOINT_ROOT="./results/imagenet200_res18_v1.5"
+CHECKPOINT_ROOT="./results/imagenet200_resnet18_224x224_base_e90_lr0.1_default"
 
 echo "Running ImageNet-200 with $METHOD at $(date)"
 
