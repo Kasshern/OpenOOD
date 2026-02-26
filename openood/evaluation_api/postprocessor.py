@@ -74,6 +74,10 @@ postprocessors = {
     'vra': VRAPostprocessor,
     'cfood': CFOODPostprocessor,
     'rff': RFFPostprocessor,
+    'rff_max_vw': RFFPostprocessor,
+    'rff_max_novw': RFFPostprocessor,
+    'rff_margin_vw': RFFPostprocessor,
+    'rff_margin_novw': RFFPostprocessor,
 }
 
 link_prefix = 'https://raw.githubusercontent.com/Jingkang50/OpenOOD/main/configs/postprocessors/'
