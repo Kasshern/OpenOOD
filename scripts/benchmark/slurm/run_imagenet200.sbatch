@@ -5,9 +5,9 @@
 #SBATCH --time=08:00:00
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
-#SBATCH --gres=gpu:A100:1
+#SBATCH --gres=gpu:1
 #SBATCH --mem=64G
-#SBATCH --partition=inferno
+#SBATCH --partition=ice-gpu
 #SBATCH --array=0-21
 
 # ICE PACE ImageNet-200 Benchmark Job Array

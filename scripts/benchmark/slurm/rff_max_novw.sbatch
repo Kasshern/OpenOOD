@@ -5,9 +5,9 @@
 #SBATCH --time=04:00:00
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
-#SBATCH --gres=gpu:A100:1
+#SBATCH --gres=gpu:1
 #SBATCH --mem=32G
-#SBATCH --partition=inferno
+#SBATCH --partition=ice-gpu
 #SBATCH --array=0-2
 
 # RFF grid search — score_mode=max, variance_weighted=False
