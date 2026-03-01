@@ -78,6 +78,8 @@ postprocessors = {
     'rff_max_novw': RFFPostprocessor,
     'rff_margin_vw': RFFPostprocessor,
     'rff_margin_novw': RFFPostprocessor,
+    'rff_exclusive_vw': RFFPostprocessor,
+    'rff_exclusive_novw': RFFPostprocessor,
 }
 
 link_prefix = 'https://raw.githubusercontent.com/Jingkang50/OpenOOD/main/configs/postprocessors/'

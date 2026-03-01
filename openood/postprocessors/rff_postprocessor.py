@@ -88,6 +88,8 @@ class RFFPostprocessor(BasePostprocessor):
             'margin': [],
             'mean_score': [],
         }
+        # Per-dataset diagnostics for multi-class analysis
+        self._diag_by_dataset = {}  # dataset_tag -> {'n_above': [], 'class_pred': []}
 
         self.setup_flag = False
 
@@ -201,6 +203,12 @@ class RFFPostprocessor(BasePostprocessor):
         if self.score_mode == 'margin':
             sorted_val = val_class_scores.sort(dim=1, descending=True).values
             val_scores = sorted_val[:, 0] - sorted_val[:, 1]
+        elif self.score_mode == 'exclusive':
+            # Calibrate on single-match val samples only (clean ID signal)
+            n_above_val = (val_class_scores > self.max_threshold).sum(dim=1)
+            single_mask = (n_above_val == 1)
+            max_vals = val_class_scores.max(dim=1).values
+            val_scores = max_vals[single_mask] if single_mask.sum() > 0 else max_vals
         else:
             val_scores = val_class_scores.max(dim=1).values
 
@@ -326,6 +334,12 @@ class RFFPostprocessor(BasePostprocessor):
         if self.score_mode == 'margin':
             sorted_scores = class_scores.sort(dim=1, descending=True).values
             conf = sorted_scores[:, 0] - sorted_scores[:, 1]  # max - 2nd max
+        elif self.score_mode == 'exclusive':
+            n_above = (class_scores > self.max_threshold).sum(dim=1)
+            max_score = class_scores.max(dim=1).values
+            # Only single-match samples get a positive score; multi and zero are OOD
+            conf = torch.where(n_above == 1, max_score,
+                               torch.full_like(max_score, -1.0))
         else:
             conf = class_scores.max(dim=1).values
 
@@ -336,13 +350,22 @@ class RFFPostprocessor(BasePostprocessor):
         if self.diagnose and self.max_threshold is not None:
             sorted_scores = class_scores.sort(dim=1, descending=True).values
             # Use max-based threshold for class counting (meaningful regardless of score_mode)
-            self._diag_accum['n_above_threshold'].append(
-                (class_scores > self.max_threshold).sum(dim=1).cpu())
+            n_above_diag = (class_scores > self.max_threshold).sum(dim=1).cpu()
+            self._diag_accum['n_above_threshold'].append(n_above_diag)
             self._diag_accum['max_score'].append(sorted_scores[:, 0].cpu())
             self._diag_accum['margin'].append(
                 (sorted_scores[:, 0] - sorted_scores[:, 1]).cpu())
             self._diag_accum['mean_score'].append(
                 class_scores.mean(dim=1).cpu())
+
+            # Per-dataset accumulation for multi-class analysis
+            if self._current_dataset_tag is not None:
+                tag = self._current_dataset_tag
+                if tag not in self._diag_by_dataset:
+                    self._diag_by_dataset[tag] = {'n_above': [], 'class_pred': []}
+                self._diag_by_dataset[tag]['n_above'].append(n_above_diag)
+                self._diag_by_dataset[tag]['class_pred'].append(
+                    class_scores.argmax(dim=1).cpu())
 
         return pred, conf
 
@@ -375,10 +398,90 @@ class RFFPostprocessor(BasePostprocessor):
         print(f'  Max score: mean={max_score.mean():.4f}, std={max_score.std():.4f}')
         print(f'  Margin (max-2nd): mean={margin.mean():.4f}, std={margin.std():.4f}')
 
+    def save_per_class_analysis(self, save_path: str):
+        """
+        Save per-class multi-rate analysis by dataset to CSV.
+
+        For each class c and dataset tag, computes:
+          - n_single: argmax=c AND n_above==1
+          - n_multi:  argmax=c AND n_above>1
+          - n_zero:   argmax=c AND n_above==0
+          - multi_rate = n_multi / (n_single + n_multi + n_zero)
+
+        A high OOD multi_rate vs low id_test multi_rate confirms the hypothesis
+        that multi-class similarity indicates OOD.
+        """
+        import csv
+
+        if not self._diag_by_dataset:
+            return
+
+        # Consolidate accumulated tensors per dataset
+        datasets = {}
+        for tag, accum in self._diag_by_dataset.items():
+            if accum['n_above'] and accum['class_pred']:
+                datasets[tag] = {
+                    'n_above': torch.cat(accum['n_above']).numpy(),
+                    'class_pred': torch.cat(accum['class_pred']).numpy(),
+                }
+
+        if not datasets:
+            return
+
+        tags = list(datasets.keys())
+        K = self.num_classes
+
+        rows = []
+        for c in range(K):
+            row = {'class': c}
+            for tag in tags:
+                n_above = datasets[tag]['n_above']
+                class_pred = datasets[tag]['class_pred']
+                mask_c = (class_pred == c)
+                n_single = int(((n_above == 1) & mask_c).sum())
+                n_multi = int(((n_above > 1) & mask_c).sum())
+                n_zero = int(((n_above == 0) & mask_c).sum())
+                total = n_single + n_multi + n_zero
+                multi_rate = round(n_multi / total, 4) if total > 0 else 0.0
+                if tag == 'id_test':
+                    row['id_test_single'] = n_single
+                    row['id_test_multi'] = n_multi
+                    row['id_test_multi_rate'] = multi_rate
+                else:
+                    row[f'{tag}_multi_rate'] = multi_rate
+            rows.append(row)
+
+        # Build column names: id_test gets 3 cols, others get 1
+        fieldnames = ['class']
+        if 'id_test' in tags:
+            fieldnames += ['id_test_single', 'id_test_multi', 'id_test_multi_rate']
+        other_tags = [t for t in tags if t != 'id_test']
+        for tag in other_tags:
+            fieldnames.append(f'{tag}_multi_rate')
+
+        save_dir = os.path.dirname(save_path)
+        if save_dir:
+            os.makedirs(save_dir, exist_ok=True)
+        with open(save_path, 'w', newline='') as f:
+            writer = csv.DictWriter(f, fieldnames=fieldnames, extrasaction='ignore')
+            writer.writeheader()
+            writer.writerows(rows)
+
+        print(f'\n--- RFF Per-Class Analysis → {save_path} ---')
+        if 'id_test' in datasets:
+            id_rates = np.array([row.get('id_test_multi_rate', 0.0) for row in rows])
+            print(f'  id_test  multi_rate: mean={id_rates.mean():.4f}, '
+                  f'max={id_rates.max():.4f}')
+        for tag in other_tags:
+            ood_rates = np.array([row.get(f'{tag}_multi_rate', 0.0) for row in rows])
+            print(f'  {tag:<15s} multi_rate: mean={ood_rates.mean():.4f}, '
+                  f'max={ood_rates.max():.4f}')
+
     def reset_diagnostics(self):
         """Reset diagnostic accumulators for next dataset."""
         for key in self._diag_accum:
             self._diag_accum[key] = []
+        self._diag_by_dataset = {}
 
     def set_dataset_tag(self, tag: str):
         """Called from evaluator before inference on each dataset."""

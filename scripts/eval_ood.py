@@ -216,6 +216,8 @@ for subfolder in sorted(glob(os.path.join(root, 's*'))):
         os.makedirs(diag_dir, exist_ok=True)
         save_path = os.path.join(diag_dir, f'{postprocessor_name}.npz')
         evaluator.postprocessor.save_diagnostics(save_path)
+        per_class_path = os.path.join(diag_dir, f'{postprocessor_name}_per_class.csv')
+        evaluator.postprocessor.save_per_class_analysis(per_class_path)
         evaluator.postprocessor.reset_diagnostics()
 
     # save RFF debug plots if enabled
