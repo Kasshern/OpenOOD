@@ -16,6 +16,7 @@
 mkdir -p logs
 
 module load anaconda3/2023.03
+eval "$(conda shell.bash hook)"
 conda activate ~/scratch/conda_venvs/openood
 
 cd ~/scratch/openood/src/OpenOOD
