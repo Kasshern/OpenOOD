@@ -70,6 +70,7 @@ class RFFPostprocessor(BasePostprocessor):
         self.y_train = None      # Training labels
         self.X_val = None        # Validation features for threshold
         self.y_val = None        # Validation labels
+        self.softmax_val = None  # Val softmax probs for softmax score_mode [n_val, C]
 
         # Debug mode: φ(x) consistency, score distributions, kernel plots
         self.debug = getattr(self.args, 'debug', False)
@@ -209,6 +210,10 @@ class RFFPostprocessor(BasePostprocessor):
             single_mask = (n_above_val == 1)
             max_vals = val_class_scores.max(dim=1).values
             val_scores = max_vals[single_mask] if single_mask.sum() > 0 else max_vals
+        elif self.score_mode == 'softmax':
+            val_softmax = self.softmax_val.to(device)          # [n_val, num_classes]
+            val_fused = val_class_scores * val_softmax          # [n_val, num_classes]
+            val_scores = val_fused.sum(dim=1)                  # [n_val]
         else:
             val_scores = val_class_scores.max(dim=1).values
 
@@ -262,17 +267,26 @@ class RFFPostprocessor(BasePostprocessor):
             # Extract validation features and labels for threshold calibration
             val_features = []
             val_labels = []
+            val_softmax = [] if self.score_mode == 'softmax' else None
             with torch.no_grad():
                 for batch in tqdm(id_loader_dict['val'],
                                   desc='Extracting val features'):
                     data = batch['data'].to(device).float()
                     labels = batch['label'].to(device)
-                    features = self._extract_features(net, data)
+                    if self.score_mode == 'softmax':
+                        output, features = net(data, return_feature=True)
+                        if self.normalize:
+                            features = torch.nn.functional.normalize(features, p=2, dim=1)
+                        val_softmax.append(torch.softmax(output, dim=1).cpu())
+                    else:
+                        features = self._extract_features(net, data)
                     val_features.append(features)
                     val_labels.append(labels)
 
             self.X_val = torch.cat(val_features, dim=0)
             self.y_val = torch.cat(val_labels, dim=0)
+            if val_softmax is not None:
+                self.softmax_val = torch.cat(val_softmax, dim=0)  # [n_val, num_classes]
             print(f'Extracted {self.X_val.shape[0]} val features for threshold')
 
         # Compute RFF embedding and threshold
@@ -340,6 +354,9 @@ class RFFPostprocessor(BasePostprocessor):
             # Only single-match samples get a positive score; multi and zero are OOD
             conf = torch.where(n_above == 1, max_score,
                                torch.full_like(max_score, -1.0))
+        elif self.score_mode == 'softmax':
+            softmax_probs = torch.softmax(output, dim=1)        # [batch, num_classes]
+            conf = (class_scores * softmax_probs).sum(dim=1)    # [batch]
         else:
             conf = class_scores.max(dim=1).values
 

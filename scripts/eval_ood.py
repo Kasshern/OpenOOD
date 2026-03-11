@@ -198,6 +198,21 @@ for subfolder in sorted(glob(os.path.join(root, 's*'))):
                 pickle.dump(evaluator.postprocessor, f,
                             pickle.HIGHEST_PROTOCOL)
 
+        # Save best hyperparams as human-readable JSON (for re-run reference)
+        import json
+        params_json_path = os.path.join(
+            pp_save_root, f'{postprocessor_name}_best_params.json')
+        if not os.path.isfile(params_json_path) and \
+                hasattr(evaluator.postprocessor, 'get_hyperparam'):
+            params = evaluator.postprocessor.get_hyperparam()
+            with open(params_json_path, 'w') as f:
+                json.dump({
+                    'postprocessor': postprocessor_name,
+                    'sigma': float(params[0]),
+                    'D': int(params[1]),
+                    'alpha': float(params[2]),
+                }, f, indent=2)
+
     metrics = evaluator.eval_ood(fsood=args.fsood)
     all_metrics.append(metrics.to_numpy())
 
