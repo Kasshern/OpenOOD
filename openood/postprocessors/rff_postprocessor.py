@@ -214,6 +214,12 @@ class RFFPostprocessor(BasePostprocessor):
             val_softmax = self.softmax_val.to(device)          # [n_val, num_classes]
             val_fused = val_class_scores * val_softmax          # [n_val, num_classes]
             val_scores = val_fused.sum(dim=1)                  # [n_val]
+        elif self.score_mode == 'entropy':
+            # Normalize class scores like document: w_c = relu(score_c) / Σ relu(score_c)
+            val_pos = torch.relu(val_class_scores)                       # [n_val, num_classes]
+            val_denom = val_pos.sum(dim=1, keepdim=True).clamp(min=1e-10)
+            val_w = val_pos / val_denom                                  # [n_val, num_classes]
+            val_scores = -(val_w * torch.log(val_w + 1e-10)).sum(dim=1) # negative entropy [n_val]
         else:
             val_scores = val_class_scores.max(dim=1).values
 
@@ -357,6 +363,11 @@ class RFFPostprocessor(BasePostprocessor):
         elif self.score_mode == 'softmax':
             softmax_probs = torch.softmax(output, dim=1)        # [batch, num_classes]
             conf = (class_scores * softmax_probs).sum(dim=1)    # [batch]
+        elif self.score_mode == 'entropy':
+            pos = torch.relu(class_scores)                              # [batch, num_classes]
+            denom = pos.sum(dim=1, keepdim=True).clamp(min=1e-10)
+            w = pos / denom                                             # [batch, num_classes]
+            conf = -(w * torch.log(w + 1e-10)).sum(dim=1)              # [batch]
         else:
             conf = class_scores.max(dim=1).values
 

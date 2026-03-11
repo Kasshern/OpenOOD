@@ -81,6 +81,7 @@ postprocessors = {
     'rff_exclusive_vw': RFFPostprocessor,
     'rff_exclusive_novw': RFFPostprocessor,
     'rff_softmax_vw': RFFPostprocessor,
+    'rff_entropy_vw': RFFPostprocessor,
 }
 
 link_prefix = 'https://raw.githubusercontent.com/Jingkang50/OpenOOD/main/configs/postprocessors/'
