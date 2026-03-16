@@ -205,13 +205,12 @@ for subfolder in sorted(glob(os.path.join(root, 's*'))):
         if not os.path.isfile(params_json_path) and \
                 hasattr(evaluator.postprocessor, 'get_hyperparam'):
             params = evaluator.postprocessor.get_hyperparam()
+            param_names = ['sigma', 'D', 'alpha', 'normalize']
+            param_dict = {'postprocessor': postprocessor_name}
+            for name, val in zip(param_names, params):
+                param_dict[name] = val
             with open(params_json_path, 'w') as f:
-                json.dump({
-                    'postprocessor': postprocessor_name,
-                    'sigma': float(params[0]),
-                    'D': int(params[1]),
-                    'alpha': float(params[2]),
-                }, f, indent=2)
+                json.dump(param_dict, f, indent=2)
 
     metrics = evaluator.eval_ood(fsood=args.fsood)
     all_metrics.append(metrics.to_numpy())

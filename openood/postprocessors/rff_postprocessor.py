@@ -38,6 +38,12 @@ class RFFPostprocessor(BasePostprocessor):
         self.args = self.config.postprocessor.postprocessor_args
         self.args_dict = self.config.postprocessor.postprocessor_sweep
 
+        # Select sweep dict based on search_mode (fast=default, full=expanded grid)
+        self.search_mode_aps = getattr(self.args, 'search_mode', 'fast')
+        if self.search_mode_aps == 'full' and hasattr(
+                self.config.postprocessor, 'postprocessor_sweep_full'):
+            self.args_dict = self.config.postprocessor.postprocessor_sweep_full
+
         # Hyperparameters
         self.sigma = self.args.sigma          # Kernel bandwidth
         self.D = self.args.D                  # RFF dimension
@@ -67,9 +73,9 @@ class RFFPostprocessor(BasePostprocessor):
         self.feature_dim = None
 
         # Stored features and labels for hyperparameter search (avoid re-extraction)
-        self.X_train = None      # Training features for mean embedding
+        self.X_train_raw = None  # Raw (unnormalized) training features
         self.y_train = None      # Training labels
-        self.X_val = None        # Validation features for threshold
+        self.X_val_raw = None    # Raw (unnormalized) validation features
         self.y_val = None        # Validation labels
         self.softmax_val = None  # Val softmax probs for softmax score_mode [n_val, C]
 
@@ -95,17 +101,22 @@ class RFFPostprocessor(BasePostprocessor):
 
         self.setup_flag = False
 
-    def _extract_features(self, net: nn.Module, data: torch.Tensor) -> torch.Tensor:
+    def _extract_features(self, net: nn.Module, data: torch.Tensor,
+                          apply_normalize=None) -> torch.Tensor:
         """
         Extract features based on configured feature space.
 
         Args:
             net: Neural network model
             data: Input batch [batch_size, C, H, W]
+            apply_normalize: Override normalization; defaults to self.normalize if None.
 
         Returns:
             features: [batch_size, feature_dim]
         """
+        if apply_normalize is None:
+            apply_normalize = self.normalize
+
         if self.feature_space == 'input':
             features = torch.flatten(data, start_dim=1)
         elif self.feature_space == 'all':
@@ -117,7 +128,7 @@ class RFFPostprocessor(BasePostprocessor):
             _, features = net(data, return_feature=True)
 
         # L2 normalize features if enabled (makes sigma transferable across datasets)
-        if self.normalize:
+        if apply_normalize:
             features = torch.nn.functional.normalize(features, p=2, dim=1)
 
         return features
@@ -153,14 +164,22 @@ class RFFPostprocessor(BasePostprocessor):
         Recompute RFF parameters and per-class mean embeddings using stored features.
         Called when hyperparameters change during APS.
         """
-        if self.X_train is None:
+        if self.X_train_raw is None:
             return
+
+        # Apply normalization based on current self.normalize (supports APS sweep)
+        if self.normalize:
+            X_train = torch.nn.functional.normalize(self.X_train_raw, p=2, dim=1)
+            X_val = torch.nn.functional.normalize(self.X_val_raw, p=2, dim=1)
+        else:
+            X_train = self.X_train_raw
+            X_val = self.X_val_raw
 
         # Sample new RFF parameters with current sigma
         self._sample_rff_params(self.feature_dim, device)
 
         # Compute RFF features for all training samples
-        phi_train = self._phi(self.X_train)  # [n_train, D]
+        phi_train = self._phi(X_train)  # [n_train, D]
 
         if self.debug:
             self._debug_phi_stats['train'] = {
@@ -196,7 +215,7 @@ class RFFPostprocessor(BasePostprocessor):
                     self.var_hat[c] = scores_c.var().clamp(min=1e-8)
 
         # Compute validation class scores
-        phi_val = self._phi(self.X_val)  # [n_val, D]
+        phi_val = self._phi(X_val)  # [n_val, D]
 
         if self.debug:
             self._debug_phi_stats['val'] = {
@@ -266,7 +285,7 @@ class RFFPostprocessor(BasePostprocessor):
         device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
         # Extract features only if not already done (for APS reuse)
-        if self.X_train is None:
+        if self.X_train_raw is None:
             # Extract training features and labels for mean embedding
             train_features = []
             train_labels = []
@@ -275,16 +294,16 @@ class RFFPostprocessor(BasePostprocessor):
                                   desc='Extracting train features'):
                     data = batch['data'].to(device).float()
                     labels = batch['label'].to(device)
-                    features = self._extract_features(net, data)
+                    features = self._extract_features(net, data, apply_normalize=False)
                     train_features.append(features)
                     train_labels.append(labels)
 
-            self.X_train = torch.cat(train_features, dim=0)
+            self.X_train_raw = torch.cat(train_features, dim=0)
             self.y_train = torch.cat(train_labels, dim=0)
-            self.feature_dim = self.X_train.shape[1]
+            self.feature_dim = self.X_train_raw.shape[1]
             self.num_classes = int(self.y_train.max().item()) + 1
-            print(f'Extracted {self.X_train.shape[0]} train features of dim {self.feature_dim}')
-            print(f'  Feature norm (mean): {torch.linalg.norm(self.X_train, dim=1).mean():.4f}')
+            print(f'Extracted {self.X_train_raw.shape[0]} train features of dim {self.feature_dim}')
+            print(f'  Feature norm (mean): {torch.linalg.norm(self.X_train_raw, dim=1).mean():.4f}')
             print(f'  Number of classes: {self.num_classes}')
 
             # Extract validation features and labels for threshold calibration
@@ -298,19 +317,18 @@ class RFFPostprocessor(BasePostprocessor):
                     labels = batch['label'].to(device)
                     if self.score_mode == 'softmax':
                         output, features = net(data, return_feature=True)
-                        if self.normalize:
-                            features = torch.nn.functional.normalize(features, p=2, dim=1)
+                        # Store raw features; _compute_rff_embedding normalizes on the fly
                         val_softmax.append(torch.softmax(output, dim=1).cpu())
                     else:
-                        features = self._extract_features(net, data)
+                        features = self._extract_features(net, data, apply_normalize=False)
                     val_features.append(features)
                     val_labels.append(labels)
 
-            self.X_val = torch.cat(val_features, dim=0)
+            self.X_val_raw = torch.cat(val_features, dim=0)
             self.y_val = torch.cat(val_labels, dim=0)
             if val_softmax is not None:
                 self.softmax_val = torch.cat(val_softmax, dim=0)  # [n_val, num_classes]
-            print(f'Extracted {self.X_val.shape[0]} val features for threshold')
+            print(f'Extracted {self.X_val_raw.shape[0]} val features for threshold')
 
         # Compute RFF embedding and threshold
         self._compute_rff_embedding(device)
@@ -717,12 +735,14 @@ class RFFPostprocessor(BasePostprocessor):
             self.D = int(hyperparam[1])
         if len(hyperparam) > 2:
             self.alpha = float(hyperparam[2])
+        if len(hyperparam) > 3:
+            self.normalize = bool(hyperparam[3])  # only present in full grid
 
         # Recompute RFF embedding with new hyperparameters
-        if self.X_train is not None:
-            device = self.X_train.device
+        if self.X_train_raw is not None:
+            device = self.X_train_raw.device
             self._compute_rff_embedding(device)
 
     def get_hyperparam(self):
-        """Return current hyperparameters."""
-        return [self.sigma, self.D, self.alpha]
+        """Return current hyperparameters (always 4 values for JSON saving)."""
+        return [self.sigma, self.D, self.alpha, self.normalize]
