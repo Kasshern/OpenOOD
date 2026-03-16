@@ -59,6 +59,7 @@ class RFFPostprocessor(BasePostprocessor):
         self.omega = None        # [D, feature_dim] - RFF frequencies
         self.b = None            # [D] - RFF phases
         self.mu_hat = None       # [num_classes, D] - Per-class mean embeddings
+        self.nu_hat = None       # [num_classes, D] - Two-hop weighted mean embeddings
         self.var_hat = None      # [num_classes] - Per-class score variance
         self.num_classes = None  # Number of classes
         self.threshold = None    # Scalar threshold (for current score_mode)
@@ -175,6 +176,16 @@ class RFFPostprocessor(BasePostprocessor):
             if mask.sum() > 0:
                 self.mu_hat[c] = phi_train[mask].mean(dim=0)
 
+        # Compute two-hop weighted mean embeddings (only when needed)
+        if self.score_mode == 'twohop':
+            self.nu_hat = torch.zeros(self.num_classes, self.D, device=device)
+            for c in range(self.num_classes):
+                mask = (self.y_train == c)
+                if mask.sum() > 0:
+                    phi_c = phi_train[mask]                              # [n_c, D]
+                    w_c = phi_c @ self.mu_hat[c]                        # [n_c] - centrality weights
+                    self.nu_hat[c] = (w_c.unsqueeze(1) * phi_c).mean(dim=0)  # [D]
+
         # Compute per-class score variance for normalization
         self.var_hat = torch.ones(self.num_classes, device=device)
         if self.variance_weighted:
@@ -220,6 +231,12 @@ class RFFPostprocessor(BasePostprocessor):
             val_denom = val_pos.sum(dim=1, keepdim=True).clamp(min=1e-10)
             val_w = val_pos / val_denom                                  # [n_val, num_classes]
             val_scores = -(val_w * torch.log(val_w + 1e-10)).sum(dim=1) # negative entropy [n_val]
+        elif self.score_mode == 'twohop':
+            nu_hat = self.nu_hat.to(device)
+            val_twohop = phi_val @ nu_hat.T                  # [n_val, num_classes]
+            if self.variance_weighted:
+                val_twohop = val_twohop / torch.sqrt(self.var_hat)
+            val_scores = val_twohop.max(dim=1).values
         else:
             val_scores = val_class_scores.max(dim=1).values
 
@@ -368,6 +385,12 @@ class RFFPostprocessor(BasePostprocessor):
             denom = pos.sum(dim=1, keepdim=True).clamp(min=1e-10)
             w = pos / denom                                             # [batch, num_classes]
             conf = -(w * torch.log(w + 1e-10)).sum(dim=1)              # [batch]
+        elif self.score_mode == 'twohop':
+            nu_hat = self.nu_hat.to(features.device)
+            twohop_scores = phi_x @ nu_hat.T                # [batch, num_classes]
+            if self.variance_weighted:
+                twohop_scores = twohop_scores / torch.sqrt(var_hat)
+            conf = twohop_scores.max(dim=1).values
         else:
             conf = class_scores.max(dim=1).values
 
