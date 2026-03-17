@@ -6,6 +6,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
 #SBATCH --gres=gpu:1
+#SBATCH --constraint="[a100|h100|v100]"
 #SBATCH --mem=32G
 #SBATCH --partition=ice-gpu
 #SBATCH --array=0-2
