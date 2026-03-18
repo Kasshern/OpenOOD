@@ -79,6 +79,11 @@ class RFFPostprocessor(BasePostprocessor):
         self.y_val = None        # Validation labels
         self.softmax_val = None  # Val softmax probs for softmax score_mode [n_val, C]
 
+        # ZCA whitening
+        self.whiten = getattr(self.args, 'whiten', False)
+        self.W_whiten = None      # [feature_dim, feature_dim] ZCA whitening matrix
+        self.mu_train_raw = None  # [feature_dim] mean of raw training features (for centering)
+
         # Debug mode: φ(x) consistency, score distributions, kernel plots
         self.debug = getattr(self.args, 'debug', False)
         self._current_dataset_tag = None       # set externally before each inference
@@ -141,6 +146,22 @@ class RFFPostprocessor(BasePostprocessor):
         # b ~ Uniform[0, 2π]
         self.b = (torch.rand(self.D) * 2 * torch.pi).to(device)
 
+    def _compute_whiten_matrix(self, device: torch.device):
+        """Compute ZCA whitening matrix from raw training features."""
+        X = self.X_train_raw                                    # [n_train, feature_dim]
+        self.mu_train_raw = X.mean(dim=0)                       # [feature_dim]
+        X_c = X - self.mu_train_raw                             # centered
+        n = X_c.shape[0]
+        Sigma = (X_c.T @ X_c) / (n - 1)                        # [feature_dim, feature_dim]
+        U, S, _ = torch.linalg.svd(Sigma, full_matrices=False)  # U:[d,d], S:[d]
+        S_inv_sqrt = 1.0 / torch.sqrt(S.clamp(min=1e-6))
+        # ZCA: W = U diag(S^{-1/2}) U^T  (symmetric — produces identity covariance)
+        self.W_whiten = (U * S_inv_sqrt.unsqueeze(0)) @ U.T     # [feature_dim, feature_dim]
+
+    def _apply_whiten(self, X: torch.Tensor) -> torch.Tensor:
+        """Apply ZCA whitening: center then project."""
+        return (X - self.mu_train_raw) @ self.W_whiten
+
     def _phi(self, x: torch.Tensor) -> torch.Tensor:
         """
         Compute RFF feature map.
@@ -167,13 +188,18 @@ class RFFPostprocessor(BasePostprocessor):
         if self.X_train_raw is None:
             return
 
-        # Apply normalization based on current self.normalize (supports APS sweep)
-        if self.normalize:
-            X_train = torch.nn.functional.normalize(self.X_train_raw, p=2, dim=1)
-            X_val = torch.nn.functional.normalize(self.X_val_raw, p=2, dim=1)
+        # Step 1: apply whitening from raw features (if enabled)
+        if self.whiten and self.W_whiten is not None:
+            X_train = self._apply_whiten(self.X_train_raw)
+            X_val   = self._apply_whiten(self.X_val_raw)
         else:
             X_train = self.X_train_raw
-            X_val = self.X_val_raw
+            X_val   = self.X_val_raw
+
+        # Step 2: L2 normalize (if enabled) — applied after whitening
+        if self.normalize:
+            X_train = torch.nn.functional.normalize(X_train, p=2, dim=1)
+            X_val   = torch.nn.functional.normalize(X_val,   p=2, dim=1)
 
         # Sample new RFF parameters with current sigma
         self._sample_rff_params(self.feature_dim, device)
@@ -330,6 +356,9 @@ class RFFPostprocessor(BasePostprocessor):
                 self.softmax_val = torch.cat(val_softmax, dim=0)  # [n_val, num_classes]
             print(f'Extracted {self.X_val_raw.shape[0]} val features for threshold')
 
+        # Compute ZCA whitening matrix from raw training features
+        self._compute_whiten_matrix(device)
+
         # Compute RFF embedding and threshold
         self._compute_rff_embedding(device)
 
@@ -361,6 +390,10 @@ class RFFPostprocessor(BasePostprocessor):
         else:
             # Penultimate layer features (default) - use return_feature=True like KNN/VIM
             output, features = net(data, return_feature=True)
+
+        # Apply whitening before L2 normalize (mirrors _compute_rff_embedding)
+        if self.whiten and self.W_whiten is not None:
+            features = self._apply_whiten(features)
 
         # L2 normalize features if enabled
         if self.normalize:
