@@ -2,11 +2,12 @@
 #SBATCH --job-name=rff_max_vw
 #SBATCH --output=logs/rff_max_vw_%A_%a.out
 #SBATCH --error=logs/rff_max_vw_%A_%a.err
-#SBATCH --time=04:00:00
+#SBATCH --time=02:30:00
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
-#SBATCH --gres=gpu:A100:1
-#SBATCH --mem=32G
+#SBATCH --gres=gpu:1
+#SBATCH --exclude=FILL_IN_MI210_NODE
+#SBATCH --mem=16G
 #SBATCH --partition=ice-gpu
 #SBATCH --array=0-2
 
