@@ -84,6 +84,11 @@ class RFFPostprocessor(BasePostprocessor):
         self.W_whiten = None      # [feature_dim, feature_dim] ZCA whitening matrix
         self.mu_train_raw = None  # [feature_dim] mean of raw training features (for centering)
 
+        # Per-class ZCA whitening
+        self.whiten_per_class = getattr(self.args, 'whiten_per_class', False)
+        self.W_whiten_per_class = None   # [num_classes, feature_dim, feature_dim]
+        self.mu_raw_per_class = None     # [num_classes, feature_dim]
+
         # Debug mode: φ(x) consistency, score distributions, kernel plots
         self.debug = getattr(self.args, 'debug', False)
         self._current_dataset_tag = None       # set externally before each inference
@@ -162,6 +167,28 @@ class RFFPostprocessor(BasePostprocessor):
         """Apply ZCA whitening: center then project."""
         return (X - self.mu_train_raw) @ self.W_whiten
 
+    def _compute_per_class_whiten_matrix(self, device: torch.device):
+        """Compute per-class ZCA whitening matrices from raw training features."""
+        C = self.num_classes
+        d = self.feature_dim
+        self.W_whiten_per_class = torch.zeros(C, d, d, device=device)
+        self.mu_raw_per_class = torch.zeros(C, d, device=device)
+        for c in range(C):
+            mask = (self.y_train == c)
+            X_c = self.X_train_raw[mask]               # [n_c, d]
+            mu_c = X_c.mean(dim=0)
+            self.mu_raw_per_class[c] = mu_c
+            if X_c.shape[0] < 2:
+                self.W_whiten_per_class[c] = torch.eye(d, device=device)
+                continue
+            X_cc = X_c - mu_c
+            n_c = X_cc.shape[0]
+            Sigma_c = (X_cc.T @ X_cc) / (n_c - 1)     # [d, d]
+            U, S, _ = torch.linalg.svd(Sigma_c, full_matrices=False)
+            # Regularize: clamp relative to max eigenvalue to avoid blowup on near-zero dims
+            S_inv_sqrt = 1.0 / torch.sqrt(S.clamp(min=S.max() * 1e-4))
+            self.W_whiten_per_class[c] = (U * S_inv_sqrt.unsqueeze(0)) @ U.T
+
     def _phi(self, x: torch.Tensor) -> torch.Tensor:
         """
         Compute RFF feature map.
@@ -187,6 +214,52 @@ class RFFPostprocessor(BasePostprocessor):
         """
         if self.X_train_raw is None:
             return
+
+        if self.whiten_per_class and self.W_whiten_per_class is not None:
+            # Per-class whitening: mu_hat[c] computed from class-c-whitened features only
+            self._sample_rff_params(self.feature_dim, device)
+            self.mu_hat = torch.zeros(self.num_classes, self.D, device=device)
+            for c in range(self.num_classes):
+                mask = (self.y_train == c)
+                if mask.sum() == 0:
+                    continue
+                X_c = (self.X_train_raw[mask] - self.mu_raw_per_class[c]) @ self.W_whiten_per_class[c]
+                if self.normalize:
+                    X_c = torch.nn.functional.normalize(X_c, p=2, dim=1)
+                self.mu_hat[c] = self._phi(X_c).mean(dim=0)
+
+            # Compute val class scores: each val point whitened by each class's W_c
+            n_val = self.X_val_raw.shape[0]
+            val_class_scores = torch.zeros(n_val, self.num_classes, device=device)
+            for c in range(self.num_classes):
+                X_val_c = (self.X_val_raw - self.mu_raw_per_class[c]) @ self.W_whiten_per_class[c]
+                if self.normalize:
+                    X_val_c = torch.nn.functional.normalize(X_val_c, p=2, dim=1)
+                phi_val_c = self._phi(X_val_c)             # [n_val, D]
+                val_class_scores[:, c] = phi_val_c @ self.mu_hat[c]
+
+            # Variance weighting
+            self.var_hat = torch.ones(self.num_classes, device=device)
+            if self.variance_weighted:
+                for c in range(self.num_classes):
+                    mask = (self.y_train == c)
+                    if mask.sum() > 1:
+                        X_c = (self.X_train_raw[mask] - self.mu_raw_per_class[c]) @ self.W_whiten_per_class[c]
+                        if self.normalize:
+                            X_c = torch.nn.functional.normalize(X_c, p=2, dim=1)
+                        scores_c = self._phi(X_c) @ self.mu_hat[c]
+                        self.var_hat[c] = scores_c.var().clamp(min=1e-8)
+                val_class_scores = val_class_scores / torch.sqrt(self.var_hat)
+
+            # Threshold (max score only for per-class whitening — twohop/margin not supported)
+            self.max_threshold = torch.quantile(val_class_scores.max(dim=1).values, self.alpha)
+            if self.score_mode == 'softmax':
+                val_softmax = self.softmax_val.to(device)
+                val_scores = (val_class_scores * val_softmax).sum(dim=1)
+            else:
+                val_scores = val_class_scores.max(dim=1).values
+            self.threshold = torch.quantile(val_scores, self.alpha)
+            return   # early return — skip existing embedding code below
 
         # Step 1: apply whitening from raw features (if enabled)
         if self.whiten and self.W_whiten is not None:
@@ -358,6 +431,8 @@ class RFFPostprocessor(BasePostprocessor):
 
         # Compute ZCA whitening matrix from raw training features
         self._compute_whiten_matrix(device)
+        if self.whiten_per_class:
+            self._compute_per_class_whiten_matrix(device)
 
         # Compute RFF embedding and threshold
         self._compute_rff_embedding(device)
@@ -391,6 +466,31 @@ class RFFPostprocessor(BasePostprocessor):
             # Penultimate layer features (default) - use return_feature=True like KNN/VIM
             output, features = net(data, return_feature=True)
 
+        _, pred = torch.max(output, dim=1)
+
+        # Per-class whitening path (takes priority over global whiten/normalize)
+        if self.whiten_per_class and self.W_whiten_per_class is not None:
+            W = self.W_whiten_per_class.to(features.device)   # [C, d, d]
+            mu_r = self.mu_raw_per_class.to(features.device)  # [C, d]
+            # features: [batch, d]
+            x_centered = features.unsqueeze(1) - mu_r.unsqueeze(0)  # [batch, C, d]
+            x_whitened = torch.einsum('bcd,cde->bce', x_centered, W)  # [batch, C, d]
+            if self.normalize:
+                x_whitened = torch.nn.functional.normalize(x_whitened, p=2, dim=2)
+            B, C, d = x_whitened.shape
+            phi_all = self._phi(x_whitened.view(B * C, d)).view(B, C, self.D)  # [B, C, D]
+            mu_hat = self.mu_hat.to(features.device)           # [C, D]
+            class_scores = (phi_all * mu_hat.unsqueeze(0)).sum(dim=2)  # [B, C]
+            if self.variance_weighted:
+                var_hat = self.var_hat.to(features.device)
+                class_scores = class_scores / torch.sqrt(var_hat)
+            if self.score_mode == 'softmax':
+                softmax_probs = torch.softmax(output, dim=1)
+                conf = (class_scores * softmax_probs).sum(dim=1)
+            else:
+                conf = class_scores.max(dim=1).values
+            return pred, conf
+
         # Apply whitening before L2 normalize (mirrors _compute_rff_embedding)
         if self.whiten and self.W_whiten is not None:
             features = self._apply_whiten(features)
@@ -398,8 +498,6 @@ class RFFPostprocessor(BasePostprocessor):
         # L2 normalize features if enabled
         if self.normalize:
             features = torch.nn.functional.normalize(features, p=2, dim=1)
-
-        _, pred = torch.max(output, dim=1)
 
         # Compute RFF features
         phi_x = self._phi(features)  # [batch_size, D]

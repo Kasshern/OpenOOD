@@ -83,8 +83,10 @@ postprocessors = {
     'rff_softmax_vw': RFFPostprocessor,
     'rff_entropy_vw': RFFPostprocessor,
     'rff_twohop_vw': RFFPostprocessor,
-    'rff_max_vw_whiten':     RFFPostprocessor,
-    'rff_softmax_vw_whiten': RFFPostprocessor,
+    'rff_max_vw_whiten':        RFFPostprocessor,
+    'rff_softmax_vw_whiten':    RFFPostprocessor,
+    'rff_max_vw_whiten_pc':     RFFPostprocessor,
+    'rff_softmax_vw_whiten_pc': RFFPostprocessor,
 }
 
 link_prefix = 'https://raw.githubusercontent.com/Jingkang50/OpenOOD/main/configs/postprocessors/'
