@@ -89,6 +89,12 @@ class RFFPostprocessor(BasePostprocessor):
         self.W_whiten_per_class = None   # [num_classes, feature_dim, feature_dim]
         self.mu_raw_per_class = None     # [num_classes, feature_dim]
 
+        # Multi-layer PCA
+        self.pca_layers     = getattr(self.args, 'pca_layers', [2, 3, 4])
+        self.pca_components = getattr(self.args, 'pca_components', 128)
+        self.pca_W    = None   # list of [d_i, pca_components] projection matrices
+        self.pca_mean = None   # list of [d_i] per-layer means
+
         # Debug mode: φ(x) consistency, score distributions, kernel plots
         self.debug = getattr(self.args, 'debug', False)
         self._current_dataset_tag = None       # set externally before each inference
@@ -133,6 +139,14 @@ class RFFPostprocessor(BasePostprocessor):
             # Concatenate flattened features from all layers
             _, all_features = net(data, return_feature_list=True)
             features = torch.cat([f.flatten(start_dim=1) for f in all_features], dim=1)
+        elif self.feature_space == 'multilayer_pca':
+            _, feats = self._extract_multilayer_raw(net, data)
+            if self.pca_W is not None:
+                reduced = [(f - mu.to(f.device)) @ W.to(f.device)
+                           for f, mu, W in zip(feats, self.pca_mean, self.pca_W)]
+                features = torch.cat(reduced, dim=1)
+            else:
+                features = torch.cat(feats, dim=1)   # raw concat (pre-PCA fallback)
         else:
             # Penultimate layer features (default) - use return_feature=True like KNN/VIM
             _, features = net(data, return_feature=True)
@@ -188,6 +202,43 @@ class RFFPostprocessor(BasePostprocessor):
             # Regularize: clamp relative to max eigenvalue to avoid blowup on near-zero dims
             S_inv_sqrt = 1.0 / torch.sqrt(S.clamp(min=S.max() * 1e-4))
             self.W_whiten_per_class[c] = (U * S_inv_sqrt.unsqueeze(0)) @ U.T
+
+    def _fit_pca(self, layer_features: list, device):
+        """Fit PCA per layer on training features.
+
+        Args:
+            layer_features: list of [n, d_i] tensors, one per selected layer
+        """
+        self.pca_W    = []
+        self.pca_mean = []
+        for X in layer_features:
+            mu = X.mean(dim=0)
+            X_c = X - mu
+            k = min(self.pca_components, X_c.shape[1])
+            Sigma = (X_c.T @ X_c) / (X_c.shape[0] - 1)
+            U, _, _ = torch.linalg.svd(Sigma, full_matrices=False)
+            self.pca_W.append(U[:, :k])    # [d_i, k]
+            self.pca_mean.append(mu)
+
+    def _extract_multilayer_raw(self, net, data):
+        """Extract & pool selected layers from feature_list.
+
+        Args:
+            net: neural network with return_feature_list support
+            data: [B, C, H, W] input batch
+
+        Returns:
+            output: logits [B, num_classes]
+            feats:  list of [B, d_i] tensors (global-avg-pooled if spatial)
+        """
+        output, feature_list = net(data, return_feature_list=True)
+        feats = []
+        for i in self.pca_layers:
+            f = feature_list[i]
+            if f.dim() > 2:                # spatial: [B, C, H, W]
+                f = f.mean(dim=[2, 3])     # global average pool → [B, C]
+            feats.append(f)
+        return output, feats               # list of [B, d_i]
 
     def _phi(self, x: torch.Tensor) -> torch.Tensor:
         """
@@ -385,49 +436,106 @@ class RFFPostprocessor(BasePostprocessor):
 
         # Extract features only if not already done (for APS reuse)
         if self.X_train_raw is None:
-            # Extract training features and labels for mean embedding
-            train_features = []
-            train_labels = []
-            with torch.no_grad():
-                for batch in tqdm(id_loader_dict['train'],
-                                  desc='Extracting train features'):
-                    data = batch['data'].to(device).float()
-                    labels = batch['label'].to(device)
-                    features = self._extract_features(net, data, apply_normalize=False)
-                    train_features.append(features)
-                    train_labels.append(labels)
+            if self.feature_space == 'multilayer_pca':
+                # --- Multi-layer PCA extraction path ---
+                # Pass 1: collect per-layer train features and fit PCA
+                layer_feats_accum = [[] for _ in self.pca_layers]
+                train_labels = []
+                with torch.no_grad():
+                    for batch in tqdm(id_loader_dict['train'],
+                                      desc='Extracting train features (mlpca)'):
+                        data = batch['data'].to(device).float()
+                        _, feats = self._extract_multilayer_raw(net, data)
+                        for j, f in enumerate(feats):
+                            layer_feats_accum[j].append(f.cpu())
+                        train_labels.append(batch['label'].to(device))
+                layer_feats = [torch.cat(acc, dim=0).to(device)
+                               for acc in layer_feats_accum]
+                self._fit_pca(layer_feats, device)
+                reduced = [(f - mu) @ W
+                           for f, mu, W in zip(layer_feats, self.pca_mean, self.pca_W)]
+                self.X_train_raw = torch.cat(reduced, dim=1)
+                self.y_train = torch.cat(train_labels, dim=0)
+                self.feature_dim = self.X_train_raw.shape[1]
+                self.num_classes = int(self.y_train.max().item()) + 1
+                print(f'Extracted {self.X_train_raw.shape[0]} train features of dim '
+                      f'{self.feature_dim} (multilayer_pca, {len(self.pca_layers)} layers)')
+                print(f'  Feature norm (mean): '
+                      f'{torch.linalg.norm(self.X_train_raw, dim=1).mean():.4f}')
+                print(f'  Number of classes: {self.num_classes}')
 
-            self.X_train_raw = torch.cat(train_features, dim=0)
-            self.y_train = torch.cat(train_labels, dim=0)
-            self.feature_dim = self.X_train_raw.shape[1]
-            self.num_classes = int(self.y_train.max().item()) + 1
-            print(f'Extracted {self.X_train_raw.shape[0]} train features of dim {self.feature_dim}')
-            print(f'  Feature norm (mean): {torch.linalg.norm(self.X_train_raw, dim=1).mean():.4f}')
-            print(f'  Number of classes: {self.num_classes}')
+                # Pass 2: collect per-layer val features and compress with fitted PCA
+                layer_val_accum = [[] for _ in self.pca_layers]
+                val_labels = []
+                val_softmax = [] if self.score_mode == 'softmax' else None
+                with torch.no_grad():
+                    for batch in tqdm(id_loader_dict['val'],
+                                      desc='Extracting val features (mlpca)'):
+                        data = batch['data'].to(device).float()
+                        if self.score_mode == 'softmax':
+                            output, feats = self._extract_multilayer_raw(net, data)
+                            val_softmax.append(torch.softmax(output, dim=1).cpu())
+                        else:
+                            _, feats = self._extract_multilayer_raw(net, data)
+                        for j, f in enumerate(feats):
+                            layer_val_accum[j].append(f.cpu())
+                        val_labels.append(batch['label'].to(device))
+                layer_val_feats = [torch.cat(acc, dim=0).to(device)
+                                   for acc in layer_val_accum]
+                reduced_val = [(f - mu.to(f.device)) @ W.to(f.device)
+                               for f, mu, W in zip(layer_val_feats,
+                                                   self.pca_mean, self.pca_W)]
+                self.X_val_raw = torch.cat(reduced_val, dim=1)
+                self.y_val = torch.cat(val_labels, dim=0)
+                if val_softmax is not None:
+                    self.softmax_val = torch.cat(val_softmax, dim=0)
+                print(f'Extracted {self.X_val_raw.shape[0]} val features for threshold')
 
-            # Extract validation features and labels for threshold calibration
-            val_features = []
-            val_labels = []
-            val_softmax = [] if self.score_mode == 'softmax' else None
-            with torch.no_grad():
-                for batch in tqdm(id_loader_dict['val'],
-                                  desc='Extracting val features'):
-                    data = batch['data'].to(device).float()
-                    labels = batch['label'].to(device)
-                    if self.score_mode == 'softmax':
-                        output, features = net(data, return_feature=True)
-                        # Store raw features; _compute_rff_embedding normalizes on the fly
-                        val_softmax.append(torch.softmax(output, dim=1).cpu())
-                    else:
+            else:
+                # --- Standard feature extraction path ---
+                # Extract training features and labels for mean embedding
+                train_features = []
+                train_labels = []
+                with torch.no_grad():
+                    for batch in tqdm(id_loader_dict['train'],
+                                      desc='Extracting train features'):
+                        data = batch['data'].to(device).float()
+                        labels = batch['label'].to(device)
                         features = self._extract_features(net, data, apply_normalize=False)
-                    val_features.append(features)
-                    val_labels.append(labels)
+                        train_features.append(features)
+                        train_labels.append(labels)
 
-            self.X_val_raw = torch.cat(val_features, dim=0)
-            self.y_val = torch.cat(val_labels, dim=0)
-            if val_softmax is not None:
-                self.softmax_val = torch.cat(val_softmax, dim=0)  # [n_val, num_classes]
-            print(f'Extracted {self.X_val_raw.shape[0]} val features for threshold')
+                self.X_train_raw = torch.cat(train_features, dim=0)
+                self.y_train = torch.cat(train_labels, dim=0)
+                self.feature_dim = self.X_train_raw.shape[1]
+                self.num_classes = int(self.y_train.max().item()) + 1
+                print(f'Extracted {self.X_train_raw.shape[0]} train features of dim {self.feature_dim}')
+                print(f'  Feature norm (mean): {torch.linalg.norm(self.X_train_raw, dim=1).mean():.4f}')
+                print(f'  Number of classes: {self.num_classes}')
+
+                # Extract validation features and labels for threshold calibration
+                val_features = []
+                val_labels = []
+                val_softmax = [] if self.score_mode == 'softmax' else None
+                with torch.no_grad():
+                    for batch in tqdm(id_loader_dict['val'],
+                                      desc='Extracting val features'):
+                        data = batch['data'].to(device).float()
+                        labels = batch['label'].to(device)
+                        if self.score_mode == 'softmax':
+                            output, features = net(data, return_feature=True)
+                            # Store raw features; _compute_rff_embedding normalizes on the fly
+                            val_softmax.append(torch.softmax(output, dim=1).cpu())
+                        else:
+                            features = self._extract_features(net, data, apply_normalize=False)
+                        val_features.append(features)
+                        val_labels.append(labels)
+
+                self.X_val_raw = torch.cat(val_features, dim=0)
+                self.y_val = torch.cat(val_labels, dim=0)
+                if val_softmax is not None:
+                    self.softmax_val = torch.cat(val_softmax, dim=0)  # [n_val, num_classes]
+                print(f'Extracted {self.X_val_raw.shape[0]} val features for threshold')
 
         # Compute ZCA whitening matrix from raw training features
         self._compute_whiten_matrix(device)
@@ -462,6 +570,11 @@ class RFFPostprocessor(BasePostprocessor):
         elif self.feature_space == 'all':
             output, all_features = net(data, return_feature_list=True)
             features = torch.cat([f.flatten(start_dim=1) for f in all_features], dim=1)
+        elif self.feature_space == 'multilayer_pca':
+            output, feats = self._extract_multilayer_raw(net, data)
+            reduced = [(f - mu.to(f.device)) @ W.to(f.device)
+                       for f, mu, W in zip(feats, self.pca_mean, self.pca_W)]
+            features = torch.cat(reduced, dim=1)
         else:
             # Penultimate layer features (default) - use return_feature=True like KNN/VIM
             output, features = net(data, return_feature=True)

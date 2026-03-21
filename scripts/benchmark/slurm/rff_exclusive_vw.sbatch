@@ -6,8 +6,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
 #SBATCH --gres=gpu:1
-#SBATCH --exclude=FILL_IN_MI210_NODE
-#SBATCH --mem=16G
+#SBATCH --mem=32G
 #SBATCH --partition=ice-gpu
 #SBATCH --array=0-2
 
