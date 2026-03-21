@@ -591,7 +591,7 @@ class RFFPostprocessor(BasePostprocessor):
             if self.normalize:
                 x_whitened = torch.nn.functional.normalize(x_whitened, p=2, dim=2)
             B, C, d = x_whitened.shape
-            phi_all = self._phi(x_whitened.view(B * C, d)).view(B, C, self.D)  # [B, C, D]
+            phi_all = self._phi(x_whitened.reshape(B * C, d)).view(B, C, self.D)  # [B, C, D]
             mu_hat = self.mu_hat.to(features.device)           # [C, D]
             class_scores = (phi_all * mu_hat.unsqueeze(0)).sum(dim=2)  # [B, C]
             if self.variance_weighted:
