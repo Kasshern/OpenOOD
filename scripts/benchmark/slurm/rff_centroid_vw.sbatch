@@ -1,7 +1,7 @@
 #!/bin/bash
-#SBATCH --job-name=rff_exclusive_novw
-#SBATCH --output=logs/rff_exclusive_novw_%A_%a.out
-#SBATCH --error=logs/rff_exclusive_novw_%A_%a.err
+#SBATCH --job-name=rff_centroid_vw
+#SBATCH --output=logs/rff_centroid_vw_%A_%a.out
+#SBATCH --error=logs/rff_centroid_vw_%A_%a.err
 #SBATCH --time=02:30:00
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
@@ -11,7 +11,7 @@
 #SBATCH --partition=ice-gpu
 #SBATCH --array=0-2
 
-# RFF grid search — score_mode=exclusive, variance_weighted=False
+# RFF grid search — score_mode=centroid, variance_weighted=True
 # Array task 0=CIFAR-10, 1=CIFAR-100, 2=ImageNet-200
 
 mkdir -p logs
@@ -32,12 +32,12 @@ ROOTS=(
 DATASET=${DATASETS[$SLURM_ARRAY_TASK_ID]}
 ROOT=${ROOTS[$SLURM_ARRAY_TASK_ID]}
 
-echo "=== rff_exclusive_novw | $DATASET | $(date) ==="
+echo "=== rff_centroid_vw | $DATASET | $(date) ==="
 
 python scripts/eval_ood.py \
     --root "$ROOT" \
     --id-data "$DATASET" \
-    --postprocessor rff_exclusive_novw \
+    --postprocessor rff_centroid_vw \
     --save-csv \
     --save-score
 

@@ -66,6 +66,8 @@ class RFFPostprocessor(BasePostprocessor):
         self.b = None            # [D] - RFF phases
         self.mu_hat = None       # [num_classes, D] - Per-class mean embeddings
         self.nu_hat = None       # [num_classes, D] - Two-hop weighted mean embeddings
+        self.phi_centroid = None  # [num_classes, D] - φ(x̄_c) for each class
+        self.zeta_hat     = None  # [num_classes, D] - twohop_centroid weighted mean embeddings
         self.var_hat = None      # [num_classes] - Per-class score variance
         self.num_classes = None  # Number of classes
         self.threshold = None    # Scalar threshold (for current score_mode)
@@ -345,6 +347,25 @@ class RFFPostprocessor(BasePostprocessor):
             if mask.sum() > 0:
                 self.mu_hat[c] = phi_train[mask].mean(dim=0)
 
+        # Compute phi of class centroids (centroid & twohop_centroid modes)
+        if self.score_mode in ('centroid', 'twohop_centroid'):
+            self.phi_centroid = torch.zeros(self.num_classes, self.D, device=device)
+            for c in range(self.num_classes):
+                mask = (self.y_train == c)
+                if mask.sum() > 0:
+                    x_bar_c = X_train[mask].mean(dim=0)          # [d] centroid in processed space
+                    self.phi_centroid[c] = self._phi(x_bar_c.unsqueeze(0)).squeeze(0)
+
+        # Compute twohop_centroid weighted mean embeddings
+        if self.score_mode == 'twohop_centroid':
+            self.zeta_hat = torch.zeros(self.num_classes, self.D, device=device)
+            for c in range(self.num_classes):
+                mask = (self.y_train == c)
+                if mask.sum() > 0:
+                    phi_c = phi_train[mask]                      # [n_c, D]
+                    w_c = phi_c @ self.phi_centroid[c]           # [n_c] = K(xᵢ, x̄_c)
+                    self.zeta_hat[c] = (w_c.unsqueeze(1) * phi_c).mean(dim=0)
+
         # Compute two-hop weighted mean embeddings (only when needed)
         if self.score_mode == 'twohop':
             self.nu_hat = torch.zeros(self.num_classes, self.D, device=device)
@@ -361,7 +382,12 @@ class RFFPostprocessor(BasePostprocessor):
             for c in range(self.num_classes):
                 mask = (self.y_train == c)
                 if mask.sum() > 1:
-                    scores_c = phi_train[mask] @ self.mu_hat[c]  # [n_c]
+                    if self.score_mode == 'centroid':
+                        scores_c = phi_train[mask] @ self.phi_centroid[c]
+                    elif self.score_mode == 'twohop_centroid':
+                        scores_c = phi_train[mask] @ self.zeta_hat[c]
+                    else:
+                        scores_c = phi_train[mask] @ self.mu_hat[c]  # [n_c]
                     self.var_hat[c] = scores_c.var().clamp(min=1e-8)
 
         # Compute validation class scores
@@ -406,6 +432,18 @@ class RFFPostprocessor(BasePostprocessor):
             if self.variance_weighted:
                 val_twohop = val_twohop / torch.sqrt(self.var_hat)
             val_scores = val_twohop.max(dim=1).values
+        elif self.score_mode == 'centroid':
+            phi_centroid = self.phi_centroid.to(device)
+            val_c_scores = phi_val @ phi_centroid.T          # [n_val, C]
+            if self.variance_weighted:
+                val_c_scores = val_c_scores / torch.sqrt(self.var_hat)
+            val_scores = val_c_scores.max(dim=1).values
+        elif self.score_mode == 'twohop_centroid':
+            zeta_hat = self.zeta_hat.to(device)
+            val_tc_scores = phi_val @ zeta_hat.T             # [n_val, C]
+            if self.variance_weighted:
+                val_tc_scores = val_tc_scores / torch.sqrt(self.var_hat)
+            val_scores = val_tc_scores.max(dim=1).values
         else:
             val_scores = val_class_scores.max(dim=1).values
 
@@ -653,6 +691,18 @@ class RFFPostprocessor(BasePostprocessor):
             if self.variance_weighted:
                 twohop_scores = twohop_scores / torch.sqrt(var_hat)
             conf = twohop_scores.max(dim=1).values
+        elif self.score_mode == 'centroid':
+            phi_centroid = self.phi_centroid.to(features.device)  # [C, D]
+            c_scores = phi_x @ phi_centroid.T                     # [batch, C]
+            if self.variance_weighted:
+                c_scores = c_scores / torch.sqrt(var_hat)
+            conf = c_scores.max(dim=1).values
+        elif self.score_mode == 'twohop_centroid':
+            zeta_hat = self.zeta_hat.to(features.device)          # [C, D]
+            tc_scores = phi_x @ zeta_hat.T                        # [batch, C]
+            if self.variance_weighted:
+                tc_scores = tc_scores / torch.sqrt(var_hat)
+            conf = tc_scores.max(dim=1).values
         else:
             conf = class_scores.max(dim=1).values
 
