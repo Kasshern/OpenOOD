@@ -1,4 +1,4 @@
-import os, sys
+import os, sys, time
 ROOT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 sys.path.append(ROOT_DIR)
 import numpy as np
@@ -92,6 +92,8 @@ if len(glob(os.path.join(root, 's*'))) == 0:
 
 # iterate through training runs
 all_metrics = []
+all_setup_times = []
+all_eval_times = []
 _cfg_hash = _get_postprocessor_config_hash(
     os.path.join(ROOT_DIR, 'configs'), postprocessor_name)
 pp_pkl_name = f'{postprocessor_name}_{_cfg_hash}.pkl'
@@ -162,6 +164,7 @@ for subfolder in sorted(glob(os.path.join(root, 's*'))):
     net.cuda()
     net.eval()
 
+    t_setup_start = time.time()
     evaluator = Evaluator(
         net,
         id_name=args.id_data,  # the target ID dataset
@@ -175,6 +178,9 @@ for subfolder in sorted(glob(os.path.join(root, 's*'))):
         batch_size,  # for certain methods the results can be slightly affected by batch size
         shuffle=False,
         num_workers=8)
+    t_setup = time.time() - t_setup_start
+    all_setup_times.append(t_setup)
+    print(f'[Timing] Setup: {t_setup:.1f}s')
 
     # load pre-computed scores if exist
     if os.path.isfile(
@@ -212,8 +218,12 @@ for subfolder in sorted(glob(os.path.join(root, 's*'))):
             with open(params_json_path, 'w') as f:
                 json.dump(param_dict, f, indent=2)
 
+    t_eval_start = time.time()
     metrics = evaluator.eval_ood(fsood=args.fsood)
+    t_eval = time.time() - t_eval_start
     all_metrics.append(metrics.to_numpy())
+    all_eval_times.append(t_eval)
+    print(f'[Timing] Eval:  {t_eval:.1f}s')
 
     # save computed scores
     if args.save_score:
@@ -255,6 +265,12 @@ for subfolder in sorted(glob(os.path.join(root, 's*'))):
                     if not pp._debug_score_accum[dname]:
                         pp._debug_score_accum[dname] = [torch.tensor(conf)]
         evaluator.postprocessor.save_debug_plots(diag_dir)
+
+# print timing summary across seeds
+print('\n[Timing Summary]')
+print(f'  Setup: {np.mean(all_setup_times):.1f}s ± {np.std(all_setup_times):.1f}s per seed')
+print(f'  Eval:  {np.mean(all_eval_times):.1f}s ± {np.std(all_eval_times):.1f}s per seed')
+print(f'  Total: {sum(all_setup_times) + sum(all_eval_times):.1f}s across {len(all_setup_times)} seeds')
 
 # compute mean metrics over training runs
 all_metrics = np.stack(all_metrics, axis=0)
