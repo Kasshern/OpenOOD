@@ -57,6 +57,10 @@ class RFFPostprocessor(BasePostprocessor):
         # Whether to L2 normalize RFF output φ(x) and class means μ̂_c (cosine similarity in RFF space)
         self.normalize_phi = getattr(self.args, 'normalize_phi', False)
 
+        # Per-layer Fisher discriminant weighting for multilayer_pca
+        self.fisher_weighting = getattr(self.args, 'fisher_weighting', False)
+        self.layer_weights = None  # set during _fit_pca call in setup
+
         # Scoring mode: 'max' = max class score, 'margin' = max - 2nd max
         self.score_mode = getattr(self.args, 'score_mode', 'max')
 
@@ -148,7 +152,7 @@ class RFFPostprocessor(BasePostprocessor):
             if self.pca_W is not None:
                 reduced = [(f - mu.to(f.device)) @ W.to(f.device)
                            for f, mu, W in zip(feats, self.pca_mean, self.pca_W)]
-                features = torch.cat(reduced, dim=1)
+                features = self._apply_layer_weights(reduced)
             else:
                 features = torch.cat(feats, dim=1)   # raw concat (pre-PCA fallback)
         else:
@@ -223,6 +227,41 @@ class RFFPostprocessor(BasePostprocessor):
             U, _, _ = torch.linalg.svd(Sigma, full_matrices=False)
             self.pca_W.append(U[:, :k])    # [d_i, k]
             self.pca_mean.append(mu)
+
+    def _compute_layer_weights(self, layer_features: list, labels: torch.Tensor) -> torch.Tensor:
+        """
+        Compute per-layer Fisher discriminant ratios as normalized layer weights.
+        F_l = trace(S_B) / trace(S_W)  where S_B = between-class, S_W = within-class scatter.
+        """
+        weights = []
+        classes = labels.unique()
+        for X in layer_features:
+            global_mean = X.mean(dim=0)
+            sb = torch.tensor(0.0, device=X.device)
+            sw = torch.tensor(0.0, device=X.device)
+            for c in classes:
+                mask = (labels == c)
+                if mask.sum() == 0:
+                    continue
+                mu_c = X[mask].mean(dim=0)
+                sb += mask.sum().float() * ((mu_c - global_mean) ** 2).sum()
+                sw += ((X[mask] - mu_c) ** 2).sum()
+            weights.append((sb / (sw + 1e-8)).item())
+        weights = torch.tensor(weights, dtype=torch.float32)
+        weights = weights / weights.sum()
+        print(f'[Fisher weights] ' + ', '.join(
+            f'layer{self.pca_layers[i]}={weights[i]:.3f}' for i in range(len(weights))))
+        return weights
+
+    def _apply_layer_weights(self, reduced_feats: list) -> torch.Tensor:
+        """Concatenate PCA-compressed layer features, optionally scaled by Fisher weights."""
+        if self.fisher_weighting and self.layer_weights is not None:
+            device = reduced_feats[0].device
+            return torch.cat(
+                [f * self.layer_weights[i].to(device) for i, f in enumerate(reduced_feats)],
+                dim=1
+            )
+        return torch.cat(reduced_feats, dim=1)
 
     def _extract_multilayer_raw(self, net, data):
         """Extract & pool selected layers from feature_list.
@@ -506,10 +545,12 @@ class RFFPostprocessor(BasePostprocessor):
                 layer_feats = [torch.cat(acc, dim=0).to(device)
                                for acc in layer_feats_accum]
                 self._fit_pca(layer_feats, device)
+                self.y_train = torch.cat(train_labels, dim=0)
+                if self.fisher_weighting:
+                    self.layer_weights = self._compute_layer_weights(layer_feats, self.y_train)
                 reduced = [(f - mu) @ W
                            for f, mu, W in zip(layer_feats, self.pca_mean, self.pca_W)]
-                self.X_train_raw = torch.cat(reduced, dim=1)
-                self.y_train = torch.cat(train_labels, dim=0)
+                self.X_train_raw = self._apply_layer_weights(reduced)
                 self.feature_dim = self.X_train_raw.shape[1]
                 self.num_classes = int(self.y_train.max().item()) + 1
                 print(f'Extracted {self.X_train_raw.shape[0]} train features of dim '
@@ -539,7 +580,7 @@ class RFFPostprocessor(BasePostprocessor):
                 reduced_val = [(f - mu.to(f.device)) @ W.to(f.device)
                                for f, mu, W in zip(layer_val_feats,
                                                    self.pca_mean, self.pca_W)]
-                self.X_val_raw = torch.cat(reduced_val, dim=1)
+                self.X_val_raw = self._apply_layer_weights(reduced_val)
                 self.y_val = torch.cat(val_labels, dim=0)
                 if val_softmax is not None:
                     self.softmax_val = torch.cat(val_softmax, dim=0)
@@ -628,7 +669,7 @@ class RFFPostprocessor(BasePostprocessor):
             output, feats = self._extract_multilayer_raw(net, data)
             reduced = [(f - mu.to(f.device)) @ W.to(f.device)
                        for f, mu, W in zip(feats, self.pca_mean, self.pca_W)]
-            features = torch.cat(reduced, dim=1)
+            features = self._apply_layer_weights(reduced)
         else:
             # Penultimate layer features (default) - use return_feature=True like KNN/VIM
             output, features = net(data, return_feature=True)
