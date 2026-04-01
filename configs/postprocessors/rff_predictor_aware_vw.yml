@@ -1,0 +1,16 @@
+postprocessor:
+  name: rff_predictor_aware_vw
+  postprocessor_args:
+    sigma: 0.5
+    D: 1024
+    alpha: 0.05
+    normalize: True
+    feature_space: penultimate
+    score_mode: predictor_aware
+    variance_weighted: True
+    APS_mode: True
+  postprocessor_sweep:
+    sigma: [0.1, 0.5, 1.0, 2.0]
+    D: [512, 1024, 2048]
+    alpha: [0.025, 0.05, 0.10]
+  hyperparam_search_done: False

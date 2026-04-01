@@ -420,6 +420,13 @@ class RFFPostprocessor(BasePostprocessor):
             val_softmax = self.softmax_val.to(device)          # [n_val, num_classes]
             val_fused = val_class_scores * val_softmax          # [n_val, num_classes]
             val_scores = val_fused.sum(dim=1)                  # [n_val]
+        elif self.score_mode == 'predictor_aware':
+            val_softmax = self.softmax_val.to(device)          # [n_val, num_classes]
+            val_pred = val_softmax.argmax(dim=1)               # [n_val]
+            n_val = val_class_scores.size(0)
+            pred_sim = val_class_scores[torch.arange(n_val, device=device), val_pred]
+            entropy = -(val_softmax * torch.log(val_softmax + 1e-8)).sum(dim=1)
+            val_scores = pred_sim - entropy
         elif self.score_mode == 'entropy':
             # Normalize class scores like document: w_c = relu(score_c) / Σ relu(score_c)
             val_pos = torch.relu(val_class_scores)                       # [n_val, num_classes]
@@ -505,12 +512,12 @@ class RFFPostprocessor(BasePostprocessor):
                 # Pass 2: collect per-layer val features and compress with fitted PCA
                 layer_val_accum = [[] for _ in self.pca_layers]
                 val_labels = []
-                val_softmax = [] if self.score_mode == 'softmax' else None
+                val_softmax = [] if self.score_mode in ('softmax', 'predictor_aware') else None
                 with torch.no_grad():
                     for batch in tqdm(id_loader_dict['val'],
                                       desc='Extracting val features (mlpca)'):
                         data = batch['data'].to(device).float()
-                        if self.score_mode == 'softmax':
+                        if self.score_mode in ('softmax', 'predictor_aware'):
                             output, feats = self._extract_multilayer_raw(net, data)
                             val_softmax.append(torch.softmax(output, dim=1).cpu())
                         else:
@@ -554,13 +561,13 @@ class RFFPostprocessor(BasePostprocessor):
                 # Extract validation features and labels for threshold calibration
                 val_features = []
                 val_labels = []
-                val_softmax = [] if self.score_mode == 'softmax' else None
+                val_softmax = [] if self.score_mode in ('softmax', 'predictor_aware') else None
                 with torch.no_grad():
                     for batch in tqdm(id_loader_dict['val'],
                                       desc='Extracting val features'):
                         data = batch['data'].to(device).float()
                         labels = batch['label'].to(device)
-                        if self.score_mode == 'softmax':
+                        if self.score_mode in ('softmax', 'predictor_aware'):
                             output, features = net(data, return_feature=True)
                             # Store raw features; _compute_rff_embedding normalizes on the fly
                             val_softmax.append(torch.softmax(output, dim=1).cpu())
@@ -638,6 +645,12 @@ class RFFPostprocessor(BasePostprocessor):
             if self.score_mode == 'softmax':
                 softmax_probs = torch.softmax(output, dim=1)
                 conf = (class_scores * softmax_probs).sum(dim=1)
+            elif self.score_mode == 'predictor_aware':
+                probs = torch.softmax(output, dim=1)
+                batch_size = output.size(0)
+                pred_sim = class_scores[torch.arange(batch_size, device=class_scores.device), pred]
+                entropy = -(probs * torch.log(probs + 1e-8)).sum(dim=1)
+                conf = pred_sim - entropy
             else:
                 conf = class_scores.max(dim=1).values
             return pred, conf
@@ -680,6 +693,12 @@ class RFFPostprocessor(BasePostprocessor):
         elif self.score_mode == 'softmax':
             softmax_probs = torch.softmax(output, dim=1)        # [batch, num_classes]
             conf = (class_scores * softmax_probs).sum(dim=1)    # [batch]
+        elif self.score_mode == 'predictor_aware':
+            probs = torch.softmax(output, dim=1)               # [batch, num_classes]
+            batch_size = output.size(0)
+            pred_sim = class_scores[torch.arange(batch_size, device=class_scores.device), pred]
+            entropy = -(probs * torch.log(probs + 1e-8)).sum(dim=1)
+            conf = pred_sim - entropy
         elif self.score_mode == 'entropy':
             pos = torch.relu(class_scores)                              # [batch, num_classes]
             denom = pos.sum(dim=1, keepdim=True).clamp(min=1e-10)
