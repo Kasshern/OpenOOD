@@ -54,6 +54,8 @@ class RFFPostprocessor(BasePostprocessor):
 
         # Whether to L2 normalize features (makes sigma transferable across datasets)
         self.normalize = getattr(self.args, 'normalize', True)
+        # Whether to L2 normalize RFF output φ(x) and class means μ̂_c (cosine similarity in RFF space)
+        self.normalize_phi = getattr(self.args, 'normalize_phi', False)
 
         # Scoring mode: 'max' = max class score, 'margin' = max - 2nd max
         self.score_mode = getattr(self.args, 'score_mode', 'max')
@@ -258,7 +260,10 @@ class RFFPostprocessor(BasePostprocessor):
         b = self.b.to(device)
 
         proj = x @ omega.T + b  # [batch_size, D]
-        return torch.sqrt(torch.tensor(2.0 / self.D, device=device)) * torch.cos(proj)
+        phi = torch.sqrt(torch.tensor(2.0 / self.D, device=device)) * torch.cos(proj)
+        if self.normalize_phi:
+            phi = torch.nn.functional.normalize(phi, p=2, dim=-1)
+        return phi
 
     def _compute_rff_embedding(self, device: torch.device):
         """
@@ -280,6 +285,8 @@ class RFFPostprocessor(BasePostprocessor):
                 if self.normalize:
                     X_c = torch.nn.functional.normalize(X_c, p=2, dim=1)
                 self.mu_hat[c] = self._phi(X_c).mean(dim=0)
+                if self.normalize_phi:
+                    self.mu_hat[c] = torch.nn.functional.normalize(self.mu_hat[c], dim=0)
 
             # Compute val class scores: each val point whitened by each class's W_c
             n_val = self.X_val_raw.shape[0]
@@ -346,6 +353,8 @@ class RFFPostprocessor(BasePostprocessor):
             mask = (self.y_train == c)
             if mask.sum() > 0:
                 self.mu_hat[c] = phi_train[mask].mean(dim=0)
+                if self.normalize_phi:
+                    self.mu_hat[c] = torch.nn.functional.normalize(self.mu_hat[c], dim=0)
 
         # Compute phi of class centroids (centroid & twohop_centroid modes)
         if self.score_mode in ('centroid', 'twohop_centroid'):

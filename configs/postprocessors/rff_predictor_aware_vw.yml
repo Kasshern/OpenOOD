@@ -5,6 +5,7 @@ postprocessor:
     D: 1024
     alpha: 0.05
     normalize: True
+    normalize_phi: True
     feature_space: penultimate
     score_mode: predictor_aware
     variance_weighted: True
