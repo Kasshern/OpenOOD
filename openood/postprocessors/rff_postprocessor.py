@@ -61,6 +61,11 @@ class RFFPostprocessor(BasePostprocessor):
         self.fisher_weighting = getattr(self.args, 'fisher_weighting', False)
         self.layer_weights = None  # set during _fit_pca call in setup
 
+        # Pre-specified layer weights from Yosinski probe (overridden by fisher_weighting at setup time)
+        _yosinski = getattr(self.args, 'yosinski_weights', None)
+        if _yosinski is not None:
+            self.layer_weights = torch.tensor(_yosinski, dtype=torch.float32)
+
         # Scoring mode: 'max' = max class score, 'margin' = max - 2nd max
         self.score_mode = getattr(self.args, 'score_mode', 'max')
 
@@ -100,6 +105,8 @@ class RFFPostprocessor(BasePostprocessor):
         # Multi-layer PCA
         self.pca_layers     = getattr(self.args, 'pca_layers', [2, 3, 4])
         self.pca_components = getattr(self.args, 'pca_components', 128)
+        # Spatial pooling mode for multilayer_pca: 'avg' (default) or 'minmax' (concat min+max)
+        self.pool_mode = getattr(self.args, 'pool_mode', 'avg')
         self.pca_W    = None   # list of [d_i, pca_components] projection matrices
         self.pca_mean = None   # list of [d_i] per-layer means
 
@@ -254,8 +261,8 @@ class RFFPostprocessor(BasePostprocessor):
         return weights
 
     def _apply_layer_weights(self, reduced_feats: list) -> torch.Tensor:
-        """Concatenate PCA-compressed layer features, optionally scaled by Fisher weights."""
-        if self.fisher_weighting and self.layer_weights is not None:
+        """Concatenate PCA-compressed layer features, optionally scaled by layer weights."""
+        if self.layer_weights is not None:
             device = reduced_feats[0].device
             return torch.cat(
                 [f * self.layer_weights[i].to(device) for i, f in enumerate(reduced_feats)],
@@ -278,8 +285,13 @@ class RFFPostprocessor(BasePostprocessor):
         feats = []
         for i in self.pca_layers:
             f = feature_list[i]
-            if f.dim() > 2:                # spatial: [B, C, H, W]
-                f = f.mean(dim=[2, 3])     # global average pool → [B, C]
+            if f.dim() > 2:                      # spatial: [B, C, H, W]
+                if self.pool_mode == 'minmax':
+                    flat = f.view(f.size(0), f.size(1), -1)          # [B, C, H*W]
+                    f = torch.cat([flat.min(dim=2).values,
+                                   flat.max(dim=2).values], dim=1)   # [B, 2C]
+                else:
+                    f = f.mean(dim=[2, 3])       # global average pool → [B, C]
             feats.append(f)
         return output, feats               # list of [B, d_i]
 
