@@ -94,6 +94,8 @@ postprocessors = {
     'rff_predictor_aware_vw':       RFFPostprocessor,
     'rff_predictor_aware_vw_allpca': RFFPostprocessor,
     'rff_softmax_vw_mlpca_minmax':  RFFPostprocessor,
+    'rff_softmax_vw_mlpca_yw':         RFFPostprocessor,
+    'rff_softmax_vw_mlpca_minmax_yw':  RFFPostprocessor,
 }
 
 link_prefix = 'https://raw.githubusercontent.com/Jingkang50/OpenOOD/main/configs/postprocessors/'

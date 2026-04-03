@@ -1,8 +1,8 @@
 #!/bin/bash
-#SBATCH --job-name=layer_probe_diagnostic
-#SBATCH --output=logs/layer_probe_diagnostic_%A_%a.out
-#SBATCH --error=logs/layer_probe_diagnostic_%A_%a.err
-#SBATCH --time=01:30:00
+#SBATCH --job-name=rff_softmax_vw_mlpca_minmax_yw
+#SBATCH --output=logs/rff_softmax_vw_mlpca_minmax_yw_%A_%a.out
+#SBATCH --error=logs/rff_softmax_vw_mlpca_minmax_yw_%A_%a.err
+#SBATCH --time=04:00:00
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
 #SBATCH --gres=gpu:1
@@ -12,7 +12,7 @@
 #SBATCH --partition=ice-gpu
 #SBATCH --array=0-2
 
-# Yosinski layer probe — per-layer binary AUROC (ID vs OOD) via logistic regression
+# RFF grid search — score_mode=softmax, variance_weighted=True, minmax pooling + Yosinski weights
 # Array task 0=CIFAR-10, 1=CIFAR-100, 2=ImageNet-200
 
 mkdir -p logs
@@ -40,12 +40,13 @@ ROOTS=(
 DATASET=${DATASETS[$SLURM_ARRAY_TASK_ID]}
 ROOT=${ROOTS[$SLURM_ARRAY_TASK_ID]}
 
-echo "=== layer_probe_diagnostic | $DATASET | $(date) ==="
+echo "=== rff_softmax_vw_mlpca_minmax_yw | $DATASET | $(date) ==="
 
-python scripts/layer_probe_diagnostic.py \
+python scripts/eval_ood.py \
     --root "$ROOT" \
     --id-data "$DATASET" \
-    --seed 0 \
-    --layers 2 3 4
+    --postprocessor rff_softmax_vw_mlpca_minmax_yw \
+    --save-csv \
+    --save-score
 
 echo "=== Done | $(date) ==="

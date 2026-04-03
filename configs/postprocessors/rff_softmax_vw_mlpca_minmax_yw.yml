@@ -1,0 +1,22 @@
+postprocessor:
+  name: rff
+  APS_mode: True
+  postprocessor_args:
+    sigma: 0.5
+    D: 1024
+    alpha: 0.05
+    feature_space: multilayer_pca
+    pca_layers: [2, 3, 4]
+    pca_components: 128
+    pool_mode: minmax
+    yosinski_weights: [0.311, 0.338, 0.350]
+    normalize: True
+    diagnose: True
+    debug: True
+    score_mode: softmax
+    variance_weighted: True
+    search_mode: fast
+  postprocessor_sweep:
+    sigma: [0.1, 0.5, 1.0, 2.0]
+    D: [512, 1024, 2048]
+    alpha: [0.025, 0.05, 0.10]
