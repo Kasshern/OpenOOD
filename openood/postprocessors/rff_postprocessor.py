@@ -110,6 +110,12 @@ class RFFPostprocessor(BasePostprocessor):
         self.pca_W    = None   # list of [d_i, pca_components] projection matrices
         self.pca_mean = None   # list of [d_i] per-layer means
 
+        # Kernel PCA (multilayer_kpca feature_space)
+        self.kpca_kernel    = getattr(self.args, 'kpca_kernel', 'rbf')
+        self.kpca_gamma     = getattr(self.args, 'kpca_gamma', None)
+        self.kpca_subsample = getattr(self.args, 'kpca_subsample', 5000)
+        self.kpca_models    = None  # list of fitted sklearn KernelPCA objects (one per layer)
+
         # Debug mode: φ(x) consistency, score distributions, kernel plots
         self.debug = getattr(self.args, 'debug', False)
         self._current_dataset_tag = None       # set externally before each inference
@@ -234,6 +240,46 @@ class RFFPostprocessor(BasePostprocessor):
             U, _, _ = torch.linalg.svd(Sigma, full_matrices=False)
             self.pca_W.append(U[:, :k])    # [d_i, k]
             self.pca_mean.append(mu)
+
+    def _fit_kpca(self, layer_features: list):
+        """Fit KernelPCA per layer on (subsampled) training features.
+
+        Args:
+            layer_features: list of [n, d_i] tensors, one per selected layer
+        """
+        from sklearn.decomposition import KernelPCA
+        import numpy as np
+        self.kpca_models = []
+        for X in layer_features:
+            X_np = X.cpu().numpy()
+            if self.kpca_subsample and len(X_np) > self.kpca_subsample:
+                idx = np.random.choice(len(X_np), self.kpca_subsample, replace=False)
+                X_fit = X_np[idx]
+            else:
+                X_fit = X_np
+            kpca = KernelPCA(
+                n_components=self.pca_components,
+                kernel=self.kpca_kernel,
+                gamma=self.kpca_gamma,
+                fit_inverse_transform=False,
+                n_jobs=-1,
+            )
+            kpca.fit(X_fit)
+            self.kpca_models.append(kpca)
+
+    def _project_kpca(self, layer_features: list) -> torch.Tensor:
+        """Project per-layer features through fitted KernelPCA models.
+
+        Args:
+            layer_features: list of [n, d_i] tensors, one per selected layer
+        Returns:
+            Concatenated (and optionally layer-weighted) reduced features [n, n_layers * pca_components]
+        """
+        reduced = []
+        for X, kpca in zip(layer_features, self.kpca_models):
+            Z = kpca.transform(X.cpu().numpy())   # [n, pca_components]
+            reduced.append(torch.from_numpy(Z).float().to(X.device))
+        return self._apply_layer_weights(reduced)
 
     def _compute_layer_weights(self, layer_features: list, labels: torch.Tensor) -> torch.Tensor:
         """
@@ -593,6 +639,59 @@ class RFFPostprocessor(BasePostprocessor):
                                for f, mu, W in zip(layer_val_feats,
                                                    self.pca_mean, self.pca_W)]
                 self.X_val_raw = self._apply_layer_weights(reduced_val)
+                self.y_val = torch.cat(val_labels, dim=0)
+                if val_softmax is not None:
+                    self.softmax_val = torch.cat(val_softmax, dim=0)
+                print(f'Extracted {self.X_val_raw.shape[0]} val features for threshold')
+
+            elif self.feature_space == 'multilayer_kpca':
+                # --- Multi-layer Kernel PCA extraction path ---
+                # Pass 1: collect per-layer train features and fit KernelPCA
+                layer_feats_accum = [[] for _ in self.pca_layers]
+                train_labels = []
+                with torch.no_grad():
+                    for batch in tqdm(id_loader_dict['train'],
+                                      desc='Extracting train features (mkpca)'):
+                        data = batch['data'].to(device).float()
+                        _, feats = self._extract_multilayer_raw(net, data)
+                        for j, f in enumerate(feats):
+                            layer_feats_accum[j].append(f.cpu())
+                        train_labels.append(batch['label'].to(device))
+                layer_feats = [torch.cat(acc, dim=0).to(device)
+                               for acc in layer_feats_accum]
+                self._fit_kpca(layer_feats)
+                self.y_train = torch.cat(train_labels, dim=0)
+                if self.fisher_weighting:
+                    self.layer_weights = self._compute_layer_weights(layer_feats, self.y_train)
+                self.X_train_raw = self._project_kpca(layer_feats)
+                self.feature_dim = self.X_train_raw.shape[1]
+                self.num_classes = int(self.y_train.max().item()) + 1
+                print(f'Extracted {self.X_train_raw.shape[0]} train features of dim '
+                      f'{self.feature_dim} (multilayer_kpca, {len(self.pca_layers)} layers, '
+                      f'kernel={self.kpca_kernel})')
+                print(f'  Feature norm (mean): '
+                      f'{torch.linalg.norm(self.X_train_raw, dim=1).mean():.4f}')
+                print(f'  Number of classes: {self.num_classes}')
+
+                # Pass 2: collect per-layer val features and compress with fitted KernelPCA
+                layer_val_accum = [[] for _ in self.pca_layers]
+                val_labels = []
+                val_softmax = [] if self.score_mode in ('softmax', 'predictor_aware') else None
+                with torch.no_grad():
+                    for batch in tqdm(id_loader_dict['val'],
+                                      desc='Extracting val features (mkpca)'):
+                        data = batch['data'].to(device).float()
+                        if self.score_mode in ('softmax', 'predictor_aware'):
+                            output, feats = self._extract_multilayer_raw(net, data)
+                            val_softmax.append(torch.softmax(output, dim=1).cpu())
+                        else:
+                            _, feats = self._extract_multilayer_raw(net, data)
+                        for j, f in enumerate(feats):
+                            layer_val_accum[j].append(f.cpu())
+                        val_labels.append(batch['label'].to(device))
+                layer_val_feats = [torch.cat(acc, dim=0).to(device)
+                                   for acc in layer_val_accum]
+                self.X_val_raw = self._project_kpca(layer_val_feats)
                 self.y_val = torch.cat(val_labels, dim=0)
                 if val_softmax is not None:
                     self.softmax_val = torch.cat(val_softmax, dim=0)
