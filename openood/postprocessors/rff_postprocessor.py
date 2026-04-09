@@ -781,6 +781,9 @@ class RFFPostprocessor(BasePostprocessor):
             reduced = [(f - mu.to(f.device)) @ W.to(f.device)
                        for f, mu, W in zip(feats, self.pca_mean, self.pca_W)]
             features = self._apply_layer_weights(reduced)
+        elif self.feature_space == 'multilayer_kpca':
+            output, feats = self._extract_multilayer_raw(net, data)
+            features = self._project_kpca(feats)
         else:
             # Penultimate layer features (default) - use return_feature=True like KNN/VIM
             output, features = net(data, return_feature=True)
