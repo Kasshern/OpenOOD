@@ -35,7 +35,7 @@ ROOTS=(
     "./results/cifar10_resnet18_32x32_base_e100_lr0.1_default"
     "./results/cifar100_resnet18_32x32_base_e100_lr0.1_default"
     "./results/imagenet200_resnet18_224x224_base_e90_lr0.1_default"
-    "./results/imagenet_res50_v1.5"
+    "./results/imagenet_resnet50_base_e30_lr0.001_randaugment-2-9"
 )
 
 DATASET=${DATASETS[$SLURM_ARRAY_TASK_ID]}
