@@ -2,7 +2,7 @@
 #SBATCH --job-name=rff_predictor_aware_vw
 #SBATCH --output=logs/rff_predictor_aware_vw_%A_%a.out
 #SBATCH --error=logs/rff_predictor_aware_vw_%A_%a.err
-#SBATCH --time=02:30:00
+#SBATCH --time=08:00:00
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
 #SBATCH --gres=gpu:1
@@ -10,10 +10,10 @@
 #SBATCH --constraint=nvidia-gpu
 #SBATCH --mem=32G
 #SBATCH --partition=ice-gpu
-#SBATCH --array=0-2
+#SBATCH --array=0-3
 
 # RFF grid search — score_mode=predictor_aware, variance_weighted=True
-# Array task 0=CIFAR-10, 1=CIFAR-100, 2=ImageNet-200
+# Array task 0=CIFAR-10, 1=CIFAR-100, 2=ImageNet-200, 3=ImageNet-1K
 
 mkdir -p logs
 
@@ -30,11 +30,12 @@ fi
 
 cd ~/scratch/openood/src/OpenOOD
 
-DATASETS=("cifar10" "cifar100" "imagenet200")
+DATASETS=("cifar10" "cifar100" "imagenet200" "imagenet")
 ROOTS=(
     "./results/cifar10_resnet18_32x32_base_e100_lr0.1_default"
     "./results/cifar100_resnet18_32x32_base_e100_lr0.1_default"
     "./results/imagenet200_resnet18_224x224_base_e90_lr0.1_default"
+    "./results/imagenet_res50_v1.5"
 )
 
 DATASET=${DATASETS[$SLURM_ARRAY_TASK_ID]}
