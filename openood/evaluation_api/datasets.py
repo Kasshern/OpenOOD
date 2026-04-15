@@ -385,7 +385,11 @@ def download_dataset(dataset, data_root):
         if dataset in dir_dict[key]:
             store_path = os.path.join(data_root, key, dataset)
             if not os.path.exists(store_path):
-                os.makedirs(store_path)
+                try:
+                    os.makedirs(store_path)
+                except PermissionError:
+                    print(f'Warning: no write permission to create {store_path}, skipping.')
+                    return
             break
     else:
         print('Invalid dataset detected {}'.format(dataset))
