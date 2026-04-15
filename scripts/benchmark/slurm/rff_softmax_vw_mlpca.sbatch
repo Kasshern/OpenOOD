@@ -10,10 +10,10 @@
 #SBATCH --constraint=nvidia-gpu
 #SBATCH --mem=32G
 #SBATCH --partition=ice-gpu
-#SBATCH --array=0-3
+#SBATCH --array=0-2
 
 # RFF grid search — score_mode=softmax, variance_weighted=True, multilayer_pca features
-# Array task 0=CIFAR-10, 1=CIFAR-100, 2=ImageNet-200, 3=ImageNet-1K
+# Array task 0=CIFAR-10, 1=CIFAR-100, 2=ImageNet-200
 
 mkdir -p logs
 
