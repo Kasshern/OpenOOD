@@ -74,7 +74,7 @@ evaluator = Evaluator(
     postprocessor=postprocessor,
     batch_size=args.batch_size,
     shuffle=False,
-    num_workers=8)
+    num_workers=4)
 t_setup = time.time() - t_setup_start
 print(f'[Timing] Setup: {t_setup:.1f}s')
 

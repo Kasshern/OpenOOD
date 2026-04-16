@@ -2,7 +2,7 @@
 #SBATCH --job-name=rff_max_vw_whiten_pc_vit_b16
 #SBATCH --output=logs/rff_max_vw_whiten_pc_vit_b16_%j.out
 #SBATCH --error=logs/rff_max_vw_whiten_pc_vit_b16_%j.err
-#SBATCH --time=04:00:00
+#SBATCH --time=08:00:00
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
 #SBATCH --gres=gpu:1
@@ -31,6 +31,7 @@ cd ~/scratch/openood/src/OpenOOD
 echo "=== rff_max_vw_whiten_pc | imagenet | vit-b-16 | $(date) ==="
 
 python scripts/eval_ood_imagenet_vit.py \
+    --batch-size 64 \
     --arch vit-b-16 \
     --tvs-version 1 \
     --postprocessor rff_max_vw_whiten_pc \
