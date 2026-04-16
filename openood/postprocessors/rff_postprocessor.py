@@ -72,6 +72,17 @@ class RFFPostprocessor(BasePostprocessor):
         # Whether to normalize class scores by per-class variance
         self.variance_weighted = getattr(self.args, 'variance_weighted', True)
 
+        # Dual-head gating (near OOD signal + far OOD signal, gated by gate_margin)
+        self.dual_head     = bool(getattr(self.args, 'dual_head', False))
+        self.head_alpha    = float(getattr(self.args, 'head_alpha', 0.5))
+        self.gate_margin   = float(getattr(self.args, 'gate_margin', 0.10))
+        self.near_preserve = bool(getattr(self.args, 'near_preserve', True))
+        # Calibration stats populated in _compute_rff_embedding
+        self._near_mean = 0.0
+        self._near_std  = 1.0
+        self._far_mean  = 0.0
+        self._far_std   = 1.0
+
         # Learned parameters (set during setup)
         self.omega = None        # [D, feature_dim] - RFF frequencies
         self.b = None            # [D] - RFF phases
@@ -562,6 +573,22 @@ class RFFPostprocessor(BasePostprocessor):
 
         self.threshold = torch.quantile(val_scores, self.alpha)
 
+        # Dual-head calibration: compute z-score stats for near and far signals on val set
+        if self.dual_head and self.softmax_val is not None:
+            val_softmax = self.softmax_val.to(device)          # [n_val, C]
+            val_pred    = val_softmax.argmax(dim=1)            # [n_val]
+            n_val       = val_class_scores.size(0)
+            val_entropy = -(val_softmax * torch.log(val_softmax + 1e-8)).sum(dim=1)
+            near_raw = val_class_scores[torch.arange(n_val, device=device), val_pred] \
+                       - val_entropy
+            far_raw  = val_class_scores.max(dim=1).values
+            self._near_mean = near_raw.mean().item()
+            self._near_std  = max(near_raw.std().item(), 1e-3)
+            self._far_mean  = far_raw.mean().item()
+            self._far_std   = max(far_raw.std().item(), 1e-3)
+            print(f'  [dual_head] near: mean={self._near_mean:.4f} std={self._near_std:.4f}')
+            print(f'  [dual_head] far:  mean={self._far_mean:.4f}  std={self._far_std:.4f}')
+
     def setup(self, net: nn.Module, id_loader_dict, ood_loader_dict):
         """
         Setup phase: compute RFF parameters, per-class mean embeddings, and threshold.
@@ -722,13 +749,14 @@ class RFFPostprocessor(BasePostprocessor):
                 # Extract validation features and labels for threshold calibration
                 val_features = []
                 val_labels = []
-                val_softmax = [] if self.score_mode in ('softmax', 'predictor_aware') else None
+                _need_softmax = self.score_mode in ('softmax', 'predictor_aware', 'dual_gated') or self.dual_head
+                val_softmax = [] if _need_softmax else None
                 with torch.no_grad():
                     for batch in tqdm(id_loader_dict['val'],
                                       desc='Extracting val features'):
                         data = batch['data'].to(device).float()
                         labels = batch['label'].to(device)
-                        if self.score_mode in ('softmax', 'predictor_aware'):
+                        if _need_softmax:
                             output, features = net(data, return_feature=True)
                             # Store raw features; _compute_rff_embedding normalizes on the fly
                             val_softmax.append(torch.softmax(output, dim=1).cpu())
@@ -886,6 +914,20 @@ class RFFPostprocessor(BasePostprocessor):
             if self.variance_weighted:
                 tc_scores = tc_scores / torch.sqrt(var_hat)
             conf = tc_scores.max(dim=1).values
+        elif self.score_mode == 'dual_gated' and self.dual_head:
+            probs   = torch.softmax(output, dim=1)                              # [batch, C]
+            entropy = -(probs * torch.log(probs + 1e-8)).sum(dim=1)            # [batch]
+            batch_size_dg = output.size(0)
+            near_raw = class_scores[torch.arange(batch_size_dg, device=class_scores.device), pred] - entropy
+            far_raw  = class_scores.max(dim=1).values
+            near_conf = (near_raw - self._near_mean) / self._near_std
+            far_conf  = (far_raw  - self._far_mean)  / self._far_std
+            if self.near_preserve:
+                delta  = far_conf - near_conf + self.gate_margin
+                adjust = torch.clamp(delta, max=0.0)
+                conf   = near_conf + self.head_alpha * adjust
+            else:
+                conf = (1.0 - self.head_alpha) * near_conf + self.head_alpha * far_conf
         else:
             conf = class_scores.max(dim=1).values
 
