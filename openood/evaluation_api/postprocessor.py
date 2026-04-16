@@ -17,7 +17,8 @@ from openood.postprocessors import (
     GENPostprocessor, NNGuidePostprocessor, RelationPostprocessor,
     T2FNormPostprocessor, ReweightOODPostprocessor, fDBDPostprocessor,
     AdaScalePostprocessor, IODINPostprocessor, NCIPostprocessor, CFOODPostprocessor,
-    VRAPostprocessor, GrOODPostprocessor, RFFPostprocessor)
+    VRAPostprocessor, GrOODPostprocessor, RFFPostprocessor,
+    CLIPPriorPostprocessor)
 from openood.utils.config import Config, merge_configs
 
 postprocessors = {
@@ -73,6 +74,7 @@ postprocessors = {
     'grood': GrOODPostprocessor,
     'vra': VRAPostprocessor,
     'cfood': CFOODPostprocessor,
+    'clip_prior': CLIPPriorPostprocessor,
     'rff': RFFPostprocessor,
     'rff_max_vw': RFFPostprocessor,
     'rff_max_novw': RFFPostprocessor,

@@ -1,0 +1,10 @@
+postprocessor:
+  name: clip_prior
+  APS_mode: True
+  postprocessor_args:
+    alpha: 0.5              # CLIP weight in [0, 1]; 0=base model only, 1=CLIP only
+    score_mode: softmax     # 'softmax' (max softmax prob) or 'energy' (logsumexp)
+    clip_backbone: ViT-B/16 # any model in clip.available_models()
+    data_root: ./data       # used to locate imagenet200 imglist + meta.bin
+  postprocessor_sweep:
+    alpha: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
