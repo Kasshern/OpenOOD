@@ -53,17 +53,20 @@ sys.path.append(ROOT_DIR)
 def load_scores(root, method, seed):
     """
     Load score pkl for a given method and seed.
-    Globs for {method}_*_scores.pkl; if multiple matches, uses the most recent.
+    Matches files of the form {method}_{8-char-hex}_scores.pkl exactly,
+    so 'rff' does not accidentally match 'rff_max_vw' etc.
     """
-    pattern = os.path.join(root, f's{seed}', 'scores', f'{method}_*_scores.pkl')
-    matches = sorted(glob.glob(pattern))
-    if not matches:
-        # Also try without _scores suffix (older format)
-        pattern2 = os.path.join(root, f's{seed}', 'scores', f'{method}_*.pkl')
-        matches = sorted(glob.glob(pattern2))
+    import re
+    scores_dir = os.path.join(root, f's{seed}', 'scores')
+    all_pkls = glob.glob(os.path.join(scores_dir, '*.pkl'))
+    # Require: filename == method + '_' + exactly 8 hex chars + '_scores.pkl'
+    pattern = re.compile(
+        r'^' + re.escape(method) + r'_[0-9a-f]{8}_scores\.pkl$')
+    matches = sorted(f for f in all_pkls
+                     if pattern.match(os.path.basename(f)))
     if not matches:
         raise FileNotFoundError(
-            f'No score file found for method "{method}" at {root}/s{seed}/scores/\n'
+            f'No score file found for method "{method}" at {scores_dir}\n'
             f'Ensure eval_ood.py was run with --save-score.')
     if len(matches) > 1:
         print(f'  [warn] Multiple score files for {method}, using most recent: {matches[-1]}')
@@ -73,17 +76,16 @@ def load_scores(root, method, seed):
 
 def discover_methods(root, seed):
     """Return all method names found in the scores directory."""
-    pattern = os.path.join(root, f's{seed}', 'scores', '*_scores.pkl')
-    files = glob.glob(pattern)
+    import re
+    scores_dir = os.path.join(root, f's{seed}', 'scores')
+    files = glob.glob(os.path.join(scores_dir, '*_scores.pkl'))
+    # Only match files of the form: {method}_{8-hex}_scores.pkl
+    pat = re.compile(r'^(.+)_[0-9a-f]{8}_scores\.pkl$')
     methods = []
     for f in files:
-        basename = os.path.basename(f)
-        # Strip trailing _scores.pkl and 8-char hash: method_XXXXXXXX_scores.pkl
-        parts = basename[:-len('_scores.pkl')]   # method_XXXXXXXX
-        # Hash is last 8 chars after final underscore
-        method = '_'.join(parts.split('_')[:-1])
-        if method:
-            methods.append(method)
+        m = pat.match(os.path.basename(f))
+        if m:
+            methods.append(m.group(1))
     return sorted(set(methods))
 
 
@@ -102,7 +104,8 @@ def run_mcnemar(correct_a, correct_b):
     Returns:
         dict with table, p_value, discordant counts, and significance flags.
     """
-    from scipy.stats import contingency as sp_contingency
+    from scipy.stats import binom_test as _binom_test_legacy
+    from scipy import stats as _scipy_stats
 
     correct_a = np.asarray(correct_a, dtype=bool)
     correct_b = np.asarray(correct_b, dtype=bool)
@@ -115,11 +118,24 @@ def run_mcnemar(correct_a, correct_b):
     c   = int(np.sum(~correct_a &  correct_b))   # A wrong, B right
     n00 = int(np.sum(~correct_a & ~correct_b))   # both wrong
 
-    table = np.array([[n11, b], [c, n00]])
-
-    # Use exact binomial test when discordant pairs are few
+    # Use exact binomial test when discordant pairs are few (standard threshold: 25)
     use_exact = (min(b, c) < 25)
-    result = sp_contingency.mcnemar(table, exact=use_exact, correction=(not use_exact))
+
+    if use_exact:
+        # Exact two-sided binomial: H0: P(b) = 0.5
+        try:
+            # scipy >= 1.7
+            p_value = float(_scipy_stats.binomtest(b, b + c, 0.5).pvalue)
+        except AttributeError:
+            # scipy < 1.7 fallback
+            p_value = float(_binom_test_legacy(b, b + c, 0.5))
+        statistic = float(b)
+        test_type = 'exact_binomial'
+    else:
+        # Chi-square with Yates continuity correction
+        statistic = float((abs(b - c) - 1) ** 2 / (b + c))
+        p_value = float(_scipy_stats.chi2.sf(statistic, df=1))
+        test_type = 'chi2_yates'
 
     return {
         'n_samples': len(correct_a),
@@ -127,14 +143,14 @@ def run_mcnemar(correct_a, correct_b):
         'b_A_right_B_wrong': b,
         'c_A_wrong_B_right': c,
         'discordant_pairs': b + c,
-        'p_value': float(result.pvalue),
-        'statistic': float(result.statistic),
-        'test_type': 'exact_binomial' if use_exact else 'chi2_yates',
+        'p_value': p_value,
+        'statistic': statistic,
+        'test_type': test_type,
         'method_a_better': bool(b > c),
         'effect': 'A>B' if b > c else ('A<B' if c > b else 'tie'),
-        'significant_005': bool(result.pvalue < 0.05),
-        'significant_001': bool(result.pvalue < 0.01),
-        'significant_0001': bool(result.pvalue < 0.001),
+        'significant_005': bool(p_value < 0.05),
+        'significant_001': bool(p_value < 0.01),
+        'significant_0001': bool(p_value < 0.001),
     }
 
 
