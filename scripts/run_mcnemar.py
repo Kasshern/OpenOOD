@@ -104,7 +104,6 @@ def run_mcnemar(correct_a, correct_b):
     Returns:
         dict with table, p_value, discordant counts, and significance flags.
     """
-    from scipy.stats import binom_test as _binom_test_legacy
     from scipy import stats as _scipy_stats
 
     correct_a = np.asarray(correct_a, dtype=bool)
@@ -123,12 +122,7 @@ def run_mcnemar(correct_a, correct_b):
 
     if use_exact:
         # Exact two-sided binomial: H0: P(b) = 0.5
-        try:
-            # scipy >= 1.7
-            p_value = float(_scipy_stats.binomtest(b, b + c, 0.5).pvalue)
-        except AttributeError:
-            # scipy < 1.7 fallback
-            p_value = float(_binom_test_legacy(b, b + c, 0.5))
+        p_value = float(_scipy_stats.binomtest(b, b + c, 0.5).pvalue)
         statistic = float(b)
         test_type = 'exact_binomial'
     else:
