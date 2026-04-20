@@ -2,7 +2,7 @@ postprocessor:
   name: rff_dual_gated_vw
   APS_mode: False
   postprocessor_args:
-    sigma: auto
+    sigma: 0.5
     D: 1024
     alpha: 0.05
     feature_space: penultimate
