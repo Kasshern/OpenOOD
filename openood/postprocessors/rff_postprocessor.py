@@ -73,10 +73,11 @@ class RFFPostprocessor(BasePostprocessor):
         self.variance_weighted = getattr(self.args, 'variance_weighted', True)
 
         # Dual-head gating (near OOD signal + far OOD signal, gated by gate_margin)
-        self.dual_head     = bool(getattr(self.args, 'dual_head', False))
-        self.head_alpha    = float(getattr(self.args, 'head_alpha', 0.5))
-        self.gate_margin   = float(getattr(self.args, 'gate_margin', 0.10))
-        self.near_preserve = bool(getattr(self.args, 'near_preserve', True))
+        self.dual_head     = bool(getattr(self.args, 'dual_head', None) or False)
+        self.head_alpha    = float(getattr(self.args, 'head_alpha', None) or 0.5)
+        self.gate_margin   = float(getattr(self.args, 'gate_margin', None) or 0.10)
+        _np = getattr(self.args, 'near_preserve', None)
+        self.near_preserve = bool(_np) if _np is not None else True
         # Calibration stats populated in _compute_rff_embedding
         self._near_mean = 0.0
         self._near_std  = 1.0
