@@ -18,7 +18,7 @@ from openood.postprocessors import (
     T2FNormPostprocessor, ReweightOODPostprocessor, fDBDPostprocessor,
     AdaScalePostprocessor, IODINPostprocessor, NCIPostprocessor, CFOODPostprocessor,
     VRAPostprocessor, GrOODPostprocessor, RFFPostprocessor,
-    CLIPPriorPostprocessor)
+    CLIPPriorPostprocessor, RFFCLIPPostprocessor)
 from openood.utils.config import Config, merge_configs
 
 postprocessors = {
@@ -106,6 +106,8 @@ postprocessors = {
     'rff_softmax_vw_mlpca_kpca':          RFFPostprocessor,
     'rff_dual_gated_vw':                  RFFPostprocessor,
     'rff_dual_gated_novw':                RFFPostprocessor,
+    'rff_max_vw_clip':                    RFFCLIPPostprocessor,
+    'rff_centroid_vw_mlpca_minmax_clip':  RFFCLIPPostprocessor,
 }
 
 link_prefix = 'https://raw.githubusercontent.com/Jingkang50/OpenOOD/main/configs/postprocessors/'

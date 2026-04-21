@@ -1,0 +1,23 @@
+postprocessor:
+  name: rff_centroid_vw_mlpca_minmax_clip
+  APS_mode: True
+  postprocessor_args:
+    # RFF settings — fixed at best-known from rff_centroid_vw_mlpca_minmax runs
+    sigma: 0.5
+    D: 2048
+    alpha: 0.05
+    feature_space: multilayer_pca
+    pca_layers: [2, 3, 4]
+    pca_components: 128
+    pool_mode: minmax
+    normalize: True
+    diagnose: False
+    debug: False
+    score_mode: centroid
+    variance_weighted: True
+    # CLIP settings
+    clip_weight: 0.3
+    clip_backbone: ViT-B/16
+    data_root: ./data
+  postprocessor_sweep:
+    clip_weight: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
