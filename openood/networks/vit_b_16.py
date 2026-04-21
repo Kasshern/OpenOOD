@@ -31,8 +31,10 @@ class ViT_B_16(VisionTransformer):
 
         x = self.encoder(x)
 
-        # Classifier "token" as used by standard language architectures
-        x = x[:, 0]
+        # Classifier "token" as used by standard language architectures.
+        # .contiguous() breaks the slice view into the full [B, 197, 768] encoder
+        # output so it can be freed immediately rather than accumulating (~37MB/batch).
+        x = x[:, 0].contiguous()
 
         if return_feature:
             return self.heads(x), x
@@ -51,7 +53,7 @@ class ViT_B_16(VisionTransformer):
         x = self.encoder(x)
 
         # Classifier "token" as used by standard language architectures
-        x = x[:, 0]
+        x = x[:, 0].contiguous()
 
         feature = x.clip(max=threshold)
         logits_cls = self.heads(feature)

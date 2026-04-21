@@ -736,11 +736,11 @@ class RFFPostprocessor(BasePostprocessor):
                         data = batch['data'].to(device).float()
                         labels = batch['label'].to(device)
                         features = self._extract_features(net, data, apply_normalize=False)
-                        train_features.append(features)
-                        train_labels.append(labels)
+                        train_features.append(features.cpu())
+                        train_labels.append(labels.cpu())
 
-                self.X_train_raw = torch.cat(train_features, dim=0)
-                self.y_train = torch.cat(train_labels, dim=0)
+                self.X_train_raw = torch.cat(train_features, dim=0).to(device)
+                self.y_train = torch.cat(train_labels, dim=0).to(device)
                 self.feature_dim = self.X_train_raw.shape[1]
                 self.num_classes = int(self.y_train.max().item()) + 1
                 print(f'Extracted {self.X_train_raw.shape[0]} train features of dim {self.feature_dim}')
@@ -763,11 +763,11 @@ class RFFPostprocessor(BasePostprocessor):
                             val_softmax.append(torch.softmax(output, dim=1).cpu())
                         else:
                             features = self._extract_features(net, data, apply_normalize=False)
-                        val_features.append(features)
-                        val_labels.append(labels)
+                        val_features.append(features.cpu())
+                        val_labels.append(labels.cpu())
 
-                self.X_val_raw = torch.cat(val_features, dim=0)
-                self.y_val = torch.cat(val_labels, dim=0)
+                self.X_val_raw = torch.cat(val_features, dim=0).to(device)
+                self.y_val = torch.cat(val_labels, dim=0).to(device)
                 if val_softmax is not None:
                     self.softmax_val = torch.cat(val_softmax, dim=0)  # [n_val, num_classes]
                 print(f'Extracted {self.X_val_raw.shape[0]} val features for threshold')
