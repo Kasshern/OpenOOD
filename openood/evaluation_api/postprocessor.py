@@ -108,6 +108,13 @@ postprocessors = {
     'rff_dual_gated_novw':                RFFPostprocessor,
     'rff_max_vw_clip':                    RFFCLIPPostprocessor,
     'rff_centroid_vw_mlpca_minmax_clip':  RFFCLIPPostprocessor,
+    'rff_predictor_aware_vw_allpca_clip': RFFCLIPPostprocessor,
+    'rff_predictor_aware_vw_clip':        RFFCLIPPostprocessor,
+    'rff_max_novw_clip':                  RFFCLIPPostprocessor,
+    'rff_softmax_vw_clip':                RFFCLIPPostprocessor,
+    'rff_dual_gated_vw_clip':             RFFCLIPPostprocessor,
+    'rff_max_vw_mlpca_minmax_clip':       RFFCLIPPostprocessor,
+    'rff_softmax_vw_mlpca_minmax_yw_clip': RFFCLIPPostprocessor,
 }
 
 link_prefix = 'https://raw.githubusercontent.com/Jingkang50/OpenOOD/main/configs/postprocessors/'

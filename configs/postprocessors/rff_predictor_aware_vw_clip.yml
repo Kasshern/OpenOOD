@@ -1,0 +1,19 @@
+postprocessor:
+  name: rff_predictor_aware_vw_clip
+  APS_mode: True
+  postprocessor_args:
+    # RFF settings — fixed at best-known from rff_predictor_aware_vw runs
+    sigma: 0.5
+    D: 2048
+    alpha: 0.05
+    normalize: True
+    normalize_phi: True
+    feature_space: penultimate
+    score_mode: predictor_aware
+    variance_weighted: True
+    # CLIP settings
+    clip_weight: 0.3
+    clip_backbone: ViT-B/16
+    data_root: ./data
+  postprocessor_sweep:
+    clip_weight: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
