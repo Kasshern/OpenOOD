@@ -150,6 +150,27 @@ class RFFPostprocessor(BasePostprocessor):
 
         self.setup_flag = False
 
+    # ── Pickle: strip large training tensors to keep pkl files small ──────────
+
+    _STRIP_ATTRS = (
+        'X_train_raw', 'y_train',
+        'X_val_raw',   'y_val',
+        'softmax_val',
+        '_phi_train_for_kernel',
+        '_debug_score_accum',
+        '_debug_phi_batch_means',
+        '_debug_phi_batch_stds',
+    )
+
+    def __getstate__(self):
+        state = self.__dict__.copy()
+        for attr in self._STRIP_ATTRS:
+            state[attr] = None
+        return state
+
+    def __setstate__(self, state):
+        self.__dict__.update(state)
+
     def _extract_features(self, net: nn.Module, data: torch.Tensor,
                           apply_normalize=None) -> torch.Tensor:
         """

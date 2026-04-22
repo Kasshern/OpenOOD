@@ -112,6 +112,15 @@ class RFFCLIPPostprocessor(RFFPostprocessor):
     def get_hyperparam(self):
         return [self.clip_weight]
 
+    # ── Pickle: exclude CLIP model (~340MB) from saved state ─────────────────
+
+    def __getstate__(self):
+        state = self.__dict__.copy()
+        state['clip_model']    = None
+        state['_renorm_scale'] = None
+        state['_renorm_shift'] = None
+        return state
+
     # ── Helpers ───────────────────────────────────────────────────────────────
 
     def _resolve_classnames(self) -> list:
