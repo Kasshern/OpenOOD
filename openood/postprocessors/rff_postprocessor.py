@@ -201,6 +201,9 @@ class RFFPostprocessor(BasePostprocessor):
                 features = self._apply_layer_weights(reduced)
             else:
                 features = torch.cat(feats, dim=1)   # raw concat (pre-PCA fallback)
+        elif self.feature_space == 'multilayer_minmax_concat':
+            _, feats = self._extract_multilayer_raw(net, data)
+            features = self._apply_layer_weights(feats)
         else:
             # Penultimate layer features (default) - use return_feature=True like KNN/VIM
             _, features = net(data, return_feature=True)
@@ -688,6 +691,57 @@ class RFFPostprocessor(BasePostprocessor):
                                for f, mu, W in zip(layer_val_feats,
                                                    self.pca_mean, self.pca_W)]
                 self.X_val_raw = self._apply_layer_weights(reduced_val)
+                self.y_val = torch.cat(val_labels, dim=0)
+                if val_softmax is not None:
+                    self.softmax_val = torch.cat(val_softmax, dim=0)
+                print(f'Extracted {self.X_val_raw.shape[0]} val features for threshold')
+
+            elif self.feature_space == 'multilayer_minmax_concat':
+                # --- Multi-layer minmax concat (no PCA) ---
+                layer_feats_accum = [[] for _ in self.pca_layers]
+                train_labels = []
+                with torch.no_grad():
+                    for batch in tqdm(id_loader_dict['train'],
+                                      desc='Extracting train features (mlminmax)'):
+                        data = batch['data'].to(device).float()
+                        _, feats = self._extract_multilayer_raw(net, data)
+                        for j, f in enumerate(feats):
+                            layer_feats_accum[j].append(f.cpu())
+                        train_labels.append(batch['label'].to(device))
+                layer_feats = [torch.cat(acc, dim=0).to(device)
+                               for acc in layer_feats_accum]
+                self.y_train = torch.cat(train_labels, dim=0)
+                if self.fisher_weighting:
+                    self.layer_weights = self._compute_layer_weights(layer_feats, self.y_train)
+                self.X_train_raw = self._apply_layer_weights(layer_feats)
+                self.feature_dim = self.X_train_raw.shape[1]
+                self.num_classes = int(self.y_train.max().item()) + 1
+                print(f'Extracted {self.X_train_raw.shape[0]} train features of dim '
+                      f'{self.feature_dim} (multilayer_minmax_concat, '
+                      f'{len(self.pca_layers)} layers)')
+                print(f'  Feature norm (mean): '
+                      f'{torch.linalg.norm(self.X_train_raw, dim=1).mean():.4f}')
+                print(f'  Number of classes: {self.num_classes}')
+
+                # Val pass
+                layer_val_accum = [[] for _ in self.pca_layers]
+                val_labels = []
+                val_softmax = [] if self.score_mode in ('softmax', 'predictor_aware') else None
+                with torch.no_grad():
+                    for batch in tqdm(id_loader_dict['val'],
+                                      desc='Extracting val features (mlminmax)'):
+                        data = batch['data'].to(device).float()
+                        if self.score_mode in ('softmax', 'predictor_aware'):
+                            output, feats = self._extract_multilayer_raw(net, data)
+                            val_softmax.append(torch.softmax(output, dim=1).cpu())
+                        else:
+                            _, feats = self._extract_multilayer_raw(net, data)
+                        for j, f in enumerate(feats):
+                            layer_val_accum[j].append(f.cpu())
+                        val_labels.append(batch['label'].to(device))
+                layer_val_feats = [torch.cat(acc, dim=0).to(device)
+                                   for acc in layer_val_accum]
+                self.X_val_raw = self._apply_layer_weights(layer_val_feats)
                 self.y_val = torch.cat(val_labels, dim=0)
                 if val_softmax is not None:
                     self.softmax_val = torch.cat(val_softmax, dim=0)

@@ -1,0 +1,14 @@
+postprocessor:
+  name: rff_softmax_vw_mlminmax
+  APS_mode: False
+  postprocessor_args:
+    sigma: 0.5
+    D: 2048
+    alpha: 0.05
+    normalize: True
+    feature_space: multilayer_minmax_concat
+    pca_layers: [1, 2, 3, 4]
+    pool_mode: minmax
+    yosinski_weights: [0.712, 0.734, 0.771, 0.790]
+    score_mode: softmax
+    variance_weighted: True
