@@ -1,0 +1,18 @@
+postprocessor:
+  name: rff_softmax_vw_poe
+  APS_mode: True
+  postprocessor_args:
+    sigma: 0.5
+    D: 2048
+    alpha: 0.05
+    normalize: True
+    normalize_phi: True
+    feature_space: penultimate
+    variance_weighted: True
+    score_mode: softmax
+    clip_backbone: ViT-B/16
+    data_root: ./data
+    lambda_: 1.0
+    poe_scale: 1.0
+  postprocessor_sweep:
+    lambda_: [0.0, 0.5, 1.0, 2.0, 4.0]
