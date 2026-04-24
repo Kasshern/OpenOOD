@@ -53,6 +53,7 @@ from .cfood_postprocessor import CFOODPostprocessor
 from .rff_postprocessor import RFFPostprocessor
 from .rff_clip_postprocessor import RFFCLIPPostprocessor
 from .rff_poe_postprocessor import RFFPOEPostprocessor
+from .rff_clip_concat_postprocessor import RFFCLIPConcatPostprocessor
 try:
     from .clip_prior_postprocessor import CLIPPriorPostprocessor
 except ImportError:

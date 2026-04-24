@@ -38,3 +38,9 @@ class CLIPZeroshot(nn.Module):
         image_features /= image_features.norm(dim=-1, keepdim=True)
         logits = image_features @ self.zeroshot_weights
         return logits
+
+    def encode_image(self, x) -> torch.Tensor:
+        """Return L2-normalized CLIP image embedding (float32, no text comparison)."""
+        image_features = self.model.encode_image(x)
+        image_features = image_features / image_features.norm(dim=-1, keepdim=True)
+        return image_features.float()
