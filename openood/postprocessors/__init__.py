@@ -54,6 +54,7 @@ from .rff_postprocessor import RFFPostprocessor
 from .rff_clip_postprocessor import RFFCLIPPostprocessor
 from .rff_poe_postprocessor import RFFPOEPostprocessor
 from .rff_clip_concat_postprocessor import RFFCLIPConcatPostprocessor
+from .rff_clip_mlminmax_postprocessor import RFFCLIPMlMinmaxPostprocessor
 try:
     from .clip_prior_postprocessor import CLIPPriorPostprocessor
 except ImportError:
