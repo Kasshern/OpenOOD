@@ -170,6 +170,13 @@ class RFFPostprocessor(BasePostprocessor):
 
     def __setstate__(self, state):
         self.__dict__.update(state)
+        # Reinitialize stripped debug dicts so set_dataset_tag works after unpickling
+        if self._debug_score_accum is None:
+            self._debug_score_accum = {}
+        if self._debug_phi_batch_means is None:
+            self._debug_phi_batch_means = {}
+        if self._debug_phi_batch_stds is None:
+            self._debug_phi_batch_stds = {}
 
     def _extract_features(self, net: nn.Module, data: torch.Tensor,
                           apply_normalize=None) -> torch.Tensor:
@@ -652,15 +659,30 @@ class RFFPostprocessor(BasePostprocessor):
                         for j, f in enumerate(feats):
                             layer_feats_accum[j].append(f.cpu())
                         train_labels.append(batch['label'].to(device))
-                layer_feats = [torch.cat(acc, dim=0).to(device)
-                               for acc in layer_feats_accum]
-                self._fit_pca(layer_feats, device)
+                # Fit PCA and project layer-by-layer to avoid GPU OOM on large datasets
+                reduced = []
+                for j in range(len(self.pca_layers)):
+                    X_j = torch.cat(layer_feats_accum[j], dim=0).to(device)  # [n, d_j]
+                    mu_j = X_j.mean(dim=0)
+                    X_c  = X_j - mu_j
+                    k    = min(self.pca_components, X_c.shape[1])
+                    Sigma = (X_c.T @ X_c) / (X_c.shape[0] - 1)
+                    U, _, _ = torch.linalg.svd(Sigma, full_matrices=False)
+                    W_j = U[:, :k]               # [d_j, k]
+                    if j == 0:
+                        self.pca_W    = []
+                        self.pca_mean = []
+                    self.pca_mean.append(mu_j)
+                    self.pca_W.append(W_j)
+                    reduced.append((X_c @ W_j).cpu())   # keep on CPU until concat
+                    del X_j, X_c, Sigma, U
+                    torch.cuda.empty_cache()
                 self.y_train = torch.cat(train_labels, dim=0)
                 if self.fisher_weighting:
-                    self.layer_weights = self._compute_layer_weights(layer_feats, self.y_train)
-                reduced = [(f - mu) @ W
-                           for f, mu, W in zip(layer_feats, self.pca_mean, self.pca_W)]
-                self.X_train_raw = self._apply_layer_weights(reduced)
+                    print('[Warning] fisher_weighting skipped in streaming PCA path '
+                          '(requires all layers on GPU simultaneously).')
+                reduced_dev = [r.to(device) for r in reduced]
+                self.X_train_raw = self._apply_layer_weights(reduced_dev)
                 self.feature_dim = self.X_train_raw.shape[1]
                 self.num_classes = int(self.y_train.max().item()) + 1
                 print(f'Extracted {self.X_train_raw.shape[0]} train features of dim '
@@ -685,12 +707,17 @@ class RFFPostprocessor(BasePostprocessor):
                         for j, f in enumerate(feats):
                             layer_val_accum[j].append(f.cpu())
                         val_labels.append(batch['label'].to(device))
-                layer_val_feats = [torch.cat(acc, dim=0).to(device)
-                                   for acc in layer_val_accum]
-                reduced_val = [(f - mu.to(f.device)) @ W.to(f.device)
-                               for f, mu, W in zip(layer_val_feats,
-                                                   self.pca_mean, self.pca_W)]
-                self.X_val_raw = self._apply_layer_weights(reduced_val)
+                # Project val layer-by-layer (same memory strategy as train)
+                reduced_val = []
+                for j in range(len(self.pca_layers)):
+                    X_j  = torch.cat(layer_val_accum[j], dim=0).to(device)
+                    mu_j = self.pca_mean[j].to(device)
+                    W_j  = self.pca_W[j].to(device)
+                    reduced_val.append(((X_j - mu_j) @ W_j).cpu())
+                    del X_j
+                    torch.cuda.empty_cache()
+                reduced_val_dev = [r.to(device) for r in reduced_val]
+                self.X_val_raw = self._apply_layer_weights(reduced_val_dev)
                 self.y_val = torch.cat(val_labels, dim=0)
                 if val_softmax is not None:
                     self.softmax_val = torch.cat(val_softmax, dim=0)
