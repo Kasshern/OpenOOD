@@ -19,7 +19,8 @@ from openood.postprocessors import (
     AdaScalePostprocessor, IODINPostprocessor, NCIPostprocessor, CFOODPostprocessor,
     VRAPostprocessor, GrOODPostprocessor, RFFPostprocessor,
     CLIPPriorPostprocessor, RFFCLIPPostprocessor, RFFPOEPostprocessor,
-    RFFCLIPConcatPostprocessor, RFFCLIPMlMinmaxPostprocessor)
+    RFFCLIPConcatPostprocessor, RFFCLIPMlMinmaxPostprocessor,
+    NystromOODPostprocessor)
 from openood.utils.config import Config, merge_configs
 
 postprocessors = {
@@ -119,6 +120,9 @@ postprocessors = {
     'rff_max_vw_poe':              RFFPOEPostprocessor,
     'rff_softmax_vw_poe':          RFFPOEPostprocessor,
     'rff_predictor_aware_vw_poe':  RFFPOEPostprocessor,
+    'nystrom_max_vw':              NystromOODPostprocessor,
+    'nystrom_softmax_vw':          NystromOODPostprocessor,
+    'nystrom_predictor_aware_vw':  NystromOODPostprocessor,
     'rff_max_vw_clip':                    RFFCLIPPostprocessor,
     'rff_centroid_vw_mlpca_minmax_clip':  RFFCLIPPostprocessor,
     'rff_predictor_aware_vw_allpca_clip': RFFCLIPPostprocessor,
