@@ -888,6 +888,9 @@ class RFFPostprocessor(BasePostprocessor):
         elif self.feature_space == 'multilayer_kpca':
             output, feats = self._extract_multilayer_raw(net, data)
             features = self._project_kpca(feats)
+        elif self.feature_space == 'multilayer_minmax_concat':
+            output, feats = self._extract_multilayer_raw(net, data)
+            features = self._apply_layer_weights(feats)
         else:
             # Penultimate layer features (default) - use return_feature=True like KNN/VIM
             output, features = net(data, return_feature=True)
