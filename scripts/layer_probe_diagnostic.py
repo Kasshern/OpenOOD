@@ -8,6 +8,12 @@ Usage:
         --root ./results/cifar10_resnet18_32x32_base_e100_lr0.1_default \
         --id-data cifar10 --seed 0
 
+Warning:
+  This script probes ID test features against OOD datasets. Treat it as a
+  retrospective diagnostic only; do not use its weights for benchmark-fair
+  OOD comparisons. Use scripts/id_layer_weight_diagnostic.py for ID-only
+  layer weights.
+
 Output:
   - Full per-layer AUROC table (rows = OOD datasets, columns = layers)
   - near/far average rows

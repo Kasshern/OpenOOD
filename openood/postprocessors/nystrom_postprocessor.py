@@ -223,40 +223,141 @@ class NystromOODPostprocessor(RFFPostprocessor):
         if self.X_train_raw is None:
             _need_softmax = self.score_mode in ('softmax', 'predictor_aware')
 
-            train_feats, train_labels = [], []
-            with torch.no_grad():
-                for batch in tqdm(id_loader_dict['train'],
-                                  desc='Extracting train features (nystrom)'):
-                    data = batch['data'].to(device).float()
-                    f    = self._extract_features(net, data, apply_normalize=False)
-                    train_feats.append(f.cpu())
-                    train_labels.append(batch['label'].cpu())
+            if self.feature_space == 'multilayer_pca':
+                layer_feats_accum = [[] for _ in self.pca_layers]
+                train_labels = []
+                with torch.no_grad():
+                    for batch in tqdm(id_loader_dict['train'],
+                                      desc='Extracting train features (nystrom mlpca)'):
+                        data = batch['data'].to(device).float()
+                        _, feats = self._extract_multilayer_raw(net, data)
+                        for j, f in enumerate(feats):
+                            layer_feats_accum[j].append(f.cpu())
+                        train_labels.append(batch['label'].to(device))
 
-            self.X_train_raw = torch.cat(train_feats,  dim=0).to(device)
-            self.y_train     = torch.cat(train_labels, dim=0).to(device)
+                reduced = []
+                self.pca_W = []
+                self.pca_mean = []
+                for j in range(len(self.pca_layers)):
+                    X_j = torch.cat(layer_feats_accum[j], dim=0).to(device)
+                    mu_j = X_j.mean(dim=0)
+                    X_c = X_j - mu_j
+                    k = min(self.pca_components, X_c.shape[1])
+                    Sigma = (X_c.T @ X_c) / (X_c.shape[0] - 1)
+                    U, _, _ = torch.linalg.svd(Sigma, full_matrices=False)
+                    W_j = U[:, :k]
+                    self.pca_mean.append(mu_j)
+                    self.pca_W.append(W_j)
+                    reduced.append((X_c @ W_j).cpu())
+                    del X_j, X_c, Sigma, U
+                    torch.cuda.empty_cache()
+
+                self.y_train = torch.cat(train_labels, dim=0)
+                reduced_dev = [r.to(device) for r in reduced]
+                self._compute_id_layer_weights(reduced_dev, self.y_train)
+                self.X_train_raw = self._apply_layer_weights(reduced_dev)
+
+                layer_val_accum = [[] for _ in self.pca_layers]
+                val_labels = []
+                val_softmax = [] if _need_softmax else None
+                with torch.no_grad():
+                    for batch in tqdm(id_loader_dict['val'],
+                                      desc='Extracting val features (nystrom mlpca)'):
+                        data = batch['data'].to(device).float()
+                        output, feats = self._extract_multilayer_raw(net, data)
+                        if _need_softmax:
+                            val_softmax.append(torch.softmax(output, dim=1).cpu())
+                        for j, f in enumerate(feats):
+                            layer_val_accum[j].append(f.cpu())
+                        val_labels.append(batch['label'].to(device))
+
+                reduced_val = []
+                for j in range(len(self.pca_layers)):
+                    X_j = torch.cat(layer_val_accum[j], dim=0).to(device)
+                    reduced_val.append(((X_j - self.pca_mean[j].to(device)) @
+                                        self.pca_W[j].to(device)).cpu())
+                    del X_j
+                    torch.cuda.empty_cache()
+                self.X_val_raw = self._apply_layer_weights(
+                    [r.to(device) for r in reduced_val])
+                self.y_val = torch.cat(val_labels, dim=0)
+                if val_softmax is not None:
+                    self.softmax_val = torch.cat(val_softmax, dim=0)
+
+            elif self.feature_space == 'multilayer_minmax_concat':
+                layer_feats_accum = [[] for _ in self.pca_layers]
+                train_labels = []
+                with torch.no_grad():
+                    for batch in tqdm(id_loader_dict['train'],
+                                      desc='Extracting train features (nystrom mlminmax)'):
+                        data = batch['data'].to(device).float()
+                        _, feats = self._extract_multilayer_raw(net, data)
+                        for j, f in enumerate(feats):
+                            layer_feats_accum[j].append(f.cpu())
+                        train_labels.append(batch['label'].to(device))
+                layer_feats = [torch.cat(acc, dim=0).to(device)
+                               for acc in layer_feats_accum]
+                self.y_train = torch.cat(train_labels, dim=0)
+                self._compute_id_layer_weights(layer_feats, self.y_train)
+                self.X_train_raw = self._apply_layer_weights(layer_feats)
+
+                layer_val_accum = [[] for _ in self.pca_layers]
+                val_labels = []
+                val_softmax = [] if _need_softmax else None
+                with torch.no_grad():
+                    for batch in tqdm(id_loader_dict['val'],
+                                      desc='Extracting val features (nystrom mlminmax)'):
+                        data = batch['data'].to(device).float()
+                        output, feats = self._extract_multilayer_raw(net, data)
+                        if _need_softmax:
+                            val_softmax.append(torch.softmax(output, dim=1).cpu())
+                        for j, f in enumerate(feats):
+                            layer_val_accum[j].append(f.cpu())
+                        val_labels.append(batch['label'].to(device))
+                self.X_val_raw = self._apply_layer_weights([
+                    torch.cat(acc, dim=0).to(device) for acc in layer_val_accum
+                ])
+                self.y_val = torch.cat(val_labels, dim=0)
+                if val_softmax is not None:
+                    self.softmax_val = torch.cat(val_softmax, dim=0)
+
+            else:
+                train_feats, train_labels = [], []
+                with torch.no_grad():
+                    for batch in tqdm(id_loader_dict['train'],
+                                      desc='Extracting train features (nystrom)'):
+                        data = batch['data'].to(device).float()
+                        f = self._extract_features(net, data, apply_normalize=False)
+                        train_feats.append(f.cpu())
+                        train_labels.append(batch['label'].cpu())
+
+                self.X_train_raw = torch.cat(train_feats, dim=0).to(device)
+                self.y_train = torch.cat(train_labels, dim=0).to(device)
+
+                val_feats, val_labels = [], []
+                val_softmax = [] if _need_softmax else None
+                with torch.no_grad():
+                    for batch in tqdm(id_loader_dict['val'],
+                                      desc='Extracting val features (nystrom)'):
+                        data = batch['data'].to(device).float()
+                        if _need_softmax:
+                            output, f = self._extract_features_with_output(
+                                net, data, apply_normalize=False)
+                            val_softmax.append(torch.softmax(output, dim=1).cpu())
+                        else:
+                            f = self._extract_features(net, data, apply_normalize=False)
+                        val_feats.append(f.cpu())
+                        val_labels.append(batch['label'].cpu())
+
+                self.X_val_raw = torch.cat(val_feats, dim=0).to(device)
+                self.y_val = torch.cat(val_labels, dim=0).to(device)
+                if val_softmax is not None:
+                    self.softmax_val = torch.cat(val_softmax, dim=0)
+
             self.feature_dim = self.X_train_raw.shape[1]
             self.num_classes = int(self.y_train.max().item()) + 1
             print(f'Extracted {self.X_train_raw.shape[0]} train features '
                   f'of dim {self.feature_dim}')
-
-            val_feats, val_labels = [], []
-            val_softmax = [] if _need_softmax else None
-            with torch.no_grad():
-                for batch in tqdm(id_loader_dict['val'],
-                                  desc='Extracting val features (nystrom)'):
-                    data = batch['data'].to(device).float()
-                    if _need_softmax:
-                        output, f = net(data, return_feature=True)
-                        val_softmax.append(torch.softmax(output, dim=1).cpu())
-                    else:
-                        f = self._extract_features(net, data, apply_normalize=False)
-                    val_feats.append(f.cpu())
-                    val_labels.append(batch['label'].cpu())
-
-            self.X_val_raw = torch.cat(val_feats,  dim=0).to(device)
-            self.y_val     = torch.cat(val_labels, dim=0).to(device)
-            if val_softmax is not None:
-                self.softmax_val = torch.cat(val_softmax, dim=0)
             print(f'Extracted {self.X_val_raw.shape[0]} val features for threshold')
 
         # ── Nyström fit ───────────────────────────────────────────────────
@@ -280,7 +381,8 @@ class NystromOODPostprocessor(RFFPostprocessor):
         """
         device = data.device
 
-        output, features = net(data, return_feature=True)
+        output, features = self._extract_features_with_output(
+            net, data, apply_normalize=False)
         _, pred = torch.max(output, dim=1)
 
         if self.normalize:

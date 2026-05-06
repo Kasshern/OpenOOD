@@ -46,6 +46,7 @@ from .relation_postprocessor import RelationPostprocessor
 from .grood import GrOODPostprocessor
 from .vra_postprocessor import VRAPostprocessor
 from .rff_postprocessor import RFFPostprocessor
+from .nystrom_postprocessor import NystromOODPostprocessor
 
 
 def get_postprocessor(config: Config):
@@ -96,6 +97,13 @@ def get_postprocessor(config: Config):
         'grood': GrOODPostprocessor,
         'vra': VRAPostprocessor,
         'rff': RFFPostprocessor,
+        'rff_softmax_vw_mlpca_idlw': RFFPostprocessor,
+        'rff_predictor_aware_vw_allpca_idlw': RFFPostprocessor,
+        'nystrom_softmax_vw': NystromOODPostprocessor,
+        'nystrom_predictor_aware_vw': NystromOODPostprocessor,
+        'nystrom_max_vw': NystromOODPostprocessor,
+        'nystrom_softmax_vw_idlw': NystromOODPostprocessor,
+        'nystrom_predictor_aware_vw_idlw': NystromOODPostprocessor,
     }
 
     return postprocessors[config.postprocessor.name](config)
