@@ -235,11 +235,15 @@ class NystromOODPostprocessor(RFFPostprocessor):
                             layer_feats_accum[j].append(f.cpu())
                         train_labels.append(batch['label'].to(device))
 
+                self.y_train = torch.cat(train_labels, dim=0)
+                layer_feats = [torch.cat(acc, dim=0)
+                               for acc in layer_feats_accum]
+                layer_feats = self._select_id_layers(layer_feats, self.y_train)
                 reduced = []
                 self.pca_W = []
                 self.pca_mean = []
                 for j in range(len(self.pca_layers)):
-                    X_j = torch.cat(layer_feats_accum[j], dim=0).to(device)
+                    X_j = layer_feats[j].to(device)
                     mu_j = X_j.mean(dim=0)
                     X_c = X_j - mu_j
                     k = min(self.pca_components, X_c.shape[1])
@@ -252,7 +256,6 @@ class NystromOODPostprocessor(RFFPostprocessor):
                     del X_j, X_c, Sigma, U
                     torch.cuda.empty_cache()
 
-                self.y_train = torch.cat(train_labels, dim=0)
                 reduced_dev = [r.to(device) for r in reduced]
                 self._compute_id_layer_weights(reduced_dev, self.y_train)
                 self.X_train_raw = self._apply_layer_weights(reduced_dev)
@@ -295,9 +298,11 @@ class NystromOODPostprocessor(RFFPostprocessor):
                         for j, f in enumerate(feats):
                             layer_feats_accum[j].append(f.cpu())
                         train_labels.append(batch['label'].to(device))
-                layer_feats = [torch.cat(acc, dim=0).to(device)
-                               for acc in layer_feats_accum]
                 self.y_train = torch.cat(train_labels, dim=0)
+                layer_feats = [torch.cat(acc, dim=0)
+                               for acc in layer_feats_accum]
+                layer_feats = self._select_id_layers(layer_feats, self.y_train)
+                layer_feats = [features.to(device) for features in layer_feats]
                 self._compute_id_layer_weights(layer_feats, self.y_train)
                 self.X_train_raw = self._apply_layer_weights(layer_feats)
 

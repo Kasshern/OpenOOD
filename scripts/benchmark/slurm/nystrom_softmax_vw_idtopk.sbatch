@@ -1,8 +1,8 @@
 #!/bin/bash
-#SBATCH --job-name=id_layer_weight
-#SBATCH --output=logs/id_layer_weight_diagnostic_%A_%a.out
-#SBATCH --error=logs/id_layer_weight_diagnostic_%A_%a.err
-#SBATCH --time=01:30:00
+#SBATCH --job-name=nys_soft_topk
+#SBATCH --output=logs/nystrom_softmax_vw_idtopk_%A_%a.out
+#SBATCH --error=logs/nystrom_softmax_vw_idtopk_%A_%a.err
+#SBATCH --time=08:00:00
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
 #SBATCH --gres=gpu:1
@@ -12,7 +12,7 @@
 #SBATCH --partition=ice-gpu
 #SBATCH --array=0-2
 
-# Fair ID-only layer-weight diagnostic.
+# Nyström softmax with multilayer PCA and ID-only top-k layer selection.
 # Array task 0=CIFAR-10, 1=CIFAR-100, 2=ImageNet-200
 
 mkdir -p logs
@@ -39,13 +39,13 @@ ROOTS=(
 DATASET=${DATASETS[$SLURM_ARRAY_TASK_ID]}
 ROOT=${ROOTS[$SLURM_ARRAY_TASK_ID]}
 
-echo "=== id_layer_weight_diagnostic | $DATASET | $(date) ==="
+echo "=== nystrom_softmax_vw_idtopk | $DATASET | $(date) ==="
 
-python scripts/id_layer_weight_diagnostic.py \
+python scripts/eval_ood.py \
     --root "$ROOT" \
     --id-data "$DATASET" \
-    --seed 0 \
-    --layers 2 3 4 \
-    --top-k 2
+    --postprocessor nystrom_softmax_vw_idtopk \
+    --save-csv \
+    --save-score
 
 echo "=== Done | $(date) ==="

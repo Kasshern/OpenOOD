@@ -99,11 +99,15 @@ def get_postprocessor(config: Config):
         'rff': RFFPostprocessor,
         'rff_softmax_vw_mlpca_idlw': RFFPostprocessor,
         'rff_predictor_aware_vw_allpca_idlw': RFFPostprocessor,
+        'rff_softmax_vw_mlpca_idtopk': RFFPostprocessor,
+        'rff_predictor_aware_vw_allpca_idtopk': RFFPostprocessor,
         'nystrom_softmax_vw': NystromOODPostprocessor,
         'nystrom_predictor_aware_vw': NystromOODPostprocessor,
         'nystrom_max_vw': NystromOODPostprocessor,
         'nystrom_softmax_vw_idlw': NystromOODPostprocessor,
         'nystrom_predictor_aware_vw_idlw': NystromOODPostprocessor,
+        'nystrom_softmax_vw_idtopk': NystromOODPostprocessor,
+        'nystrom_predictor_aware_vw_idtopk': NystromOODPostprocessor,
     }
 
     return postprocessors[config.postprocessor.name](config)

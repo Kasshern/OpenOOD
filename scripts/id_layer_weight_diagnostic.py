@@ -25,7 +25,11 @@ from openood.evaluation_api import Evaluator
 from openood.evaluation_api.postprocessor import get_postprocessor
 from openood.networks import ResNet18_32x32, ResNet18_224x224
 from openood.postprocessors.feature_selection import (
-    compute_id_layer_weights, format_layer_weights)
+    compute_id_layer_weights,
+    format_layer_scores,
+    format_layer_weights,
+    select_topk_layers,
+)
 
 
 LAYER_NAMES = {
@@ -60,6 +64,8 @@ def parse_args():
     parser.add_argument('--layers', type=int, nargs='+', default=[1, 2, 3, 4])
     parser.add_argument('--source', choices=['train', 'val'], default='train')
     parser.add_argument('--pool-mode', choices=['avg', 'minmax'], default='avg')
+    parser.add_argument('--top-k', type=int, default=None,
+                        help='Optionally print ID-only top-k selected layers')
     return parser.parse_args()
 
 
@@ -136,6 +142,22 @@ def main():
     print(f'  yosinski_weights: [{weights_str}]')
     print('\nLog label:')
     print('  ' + format_layer_weights(args.layers, weights))
+
+    if args.top_k is not None:
+        selected_layers, _, scores = select_topk_layers(
+            args.layers,
+            layer_features,
+            labels,
+            k=args.top_k,
+            metric='id_fisher_topk',
+        )
+        print('\nTop-k selection:')
+        print('  scores: ' + format_layer_scores(args.layers, scores))
+        print('  selected: [' + ', '.join(str(layer) for layer in selected_layers) + ']')
+        print('  config:')
+        print('    layer_selection: id_fisher_topk')
+        print(f'    layer_selection_k: {args.top_k}')
+        print(f'    layer_selection_source: {args.source}')
 
 
 if __name__ == '__main__':
