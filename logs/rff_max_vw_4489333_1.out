@@ -1,0 +1,999 @@
+---------------------------------------
+Begin Slurm Prolog: Mar-18-2026 06:26:00
+Job ID:    4495809
+User ID:   ksalzman3
+Account:   coc
+Job name:  rff_max_vw
+Partition: ice-gpu
+QOS:       coc-ice
+---------------------------------------
+=== rff_max_vw | cifar100 | Wed Mar 18 06:26:08 AM EDT 2026 ===
+
+==================================================
+Setting up RFF Kernel Attention OOD detector...
+  sigma (bandwidth): 0.5
+  D (RFF dimension): 1024
+  alpha (target FPR): 0.05
+  feature_space: penultimate
+  normalize: True
+  score_mode: max
+  variance_weighted: True
+==================================================
+Extracted 50000 train features of dim 512
+  Feature norm (mean): 12.7760
+  Number of classes: 100
+Extracted 1000 val features for threshold
+Per-class embedding norms (mean): 0.6978
+Per-class score variance (mean): 0.003785
+Threshold (max) at 5.0%: 3.9945
+Max threshold (for diagnostics) at 5.0%: 3.9945
+RFF setup complete.
+
+Starting automatic parameter search...
+Hyperparam: [0.05, 512, 0.025, True], auroc: 0.5054624485596708
+Hyperparam: [0.1, 512, 0.025, True], auroc: 0.5058909465020576
+Hyperparam: [0.2, 512, 0.025, True], auroc: 0.6303374485596709
+Hyperparam: [0.3, 512, 0.025, True], auroc: 0.8062283950617285
+Hyperparam: [0.5, 512, 0.025, True], auroc: 0.8354012345679012
+Hyperparam: [0.75, 512, 0.025, True], auroc: 0.7554223251028807
+Hyperparam: [1.0, 512, 0.025, True], auroc: 0.6835102880658437
+Hyperparam: [1.5, 512, 0.025, True], auroc: 0.42238477366255145
+Hyperparam: [2.0, 512, 0.025, True], auroc: 0.4080848765432099
+Hyperparam: [0.05, 1024, 0.025, True], auroc: 0.49667181069958843
+Hyperparam: [0.1, 1024, 0.025, True], auroc: 0.4841265432098765
+Hyperparam: [0.2, 1024, 0.025, True], auroc: 0.6729850823045268
+Hyperparam: [0.3, 1024, 0.025, True], auroc: 0.8284794238683129
+Hyperparam: [0.5, 1024, 0.025, True], auroc: 0.8401903292181069
+Hyperparam: [0.75, 1024, 0.025, True], auroc: 0.8015288065843622
+Hyperparam: [1.0, 1024, 0.025, True], auroc: 0.6405462962962962
+Hyperparam: [1.5, 1024, 0.025, True], auroc: 0.38632561728395065
+Hyperparam: [2.0, 1024, 0.025, True], auroc: 0.34516769547325105
+Hyperparam: [0.05, 2048, 0.025, True], auroc: 0.49249485596707815
+Hyperparam: [0.1, 2048, 0.025, True], auroc: 0.5019567901234568
+Hyperparam: [0.2, 2048, 0.025, True], auroc: 0.7012170781893003
+Hyperparam: [0.3, 2048, 0.025, True], auroc: 0.8442777777777778
+Hyperparam: [0.5, 2048, 0.025, True], auroc: 0.84170987654321
+Hyperparam: [0.75, 2048, 0.025, True], auroc: 0.8005108024691358
+Hyperparam: [1.0, 2048, 0.025, True], auroc: 0.6907803497942386
+Hyperparam: [1.5, 2048, 0.025, True], auroc: 0.5244979423868312
+Hyperparam: [2.0, 2048, 0.025, True], auroc: 0.3110900205761317
+Hyperparam: [0.05, 4096, 0.025, True], auroc: 0.4980586419753087
+Hyperparam: [0.1, 4096, 0.025, True], auroc: 0.5070051440329219
+Hyperparam: [0.2, 4096, 0.025, True], auroc: 0.7347685185185184
+Hyperparam: [0.3, 4096, 0.025, True], auroc: 0.8446975308641974
+Hyperparam: [0.5, 4096, 0.025, True], auroc: 0.8413497942386831
+Hyperparam: [0.75, 4096, 0.025, True], auroc: 0.7943487654320989
+Hyperparam: [1.0, 4096, 0.025, True], auroc: 0.7116918724279836
+Hyperparam: [1.5, 4096, 0.025, True], auroc: 0.4599814814814815
+Hyperparam: [2.0, 4096, 0.025, True], auroc: 0.34735339506172835
+Hyperparam: [0.05, 512, 0.05, True], auroc: 0.5052716049382716
+Hyperparam: [0.1, 512, 0.05, True], auroc: 0.5003189300411524
+Hyperparam: [0.2, 512, 0.05, True], auroc: 0.6519310699588478
+Hyperparam: [0.3, 512, 0.05, True], auroc: 0.8083868312757202
+Hyperparam: [0.5, 512, 0.05, True], auroc: 0.830425925925926
+Hyperparam: [0.75, 512, 0.05, True], auroc: 0.7517973251028807
+Hyperparam: [1.0, 512, 0.05, True], auroc: 0.7109850823045268
+Hyperparam: [1.5, 512, 0.05, True], auroc: 0.49821193415637854
+Hyperparam: [2.0, 512, 0.05, True], auroc: 0.406690329218107
+Hyperparam: [0.05, 1024, 0.05, True], auroc: 0.495287037037037
+Hyperparam: [0.1, 1024, 0.05, True], auroc: 0.49948353909465015
+Hyperparam: [0.2, 1024, 0.05, True], auroc: 0.6813734567901235
+Hyperparam: [0.3, 1024, 0.05, True], auroc: 0.8274753086419754
+Hyperparam: [0.5, 1024, 0.05, True], auroc: 0.8341934156378601
+Hyperparam: [0.75, 1024, 0.05, True], auroc: 0.7791774691358024
+Hyperparam: [1.0, 1024, 0.05, True], auroc: 0.7092191358024691
+Hyperparam: [1.5, 1024, 0.05, True], auroc: 0.4133374485596708
+Hyperparam: [2.0, 1024, 0.05, True], auroc: 0.32619084362139916
+Hyperparam: [0.05, 2048, 0.05, True], auroc: 0.49713477366255143
+Hyperparam: [0.1, 2048, 0.05, True], auroc: 0.5313343621399177
+Hyperparam: [0.2, 2048, 0.05, True], auroc: 0.6987798353909465
+Hyperparam: [0.3, 2048, 0.05, True], auroc: 0.83634670781893
+Hyperparam: [0.5, 2048, 0.05, True], auroc: 0.8378971193415639
+Hyperparam: [0.75, 2048, 0.05, True], auroc: 0.8022499999999999
+Hyperparam: [1.0, 2048, 0.05, True], auroc: 0.7017427983539095
+Hyperparam: [1.5, 2048, 0.05, True], auroc: 0.4597340534979424
+Hyperparam: [2.0, 2048, 0.05, True], auroc: 0.36712448559670785
+Hyperparam: [0.05, 4096, 0.05, True], auroc: 0.5087561728395062
+Hyperparam: [0.1, 4096, 0.05, True], auroc: 0.49900205761316874
+Hyperparam: [0.2, 4096, 0.05, True], auroc: 0.721114197530864
+Hyperparam: [0.3, 4096, 0.05, True], auroc: 0.8501275720164609
+Hyperparam: [0.5, 4096, 0.05, True], auroc: 0.8429351851851851
+Hyperparam: [0.75, 4096, 0.05, True], auroc: 0.7937911522633744
+Hyperparam: [1.0, 4096, 0.05, True], auroc: 0.7038791152263375
+Hyperparam: [1.5, 4096, 0.05, True], auroc: 0.44622942386831277
+Hyperparam: [2.0, 4096, 0.05, True], auroc: 0.34341975308641975
+Hyperparam: [0.05, 512, 0.1, True], auroc: 0.5198600823045267
+Hyperparam: [0.1, 512, 0.1, True], auroc: 0.4998786008230453
+Hyperparam: [0.2, 512, 0.1, True], auroc: 0.632074074074074
+Hyperparam: [0.3, 512, 0.1, True], auroc: 0.8101018518518518
+Hyperparam: [0.5, 512, 0.1, True], auroc: 0.8449465020576131
+Hyperparam: [0.75, 512, 0.1, True], auroc: 0.7977289094650205
+Hyperparam: [1.0, 512, 0.1, True], auroc: 0.71283487654321
+Hyperparam: [1.5, 512, 0.1, True], auroc: 0.4337849794238683
+Hyperparam: [2.0, 512, 0.1, True], auroc: 0.4034763374485597
+Hyperparam: [0.05, 1024, 0.1, True], auroc: 0.5294475308641975
+Hyperparam: [0.1, 1024, 0.1, True], auroc: 0.5024722222222222
+Hyperparam: [0.2, 1024, 0.1, True], auroc: 0.6573539094650206
+Hyperparam: [0.3, 1024, 0.1, True], auroc: 0.8295123456790123
+Hyperparam: [0.5, 1024, 0.1, True], auroc: 0.8404485596707819
+Hyperparam: [0.75, 1024, 0.1, True], auroc: 0.80265329218107
+Hyperparam: [1.0, 1024, 0.1, True], auroc: 0.6278580246913581
+Hyperparam: [1.5, 1024, 0.1, True], auroc: 0.47382047325102883
+Hyperparam: [2.0, 1024, 0.1, True], auroc: 0.3743827160493827
+Hyperparam: [0.05, 2048, 0.1, True], auroc: 0.5014876543209876
+Hyperparam: [0.1, 2048, 0.1, True], auroc: 0.5122319958847736
+Hyperparam: [0.2, 2048, 0.1, True], auroc: 0.7085082304526749
+Hyperparam: [0.3, 2048, 0.1, True], auroc: 0.8400689300411522
+Hyperparam: [0.5, 2048, 0.1, True], auroc: 0.8420411522633744
+Hyperparam: [0.75, 2048, 0.1, True], auroc: 0.793690329218107
+Hyperparam: [1.0, 2048, 0.1, True], auroc: 0.6971543209876543
+Hyperparam: [1.5, 2048, 0.1, True], auroc: 0.4595617283950617
+Hyperparam: [2.0, 2048, 0.1, True], auroc: 0.35593312757201645
+Hyperparam: [0.05, 4096, 0.1, True], auroc: 0.5134866255144033
+Hyperparam: [0.1, 4096, 0.1, True], auroc: 0.5119537037037036
+Hyperparam: [0.2, 4096, 0.1, True], auroc: 0.7205267489711933
+Hyperparam: [0.3, 4096, 0.1, True], auroc: 0.8530483539094651
+Hyperparam: [0.5, 4096, 0.1, True], auroc: 0.8399531893004115
+Hyperparam: [0.75, 4096, 0.1, True], auroc: 0.7890205761316872
+Hyperparam: [1.0, 4096, 0.1, True], auroc: 0.7208106995884773
+Hyperparam: [1.5, 4096, 0.1, True], auroc: 0.4996327160493827
+Hyperparam: [2.0, 4096, 0.1, True], auroc: 0.31872633744855966
+Hyperparam: [0.05, 512, 0.025, False], auroc: 0.5091610082304526
+Hyperparam: [0.1, 512, 0.025, False], auroc: 0.49430246913580245
+Hyperparam: [0.2, 512, 0.025, False], auroc: 0.5074814814814814
+Hyperparam: [0.3, 512, 0.025, False], auroc: 0.49425051440329215
+Hyperparam: [0.5, 512, 0.025, False], auroc: 0.5054290123456789
+Hyperparam: [0.75, 512, 0.025, False], auroc: 0.5089953703703703
+Hyperparam: [1.0, 512, 0.025, False], auroc: 0.49593415637860083
+Hyperparam: [1.5, 512, 0.025, False], auroc: 0.4802551440329218
+Hyperparam: [2.0, 512, 0.025, False], auroc: 0.5325216049382716
+Hyperparam: [0.05, 1024, 0.025, False], auroc: 0.4766584362139918
+Hyperparam: [0.1, 1024, 0.025, False], auroc: 0.5174465020576131
+Hyperparam: [0.2, 1024, 0.025, False], auroc: 0.5073960905349795
+Hyperparam: [0.3, 1024, 0.025, False], auroc: 0.4785941358024691
+Hyperparam: [0.5, 1024, 0.025, False], auroc: 0.4949598765432099
+Hyperparam: [0.75, 1024, 0.025, False], auroc: 0.5097052469135802
+Hyperparam: [1.0, 1024, 0.025, False], auroc: 0.5224398148148148
+Hyperparam: [1.5, 1024, 0.025, False], auroc: 0.49046862139917696
+Hyperparam: [2.0, 1024, 0.025, False], auroc: 0.5424002057613169
+Hyperparam: [0.05, 2048, 0.025, False], auroc: 0.5057335390946502
+Hyperparam: [0.1, 2048, 0.025, False], auroc: 0.48760596707818926
+Hyperparam: [0.2, 2048, 0.025, False], auroc: 0.48040123456790124
+Hyperparam: [0.3, 2048, 0.025, False], auroc: 0.5038261316872428
+Hyperparam: [0.5, 2048, 0.025, False], auroc: 0.5010684156378601
+Hyperparam: [0.75, 2048, 0.025, False], auroc: 0.48535082304526755
+Hyperparam: [1.0, 2048, 0.025, False], auroc: 0.48303395061728394
+Hyperparam: [1.5, 2048, 0.025, False], auroc: 0.5026820987654321
+Hyperparam: [2.0, 2048, 0.025, False], auroc: 0.5420771604938271
+Hyperparam: [0.05, 4096, 0.025, False], auroc: 0.49287757201646093
+Hyperparam: [0.1, 4096, 0.025, False], auroc: 0.5062520576131687
+Hyperparam: [0.2, 4096, 0.025, False], auroc: 0.5004819958847737
+Hyperparam: [0.3, 4096, 0.025, False], auroc: 0.48929938271604945
+Hyperparam: [0.5, 4096, 0.025, False], auroc: 0.47484465020576133
+Hyperparam: [0.75, 4096, 0.025, False], auroc: 0.5063271604938272
+Hyperparam: [1.0, 4096, 0.025, False], auroc: 0.5337376543209876
+Hyperparam: [1.5, 4096, 0.025, False], auroc: 0.5018106995884773
+Hyperparam: [2.0, 4096, 0.025, False], auroc: 0.5461213991769548
+Hyperparam: [0.05, 512, 0.05, False], auroc: 0.4969084362139918
+Hyperparam: [0.1, 512, 0.05, False], auroc: 0.509787037037037
+Hyperparam: [0.2, 512, 0.05, False], auroc: 0.4706018518518519
+Hyperparam: [0.3, 512, 0.05, False], auroc: 0.5035370370370371
+Hyperparam: [0.5, 512, 0.05, False], auroc: 0.49138991769547324
+Hyperparam: [0.75, 512, 0.05, False], auroc: 0.4924969135802469
+Hyperparam: [1.0, 512, 0.05, False], auroc: 0.49805864197530864
+Hyperparam: [1.5, 512, 0.05, False], auroc: 0.5210694444444445
+Hyperparam: [2.0, 512, 0.05, False], auroc: 0.5193981481481481
+Hyperparam: [0.05, 1024, 0.05, False], auroc: 0.48699279835390946
+Hyperparam: [0.1, 1024, 0.05, False], auroc: 0.4950668724279835
+Hyperparam: [0.2, 1024, 0.05, False], auroc: 0.5144722222222222
+Hyperparam: [0.3, 1024, 0.05, False], auroc: 0.4951743827160494
+Hyperparam: [0.5, 1024, 0.05, False], auroc: 0.5116764403292181
+Hyperparam: [0.75, 1024, 0.05, False], auroc: 0.5145751028806584
+Hyperparam: [1.0, 1024, 0.05, False], auroc: 0.48110185185185184
+Hyperparam: [1.5, 1024, 0.05, False], auroc: 0.5251450617283951
+Hyperparam: [2.0, 1024, 0.05, False], auroc: 0.5274166666666666
+Hyperparam: [0.05, 2048, 0.05, False], auroc: 0.5114079218106996
+Hyperparam: [0.1, 2048, 0.05, False], auroc: 0.5004927983539095
+Hyperparam: [0.2, 2048, 0.05, False], auroc: 0.5137592592592592
+Hyperparam: [0.3, 2048, 0.05, False], auroc: 0.5077664609053498
+Hyperparam: [0.5, 2048, 0.05, False], auroc: 0.5111059670781892
+Hyperparam: [0.75, 2048, 0.05, False], auroc: 0.4998827160493827
+Hyperparam: [1.0, 2048, 0.05, False], auroc: 0.503246913580247
+Hyperparam: [1.5, 2048, 0.05, False], auroc: 0.5289362139917695
+Hyperparam: [2.0, 2048, 0.05, False], auroc: 0.5440946502057613
+Hyperparam: [0.05, 4096, 0.05, False], auroc: 0.5075061728395062
+Hyperparam: [0.1, 4096, 0.05, False], auroc: 0.5089393004115227
+Hyperparam: [0.2, 4096, 0.05, False], auroc: 0.483048353909465
+Hyperparam: [0.3, 4096, 0.05, False], auroc: 0.5095133744855966
+Hyperparam: [0.5, 4096, 0.05, False], auroc: 0.5070946502057614
+Hyperparam: [0.75, 4096, 0.05, False], auroc: 0.49759053497942385
+Hyperparam: [1.0, 4096, 0.05, False], auroc: 0.4886049382716049
+Hyperparam: [1.5, 4096, 0.05, False], auroc: 0.5267880658436214
+Hyperparam: [2.0, 4096, 0.05, False], auroc: 0.5475689300411523
+Hyperparam: [0.05, 512, 0.1, False], auroc: 0.5060627572016461
+Hyperparam: [0.1, 512, 0.1, False], auroc: 0.5103539094650206
+Hyperparam: [0.2, 512, 0.1, False], auroc: 0.5199938271604938
+Hyperparam: [0.3, 512, 0.1, False], auroc: 0.5042489711934157
+Hyperparam: [0.5, 512, 0.1, False], auroc: 0.48135699588477365
+Hyperparam: [0.75, 512, 0.1, False], auroc: 0.504369341563786
+Hyperparam: [1.0, 512, 0.1, False], auroc: 0.48756378600823047
+Hyperparam: [1.5, 512, 0.1, False], auroc: 0.49265843621399175
+Hyperparam: [2.0, 512, 0.1, False], auroc: 0.5265617283950618
+Hyperparam: [0.05, 1024, 0.1, False], auroc: 0.5079063786008231
+Hyperparam: [0.1, 1024, 0.1, False], auroc: 0.490832304526749
+Hyperparam: [0.2, 1024, 0.1, False], auroc: 0.5023281893004115
+Hyperparam: [0.3, 1024, 0.1, False], auroc: 0.5189871399176955
+Hyperparam: [0.5, 1024, 0.1, False], auroc: 0.5095210905349794
+Hyperparam: [0.75, 1024, 0.1, False], auroc: 0.5157170781893003
+Hyperparam: [1.0, 1024, 0.1, False], auroc: 0.4935401234567901
+Hyperparam: [1.5, 1024, 0.1, False], auroc: 0.5284783950617283
+Hyperparam: [2.0, 1024, 0.1, False], auroc: 0.5279722222222222
+Hyperparam: [0.05, 2048, 0.1, False], auroc: 0.5043559670781893
+Hyperparam: [0.1, 2048, 0.1, False], auroc: 0.5092520576131687
+Hyperparam: [0.2, 2048, 0.1, False], auroc: 0.46557355967078196
+Hyperparam: [0.3, 2048, 0.1, False], auroc: 0.48511831275720163
+Hyperparam: [0.5, 2048, 0.1, False], auroc: 0.48047633744855966
+Hyperparam: [0.75, 2048, 0.1, False], auroc: 0.49713220164609057
+Hyperparam: [1.0, 2048, 0.1, False], auroc: 0.4984825102880659
+Hyperparam: [1.5, 2048, 0.1, False], auroc: 0.5110848765432099
+Hyperparam: [2.0, 2048, 0.1, False], auroc: 0.5657355967078189
+Hyperparam: [0.05, 4096, 0.1, False], auroc: 0.5230195473251029
+Hyperparam: [0.1, 4096, 0.1, False], auroc: 0.5115051440329218
+Hyperparam: [0.2, 4096, 0.1, False], auroc: 0.4806471193415638
+Hyperparam: [0.3, 4096, 0.1, False], auroc: 0.4904639917695473
+Hyperparam: [0.5, 4096, 0.1, False], auroc: 0.4959166666666666
+Hyperparam: [0.75, 4096, 0.1, False], auroc: 0.5003312757201646
+Hyperparam: [1.0, 4096, 0.1, False], auroc: 0.5112752057613169
+Hyperparam: [1.5, 4096, 0.1, False], auroc: 0.4833590534979424
+Hyperparam: [2.0, 4096, 0.1, False], auroc: 0.5400792181069959
+Final hyperparam: [0.3, 4096, 0.1, True]
+Performing inference on cifar100 test set...
+Processing near ood...
+Performing inference on cifar10 dataset...
+Computing metrics on cifar10 dataset...
+FPR@95: 65.03, AUROC: 76.62 AUPR_IN: 75.92, AUPR_OUT: 73.97
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on tin dataset...
+Computing metrics on tin dataset...
+FPR@95: 49.70, AUROC: 82.44 AUPR_IN: 88.05, AUPR_OUT: 72.12
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 57.37, AUROC: 79.53 AUPR_IN: 81.99, AUPR_OUT: 73.04
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Performing inference on mnist dataset...
+Computing metrics on mnist dataset...
+FPR@95: 55.88, AUROC: 80.73 AUPR_IN: 52.89, AUPR_OUT: 96.03
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on svhn dataset...
+Computing metrics on svhn dataset...
+FPR@95: 41.63, AUROC: 88.30 AUPR_IN: 78.68, AUPR_OUT: 94.58
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on texture dataset...
+Computing metrics on texture dataset...
+FPR@95: 48.22, AUROC: 85.40 AUPR_IN: 90.72, AUPR_OUT: 75.78
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on places365 dataset...
+Computing metrics on places365 dataset...
+FPR@95: 52.68, AUROC: 82.90 AUPR_IN: 65.60, AUPR_OUT: 93.35
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 49.60, AUROC: 84.33 AUPR_IN: 71.97, AUPR_OUT: 89.94
+──────────────────────────────────────────────────────────────────────
+
+           FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+cifar10     65.03  76.62    75.92     73.97 77.18
+tin         49.70  82.44    88.05     72.12 77.18
+nearood     57.37  79.53    81.99     73.04 77.18
+mnist       55.88  80.73    52.89     96.03 77.18
+svhn        41.63  88.30    78.68     94.58 77.18
+texture     48.22  85.40    90.72     75.78 77.18
+places365   52.68  82.90    65.60     93.35 77.18
+farood      49.60  84.33    71.97     89.94 77.18
+
+--- RFF Diagnostics (586923 samples) ./results/cifar100_resnet18_32x32_base_e100_lr0.1_default/s0/diagnostics/rff_max_vw.npz ---
+  Classes above threshold: mean=2.1, zero=18.2%, one=30.8%, multi(>1)=51.1%
+  Max score: mean=11.3738, std=27.6984
+  Margin (max-2nd): mean=1.0334, std=2.1153
+
+--- RFF Per-Class Analysis → ./results/cifar100_resnet18_32x32_base_e100_lr0.1_default/s0/diagnostics/rff_max_vw_per_class.csv ---
+  id_test  multi_rate: mean=0.1435, max=0.6071
+  cifar10         multi_rate: mean=0.0857, max=0.3238
+  tin             multi_rate: mean=0.0988, max=0.5000
+  mnist           multi_rate: mean=0.0065, max=0.0969
+  svhn            multi_rate: mean=0.0136, max=0.2083
+  texture         multi_rate: mean=0.0360, max=0.2500
+  places365       multi_rate: mean=0.0542, max=0.2379
+
+--- RFF Debug Plots → ./results/cifar100_resnet18_32x32_base_e100_lr0.1_default/s0/diagnostics ---
+  Kernel dist: mean=0.0029, std=0.0334, min=-0.0437, max=0.7974
+  φ(x) stats per split:
+    train          : mean=-0.00000, std=0.01563
+    val            : mean=0.00000, std=0.01562
+    id_test        : mean=-0.00000, std=0.01563
+    cifar10        : mean=-0.00002, std=0.01563
+    tin            : mean=-0.00001, std=0.01562
+    mnist          : mean=-0.00001, std=0.01563
+    svhn           : mean=-0.00004, std=0.01563
+    texture        : mean=-0.00003, std=0.01563
+    places365      : mean=-0.00002, std=0.01562
+  Score dist:
+    id_test        : mean=2.2401, std=1.3938, n=9000
+    cifar10        : mean=1.0620, std=0.8106, n=10000
+    tin            : mean=0.8458, std=0.5698, n=6526
+    mnist          : mean=0.9086, std=0.6215, n=70000
+    svhn           : mean=0.6709, std=0.4617, n=26032
+    texture        : mean=0.7639, std=0.5680, n=5640
+    places365      : mean=0.8419, std=0.6105, n=33773
+  Debug stats → ./results/cifar100_resnet18_32x32_base_e100_lr0.1_default/s0/diagnostics/rff_debug_stats.csv
+
+==================================================
+Setting up RFF Kernel Attention OOD detector...
+  sigma (bandwidth): 0.5
+  D (RFF dimension): 1024
+  alpha (target FPR): 0.05
+  feature_space: penultimate
+  normalize: True
+  score_mode: max
+  variance_weighted: True
+==================================================
+Extracted 50000 train features of dim 512
+  Feature norm (mean): 12.8982
+  Number of classes: 100
+Extracted 1000 val features for threshold
+Per-class embedding norms (mean): 0.6954
+Per-class score variance (mean): 0.003701
+Threshold (max) at 5.0%: 3.9560
+Max threshold (for diagnostics) at 5.0%: 3.9560
+RFF setup complete.
+
+Starting automatic parameter search...
+Hyperparam: [0.05, 512, 0.025, True], auroc: 0.5108837448559671
+Hyperparam: [0.1, 512, 0.025, True], auroc: 0.5172062757201645
+Hyperparam: [0.2, 512, 0.025, True], auroc: 0.6162577160493827
+Hyperparam: [0.3, 512, 0.025, True], auroc: 0.8154115226337448
+Hyperparam: [0.5, 512, 0.025, True], auroc: 0.8357088477366256
+Hyperparam: [0.75, 512, 0.025, True], auroc: 0.8009871399176954
+Hyperparam: [1.0, 512, 0.025, True], auroc: 0.7066764403292182
+Hyperparam: [1.5, 512, 0.025, True], auroc: 0.4182901234567902
+Hyperparam: [2.0, 512, 0.025, True], auroc: 0.4010457818930041
+Hyperparam: [0.05, 1024, 0.025, True], auroc: 0.5000864197530864
+Hyperparam: [0.1, 1024, 0.025, True], auroc: 0.5098086419753087
+Hyperparam: [0.2, 1024, 0.025, True], auroc: 0.6579753086419753
+Hyperparam: [0.3, 1024, 0.025, True], auroc: 0.8336069958847737
+Hyperparam: [0.5, 1024, 0.025, True], auroc: 0.8363302469135804
+Hyperparam: [0.75, 1024, 0.025, True], auroc: 0.7961615226337448
+Hyperparam: [1.0, 1024, 0.025, True], auroc: 0.7210349794238683
+Hyperparam: [1.5, 1024, 0.025, True], auroc: 0.38678703703703704
+Hyperparam: [2.0, 1024, 0.025, True], auroc: 0.32832716049382715
+Hyperparam: [0.05, 2048, 0.025, True], auroc: 0.5006574074074074
+Hyperparam: [0.1, 2048, 0.025, True], auroc: 0.4942201646090535
+Hyperparam: [0.2, 2048, 0.025, True], auroc: 0.695233024691358
+Hyperparam: [0.3, 2048, 0.025, True], auroc: 0.8462983539094651
+Hyperparam: [0.5, 2048, 0.025, True], auroc: 0.8392716049382715
+Hyperparam: [0.75, 2048, 0.025, True], auroc: 0.796167695473251
+Hyperparam: [1.0, 2048, 0.025, True], auroc: 0.6964485596707818
+Hyperparam: [1.5, 2048, 0.025, True], auroc: 0.42010905349794236
+Hyperparam: [2.0, 2048, 0.025, True], auroc: 0.3780087448559671
+Hyperparam: [0.05, 4096, 0.025, True], auroc: 0.4945432098765432
+Hyperparam: [0.1, 4096, 0.025, True], auroc: 0.5149866255144032
+Hyperparam: [0.2, 4096, 0.025, True], auroc: 0.732235596707819
+Hyperparam: [0.3, 4096, 0.025, True], auroc: 0.8492716049382716
+Hyperparam: [0.5, 4096, 0.025, True], auroc: 0.8383240740740742
+Hyperparam: [0.75, 4096, 0.025, True], auroc: 0.8045267489711934
+Hyperparam: [1.0, 4096, 0.025, True], auroc: 0.6861069958847736
+Hyperparam: [1.5, 4096, 0.025, True], auroc: 0.4723009259259259
+Hyperparam: [2.0, 4096, 0.025, True], auroc: 0.31436934156378604
+Hyperparam: [0.05, 512, 0.05, True], auroc: 0.4905329218106995
+Hyperparam: [0.1, 512, 0.05, True], auroc: 0.4949855967078189
+Hyperparam: [0.2, 512, 0.05, True], auroc: 0.6189722222222223
+Hyperparam: [0.3, 512, 0.05, True], auroc: 0.8143199588477364
+Hyperparam: [0.5, 512, 0.05, True], auroc: 0.832312757201646
+Hyperparam: [0.75, 512, 0.05, True], auroc: 0.7906851851851852
+Hyperparam: [1.0, 512, 0.05, True], auroc: 0.6883425925925926
+Hyperparam: [1.5, 512, 0.05, True], auroc: 0.33250411522633744
+Hyperparam: [2.0, 512, 0.05, True], auroc: 0.3790576131687243
+Hyperparam: [0.05, 1024, 0.05, True], auroc: 0.503287037037037
+Hyperparam: [0.1, 1024, 0.05, True], auroc: 0.4902623456790124
+Hyperparam: [0.2, 1024, 0.05, True], auroc: 0.6562006172839506
+Hyperparam: [0.3, 1024, 0.05, True], auroc: 0.8272530864197529
+Hyperparam: [0.5, 1024, 0.05, True], auroc: 0.837604938271605
+Hyperparam: [0.75, 1024, 0.05, True], auroc: 0.8120195473251028
+Hyperparam: [1.0, 1024, 0.05, True], auroc: 0.6774485596707819
+Hyperparam: [1.5, 1024, 0.05, True], auroc: 0.3469722222222222
+Hyperparam: [2.0, 1024, 0.05, True], auroc: 0.33791358024691354
+Hyperparam: [0.05, 2048, 0.05, True], auroc: 0.4662865226337448
+Hyperparam: [0.1, 2048, 0.05, True], auroc: 0.5129444444444444
+Hyperparam: [0.2, 2048, 0.05, True], auroc: 0.6832469135802468
+Hyperparam: [0.3, 2048, 0.05, True], auroc: 0.8396183127572016
+Hyperparam: [0.5, 2048, 0.05, True], auroc: 0.8383405349794238
+Hyperparam: [0.75, 2048, 0.05, True], auroc: 0.7984372427983539
+Hyperparam: [1.0, 2048, 0.05, True], auroc: 0.6958652263374485
+Hyperparam: [1.5, 2048, 0.05, True], auroc: 0.49331687242798355
+Hyperparam: [2.0, 2048, 0.05, True], auroc: 0.34935956790123457
+Hyperparam: [0.05, 4096, 0.05, True], auroc: 0.4961769547325103
+Hyperparam: [0.1, 4096, 0.05, True], auroc: 0.4938641975308642
+Hyperparam: [0.2, 4096, 0.05, True], auroc: 0.7280751028806585
+Hyperparam: [0.3, 4096, 0.05, True], auroc: 0.8480277777777777
+Hyperparam: [0.5, 4096, 0.05, True], auroc: 0.8416769547325103
+Hyperparam: [0.75, 4096, 0.05, True], auroc: 0.8104207818930041
+Hyperparam: [1.0, 4096, 0.05, True], auroc: 0.7167181069958847
+Hyperparam: [1.5, 4096, 0.05, True], auroc: 0.4362510288065844
+Hyperparam: [2.0, 4096, 0.05, True], auroc: 0.40105246913580245
+Hyperparam: [0.05, 512, 0.1, True], auroc: 0.5078960905349794
+Hyperparam: [0.1, 512, 0.1, True], auroc: 0.514227366255144
+Hyperparam: [0.2, 512, 0.1, True], auroc: 0.6280432098765432
+Hyperparam: [0.3, 512, 0.1, True], auroc: 0.813482510288066
+Hyperparam: [0.5, 512, 0.1, True], auroc: 0.8341008230452674
+Hyperparam: [0.75, 512, 0.1, True], auroc: 0.8123641975308641
+Hyperparam: [1.0, 512, 0.1, True], auroc: 0.6436213991769547
+Hyperparam: [1.5, 512, 0.1, True], auroc: 0.35370524691358024
+Hyperparam: [2.0, 512, 0.1, True], auroc: 0.37099279835390947
+Hyperparam: [0.05, 1024, 0.1, True], auroc: 0.48121604938271606
+Hyperparam: [0.1, 1024, 0.1, True], auroc: 0.5160118312757201
+Hyperparam: [0.2, 1024, 0.1, True], auroc: 0.6759819958847737
+Hyperparam: [0.3, 1024, 0.1, True], auroc: 0.825738683127572
+Hyperparam: [0.5, 1024, 0.1, True], auroc: 0.839769547325103
+Hyperparam: [0.75, 1024, 0.1, True], auroc: 0.8072417695473252
+Hyperparam: [1.0, 1024, 0.1, True], auroc: 0.6930380658436215
+Hyperparam: [1.5, 1024, 0.1, True], auroc: 0.39244701646090535
+Hyperparam: [2.0, 1024, 0.1, True], auroc: 0.3685072016460905
+Hyperparam: [0.05, 2048, 0.1, True], auroc: 0.4993179012345679
+Hyperparam: [0.1, 2048, 0.1, True], auroc: 0.4979135802469135
+Hyperparam: [0.2, 2048, 0.1, True], auroc: 0.6920596707818929
+Hyperparam: [0.3, 2048, 0.1, True], auroc: 0.840138888888889
+Hyperparam: [0.5, 2048, 0.1, True], auroc: 0.8386203703703703
+Hyperparam: [0.75, 2048, 0.1, True], auroc: 0.8058230452674897
+Hyperparam: [1.0, 2048, 0.1, True], auroc: 0.7069475308641975
+Hyperparam: [1.5, 2048, 0.1, True], auroc: 0.3938739711934156
+Hyperparam: [2.0, 2048, 0.1, True], auroc: 0.2802937242798354
+Hyperparam: [0.05, 4096, 0.1, True], auroc: 0.49162860082304527
+Hyperparam: [0.1, 4096, 0.1, True], auroc: 0.5171882716049383
+Hyperparam: [0.2, 4096, 0.1, True], auroc: 0.7181131687242799
+Hyperparam: [0.3, 4096, 0.1, True], auroc: 0.8436913580246914
+Hyperparam: [0.5, 4096, 0.1, True], auroc: 0.8426203703703704
+Hyperparam: [0.75, 4096, 0.1, True], auroc: 0.7918641975308642
+Hyperparam: [1.0, 4096, 0.1, True], auroc: 0.7138611111111112
+Hyperparam: [1.5, 4096, 0.1, True], auroc: 0.4377047325102881
+Hyperparam: [2.0, 4096, 0.1, True], auroc: 0.3756054526748971
+Hyperparam: [0.05, 512, 0.025, False], auroc: 0.4893909465020576
+Hyperparam: [0.1, 512, 0.025, False], auroc: 0.4764855967078189
+Hyperparam: [0.2, 512, 0.025, False], auroc: 0.5299053497942388
+Hyperparam: [0.3, 512, 0.025, False], auroc: 0.49515020576131685
+Hyperparam: [0.5, 512, 0.025, False], auroc: 0.5018364197530863
+Hyperparam: [0.75, 512, 0.025, False], auroc: 0.519287037037037
+Hyperparam: [1.0, 512, 0.025, False], auroc: 0.489775720164609
+Hyperparam: [1.5, 512, 0.025, False], auroc: 0.49183641975308645
+Hyperparam: [2.0, 512, 0.025, False], auroc: 0.5222993827160494
+Hyperparam: [0.05, 1024, 0.025, False], auroc: 0.4848477366255144
+Hyperparam: [0.1, 1024, 0.025, False], auroc: 0.4977479423868313
+Hyperparam: [0.2, 1024, 0.025, False], auroc: 0.5032546296296296
+Hyperparam: [0.3, 1024, 0.025, False], auroc: 0.484122427983539
+Hyperparam: [0.5, 1024, 0.025, False], auroc: 0.5047232510288066
+Hyperparam: [0.75, 1024, 0.025, False], auroc: 0.48258847736625515
+Hyperparam: [1.0, 1024, 0.025, False], auroc: 0.49948251028806584
+Hyperparam: [1.5, 1024, 0.025, False], auroc: 0.491679012345679
+Hyperparam: [2.0, 1024, 0.025, False], auroc: 0.5479202674897119
+Hyperparam: [0.05, 2048, 0.025, False], auroc: 0.5037314814814814
+Hyperparam: [0.1, 2048, 0.025, False], auroc: 0.5034763374485596
+Hyperparam: [0.2, 2048, 0.025, False], auroc: 0.5015689300411522
+Hyperparam: [0.3, 2048, 0.025, False], auroc: 0.4852345679012346
+Hyperparam: [0.5, 2048, 0.025, False], auroc: 0.5003184156378602
+Hyperparam: [0.75, 2048, 0.025, False], auroc: 0.5111121399176954
+Hyperparam: [1.0, 2048, 0.025, False], auroc: 0.49987654320987657
+Hyperparam: [1.5, 2048, 0.025, False], auroc: 0.5227191358024692
+Hyperparam: [2.0, 2048, 0.025, False], auroc: 0.5217109053497941
+Hyperparam: [0.05, 4096, 0.025, False], auroc: 0.5161491769547325
+Hyperparam: [0.1, 4096, 0.025, False], auroc: 0.49810133744855967
+Hyperparam: [0.2, 4096, 0.025, False], auroc: 0.4966172839506173
+Hyperparam: [0.3, 4096, 0.025, False], auroc: 0.49762551440329217
+Hyperparam: [0.5, 4096, 0.025, False], auroc: 0.49883024691358024
+Hyperparam: [0.75, 4096, 0.025, False], auroc: 0.5088127572016461
+Hyperparam: [1.0, 4096, 0.025, False], auroc: 0.49978189300411524
+Hyperparam: [1.5, 4096, 0.025, False], auroc: 0.5256502057613169
+Hyperparam: [2.0, 4096, 0.025, False], auroc: 0.5567716049382716
+Hyperparam: [0.05, 512, 0.05, False], auroc: 0.4733220164609054
+Hyperparam: [0.1, 512, 0.05, False], auroc: 0.48255144032921804
+Hyperparam: [0.2, 512, 0.05, False], auroc: 0.48786008230452677
+Hyperparam: [0.3, 512, 0.05, False], auroc: 0.48044598765432095
+Hyperparam: [0.5, 512, 0.05, False], auroc: 0.5051995884773662
+Hyperparam: [0.75, 512, 0.05, False], auroc: 0.4793333333333333
+Hyperparam: [1.0, 512, 0.05, False], auroc: 0.5013930041152264
+Hyperparam: [1.5, 512, 0.05, False], auroc: 0.5114557613168724
+Hyperparam: [2.0, 512, 0.05, False], auroc: 0.5290020576131687
+Hyperparam: [0.05, 1024, 0.05, False], auroc: 0.5063930041152264
+Hyperparam: [0.1, 1024, 0.05, False], auroc: 0.47876851851851854
+Hyperparam: [0.2, 1024, 0.05, False], auroc: 0.47682201646090533
+Hyperparam: [0.3, 1024, 0.05, False], auroc: 0.5101779835390946
+Hyperparam: [0.5, 1024, 0.05, False], auroc: 0.5025164609053497
+Hyperparam: [0.75, 1024, 0.05, False], auroc: 0.5346512345679013
+Hyperparam: [1.0, 1024, 0.05, False], auroc: 0.5198780864197532
+Hyperparam: [1.5, 1024, 0.05, False], auroc: 0.4843034979423868
+Hyperparam: [2.0, 1024, 0.05, False], auroc: 0.5303590534979424
+Hyperparam: [0.05, 2048, 0.05, False], auroc: 0.5011502057613169
+Hyperparam: [0.1, 2048, 0.05, False], auroc: 0.5172921810699589
+Hyperparam: [0.2, 2048, 0.05, False], auroc: 0.49156069958847737
+Hyperparam: [0.3, 2048, 0.05, False], auroc: 0.5126820987654321
+Hyperparam: [0.5, 2048, 0.05, False], auroc: 0.5318837448559671
+Hyperparam: [0.75, 2048, 0.05, False], auroc: 0.5070637860082304
+Hyperparam: [1.0, 2048, 0.05, False], auroc: 0.491466049382716
+Hyperparam: [1.5, 2048, 0.05, False], auroc: 0.5187993827160494
+Hyperparam: [2.0, 2048, 0.05, False], auroc: 0.5518724279835391
+Hyperparam: [0.05, 4096, 0.05, False], auroc: 0.49803703703703706
+Hyperparam: [0.1, 4096, 0.05, False], auroc: 0.5016141975308642
+Hyperparam: [0.2, 4096, 0.05, False], auroc: 0.5111584362139917
+Hyperparam: [0.3, 4096, 0.05, False], auroc: 0.4930452674897119
+Hyperparam: [0.5, 4096, 0.05, False], auroc: 0.4992088477366255
+Hyperparam: [0.75, 4096, 0.05, False], auroc: 0.4793364197530864
+Hyperparam: [1.0, 4096, 0.05, False], auroc: 0.4918858024691358
+Hyperparam: [1.5, 4096, 0.05, False], auroc: 0.5227407407407407
+Hyperparam: [2.0, 4096, 0.05, False], auroc: 0.5584413580246914
+Hyperparam: [0.05, 512, 0.1, False], auroc: 0.5315905349794239
+Hyperparam: [0.1, 512, 0.1, False], auroc: 0.4890895061728395
+Hyperparam: [0.2, 512, 0.1, False], auroc: 0.4966502057613169
+Hyperparam: [0.3, 512, 0.1, False], auroc: 0.4933909465020576
+Hyperparam: [0.5, 512, 0.1, False], auroc: 0.4897993827160494
+Hyperparam: [0.75, 512, 0.1, False], auroc: 0.47575823045267496
+Hyperparam: [1.0, 512, 0.1, False], auroc: 0.49181275720164613
+Hyperparam: [1.5, 512, 0.1, False], auroc: 0.49013786008230453
+Hyperparam: [2.0, 512, 0.1, False], auroc: 0.5248034979423868
+Hyperparam: [0.05, 1024, 0.1, False], auroc: 0.4945946502057613
+Hyperparam: [0.1, 1024, 0.1, False], auroc: 0.5046738683127572
+Hyperparam: [0.2, 1024, 0.1, False], auroc: 0.495886316872428
+Hyperparam: [0.3, 1024, 0.1, False], auroc: 0.48448662551440325
+Hyperparam: [0.5, 1024, 0.1, False], auroc: 0.48201851851851857
+Hyperparam: [0.75, 1024, 0.1, False], auroc: 0.515880658436214
+Hyperparam: [1.0, 1024, 0.1, False], auroc: 0.5172654320987654
+Hyperparam: [1.5, 1024, 0.1, False], auroc: 0.5032854938271605
+Hyperparam: [2.0, 1024, 0.1, False], auroc: 0.5389835390946502
+Hyperparam: [0.05, 2048, 0.1, False], auroc: 0.5164845679012345
+Hyperparam: [0.1, 2048, 0.1, False], auroc: 0.5045730452674897
+Hyperparam: [0.2, 2048, 0.1, False], auroc: 0.5044284979423869
+Hyperparam: [0.3, 2048, 0.1, False], auroc: 0.5144557613168724
+Hyperparam: [0.5, 2048, 0.1, False], auroc: 0.5047623456790123
+Hyperparam: [0.75, 2048, 0.1, False], auroc: 0.5180149176954733
+Hyperparam: [1.0, 2048, 0.1, False], auroc: 0.4928662551440329
+Hyperparam: [1.5, 2048, 0.1, False], auroc: 0.48864197530864195
+Hyperparam: [2.0, 2048, 0.1, False], auroc: 0.5424927983539094
+Hyperparam: [0.05, 4096, 0.1, False], auroc: 0.48689506172839503
+Hyperparam: [0.1, 4096, 0.1, False], auroc: 0.5055745884773662
+Hyperparam: [0.2, 4096, 0.1, False], auroc: 0.4997253086419753
+Hyperparam: [0.3, 4096, 0.1, False], auroc: 0.4967448559670782
+Hyperparam: [0.5, 4096, 0.1, False], auroc: 0.5037911522633745
+Hyperparam: [0.75, 4096, 0.1, False], auroc: 0.5035534979423868
+Hyperparam: [1.0, 4096, 0.1, False], auroc: 0.5207890946502057
+Hyperparam: [1.5, 4096, 0.1, False], auroc: 0.5219094650205761
+Hyperparam: [2.0, 4096, 0.1, False], auroc: 0.5693384773662551
+Final hyperparam: [0.3, 4096, 0.025, True]
+Performing inference on cifar100 test set...
+Processing near ood...
+Performing inference on cifar10 dataset...
+Computing metrics on cifar10 dataset...
+FPR@95: 64.98, AUROC: 76.11 AUPR_IN: 76.04, AUPR_OUT: 73.22
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on tin dataset...
+Computing metrics on tin dataset...
+FPR@95: 49.84, AUROC: 82.19 AUPR_IN: 87.73, AUPR_OUT: 71.61
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 57.41, AUROC: 79.15 AUPR_IN: 81.88, AUPR_OUT: 72.42
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Performing inference on mnist dataset...
+Computing metrics on mnist dataset...
+FPR@95: 46.94, AUROC: 84.09 AUPR_IN: 58.57, AUPR_OUT: 96.78
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on svhn dataset...
+Computing metrics on svhn dataset...
+FPR@95: 47.33, AUROC: 85.95 AUPR_IN: 75.65, AUPR_OUT: 93.22
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on texture dataset...
+Computing metrics on texture dataset...
+FPR@95: 47.97, AUROC: 84.87 AUPR_IN: 90.69, AUPR_OUT: 74.52
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on places365 dataset...
+Computing metrics on places365 dataset...
+FPR@95: 53.71, AUROC: 82.18 AUPR_IN: 64.54, AUPR_OUT: 92.93
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 48.99, AUROC: 84.27 AUPR_IN: 72.36, AUPR_OUT: 89.36
+──────────────────────────────────────────────────────────────────────
+
+           FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+cifar10     64.98  76.11    76.04     73.22 77.38
+tin         49.84  82.19    87.73     71.61 77.38
+nearood     57.41  79.15    81.88     72.42 77.38
+mnist       46.94  84.09    58.57     96.78 77.38
+svhn        47.33  85.95    75.65     93.22 77.38
+texture     47.97  84.87    90.69     74.52 77.38
+places365   53.71  82.18    64.54     92.93 77.38
+farood      48.99  84.27    72.36     89.36 77.38
+
+--- RFF Diagnostics (586923 samples) ./results/cifar100_resnet18_32x32_base_e100_lr0.1_default/s1/diagnostics/rff_max_vw.npz ---
+  Classes above threshold: mean=2.3, zero=9.7%, one=29.6%, multi(>1)=60.7%
+  Max score: mean=11.5542, std=28.0815
+  Margin (max-2nd): mean=1.0597, std=2.0855
+
+--- RFF Per-Class Analysis → ./results/cifar100_resnet18_32x32_base_e100_lr0.1_default/s1/diagnostics/rff_max_vw_per_class.csv ---
+  id_test  multi_rate: mean=0.4932, max=0.8242
+  cifar10         multi_rate: mean=0.4553, max=0.7679
+  tin             multi_rate: mean=0.4692, max=0.8333
+  mnist           multi_rate: mean=0.1552, max=0.5800
+  svhn            multi_rate: mean=0.1513, max=0.6087
+  texture         multi_rate: mean=0.2683, max=1.0000
+  places365       multi_rate: mean=0.3681, max=0.5813
+
+--- RFF Debug Plots → ./results/cifar100_resnet18_32x32_base_e100_lr0.1_default/s1/diagnostics ---
+  Kernel dist: mean=0.0019, std=0.0196, min=-0.0540, max=0.2863
+  φ(x) stats per split:
+    train          : mean=-0.00000, std=0.01563
+    val            : mean=-0.00001, std=0.01562
+    id_test        : mean=-0.00001, std=0.01563
+    cifar10        : mean=-0.00002, std=0.01562
+    tin            : mean=-0.00001, std=0.01562
+    mnist          : mean=0.00004, std=0.01562
+    svhn           : mean=-0.00006, std=0.01562
+    texture        : mean=-0.00002, std=0.01562
+    places365      : mean=-0.00000, std=0.01562
+  Score dist:
+    id_test        : mean=2.2438, std=1.4034, n=9000
+    cifar10        : mean=1.0710, std=0.7996, n=10000
+    tin            : mean=0.8481, std=0.5911, n=6526
+    mnist          : mean=0.7853, std=0.5230, n=70000
+    svhn           : mean=0.7370, std=0.5092, n=26032
+    texture        : mean=0.7688, std=0.5415, n=5640
+    places365      : mean=0.8577, std=0.6258, n=33773
+  Debug stats → ./results/cifar100_resnet18_32x32_base_e100_lr0.1_default/s1/diagnostics/rff_debug_stats.csv
+
+==================================================
+Setting up RFF Kernel Attention OOD detector...
+  sigma (bandwidth): 0.5
+  D (RFF dimension): 1024
+  alpha (target FPR): 0.05
+  feature_space: penultimate
+  normalize: True
+  score_mode: max
+  variance_weighted: True
+==================================================
+Extracted 50000 train features of dim 512
+  Feature norm (mean): 12.9293
+  Number of classes: 100
+Extracted 1000 val features for threshold
+Per-class embedding norms (mean): 0.6904
+Per-class score variance (mean): 0.003740
+Threshold (max) at 5.0%: 3.9649
+Max threshold (for diagnostics) at 5.0%: 3.9649
+RFF setup complete.
+
+Starting automatic parameter search...
+Hyperparam: [0.05, 512, 0.025, True], auroc: 0.5108477366255144
+Hyperparam: [0.1, 512, 0.025, True], auroc: 0.47721810699588474
+Hyperparam: [0.2, 512, 0.025, True], auroc: 0.6330946502057614
+Hyperparam: [0.3, 512, 0.025, True], auroc: 0.8001296296296296
+Hyperparam: [0.5, 512, 0.025, True], auroc: 0.8202520576131687
+Hyperparam: [0.75, 512, 0.025, True], auroc: 0.7915977366255142
+Hyperparam: [1.0, 512, 0.025, True], auroc: 0.6827541152263374
+Hyperparam: [1.5, 512, 0.025, True], auroc: 0.4433940329218107
+Hyperparam: [2.0, 512, 0.025, True], auroc: 0.3604341563786008
+Hyperparam: [0.05, 1024, 0.025, True], auroc: 0.5022757201646091
+Hyperparam: [0.1, 1024, 0.025, True], auroc: 0.4859125514403292
+Hyperparam: [0.2, 1024, 0.025, True], auroc: 0.6650884773662552
+Hyperparam: [0.3, 1024, 0.025, True], auroc: 0.8161255144032923
+Hyperparam: [0.5, 1024, 0.025, True], auroc: 0.8340349794238684
+Hyperparam: [0.75, 1024, 0.025, True], auroc: 0.7822067901234568
+Hyperparam: [1.0, 1024, 0.025, True], auroc: 0.6807664609053498
+Hyperparam: [1.5, 1024, 0.025, True], auroc: 0.5136327160493827
+Hyperparam: [2.0, 1024, 0.025, True], auroc: 0.3319171810699588
+Hyperparam: [0.05, 2048, 0.025, True], auroc: 0.5278611111111111
+Hyperparam: [0.1, 2048, 0.025, True], auroc: 0.5154650205761316
+Hyperparam: [0.2, 2048, 0.025, True], auroc: 0.6686399176954733
+Hyperparam: [0.3, 2048, 0.025, True], auroc: 0.8244907407407407
+Hyperparam: [0.5, 2048, 0.025, True], auroc: 0.8317067901234568
+Hyperparam: [0.75, 2048, 0.025, True], auroc: 0.7862006172839505
+Hyperparam: [1.0, 2048, 0.025, True], auroc: 0.7141615226337448
+Hyperparam: [1.5, 2048, 0.025, True], auroc: 0.4476584362139917
+Hyperparam: [2.0, 2048, 0.025, True], auroc: 0.3567479423868313
+Hyperparam: [0.05, 4096, 0.025, True], auroc: 0.49273096707818925
+Hyperparam: [0.1, 4096, 0.025, True], auroc: 0.5203302469135803
+Hyperparam: [0.2, 4096, 0.025, True], auroc: 0.7158302469135803
+Hyperparam: [0.3, 4096, 0.025, True], auroc: 0.8379650205761315
+Hyperparam: [0.5, 4096, 0.025, True], auroc: 0.8330221193415639
+Hyperparam: [0.75, 4096, 0.025, True], auroc: 0.788400205761317
+Hyperparam: [1.0, 4096, 0.025, True], auroc: 0.6707973251028807
+Hyperparam: [1.5, 4096, 0.025, True], auroc: 0.5259207818930042
+Hyperparam: [2.0, 4096, 0.025, True], auroc: 0.3729758230452675
+Hyperparam: [0.05, 512, 0.05, True], auroc: 0.4953045267489712
+Hyperparam: [0.1, 512, 0.05, True], auroc: 0.48942695473251024
+Hyperparam: [0.2, 512, 0.05, True], auroc: 0.6197006172839506
+Hyperparam: [0.3, 512, 0.05, True], auroc: 0.8054444444444444
+Hyperparam: [0.5, 512, 0.05, True], auroc: 0.8187664609053497
+Hyperparam: [0.75, 512, 0.05, True], auroc: 0.8018518518518519
+Hyperparam: [1.0, 512, 0.05, True], auroc: 0.6703533950617284
+Hyperparam: [1.5, 512, 0.05, True], auroc: 0.4589475308641975
+Hyperparam: [2.0, 512, 0.05, True], auroc: 0.3993112139917695
+Hyperparam: [0.05, 1024, 0.05, True], auroc: 0.49440534979423867
+Hyperparam: [0.1, 1024, 0.05, True], auroc: 0.515832304526749
+Hyperparam: [0.2, 1024, 0.05, True], auroc: 0.6693220164609053
+Hyperparam: [0.3, 1024, 0.05, True], auroc: 0.8234902263374486
+Hyperparam: [0.5, 1024, 0.05, True], auroc: 0.8280555555555557
+Hyperparam: [0.75, 1024, 0.05, True], auroc: 0.7810144032921811
+Hyperparam: [1.0, 1024, 0.05, True], auroc: 0.703414609053498
+Hyperparam: [1.5, 1024, 0.05, True], auroc: 0.43625205761316876
+Hyperparam: [2.0, 1024, 0.05, True], auroc: 0.3216805555555555
+Hyperparam: [0.05, 2048, 0.05, True], auroc: 0.5037181069958847
+Hyperparam: [0.1, 2048, 0.05, True], auroc: 0.4936059670781894
+Hyperparam: [0.2, 2048, 0.05, True], auroc: 0.6928240740740741
+Hyperparam: [0.3, 2048, 0.05, True], auroc: 0.8274320987654321
+Hyperparam: [0.5, 2048, 0.05, True], auroc: 0.8277479423868312
+Hyperparam: [0.75, 2048, 0.05, True], auroc: 0.7890740740740741
+Hyperparam: [1.0, 2048, 0.05, True], auroc: 0.6646316872427983
+Hyperparam: [1.5, 2048, 0.05, True], auroc: 0.5557057613168724
+Hyperparam: [2.0, 2048, 0.05, True], auroc: 0.342511316872428
+Hyperparam: [0.05, 4096, 0.05, True], auroc: 0.52209670781893
+Hyperparam: [0.1, 4096, 0.05, True], auroc: 0.4879485596707819
+Hyperparam: [0.2, 4096, 0.05, True], auroc: 0.7210997942386832
+Hyperparam: [0.3, 4096, 0.05, True], auroc: 0.8405812757201647
+Hyperparam: [0.5, 4096, 0.05, True], auroc: 0.8286718106995884
+Hyperparam: [0.75, 4096, 0.05, True], auroc: 0.7872407407407408
+Hyperparam: [1.0, 4096, 0.05, True], auroc: 0.710059670781893
+Hyperparam: [1.5, 4096, 0.05, True], auroc: 0.4823168724279836
+Hyperparam: [2.0, 4096, 0.05, True], auroc: 0.4119783950617284
+Hyperparam: [0.05, 512, 0.1, True], auroc: 0.49984979423868314
+Hyperparam: [0.1, 512, 0.1, True], auroc: 0.5252541152263375
+Hyperparam: [0.2, 512, 0.1, True], auroc: 0.6373467078189302
+Hyperparam: [0.3, 512, 0.1, True], auroc: 0.8072078189300411
+Hyperparam: [0.5, 512, 0.1, True], auroc: 0.8258539094650206
+Hyperparam: [0.75, 512, 0.1, True], auroc: 0.7968569958847735
+Hyperparam: [1.0, 512, 0.1, True], auroc: 0.6899310699588478
+Hyperparam: [1.5, 512, 0.1, True], auroc: 0.33980401234567903
+Hyperparam: [2.0, 512, 0.1, True], auroc: 0.37410236625514404
+Hyperparam: [0.05, 1024, 0.1, True], auroc: 0.5022551440329218
+Hyperparam: [0.1, 1024, 0.1, True], auroc: 0.5123971193415638
+Hyperparam: [0.2, 1024, 0.1, True], auroc: 0.6484938271604939
+Hyperparam: [0.3, 1024, 0.1, True], auroc: 0.8210730452674897
+Hyperparam: [0.5, 1024, 0.1, True], auroc: 0.8280432098765431
+Hyperparam: [0.75, 1024, 0.1, True], auroc: 0.8064423868312758
+Hyperparam: [1.0, 1024, 0.1, True], auroc: 0.6927993827160494
+Hyperparam: [1.5, 1024, 0.1, True], auroc: 0.43449331275720166
+Hyperparam: [2.0, 1024, 0.1, True], auroc: 0.32546347736625514
+Hyperparam: [0.05, 2048, 0.1, True], auroc: 0.5135946502057612
+Hyperparam: [0.1, 2048, 0.1, True], auroc: 0.49760339506172835
+Hyperparam: [0.2, 2048, 0.1, True], auroc: 0.6804835390946503
+Hyperparam: [0.3, 2048, 0.1, True], auroc: 0.8320946502057611
+Hyperparam: [0.5, 2048, 0.1, True], auroc: 0.8293158436213991
+Hyperparam: [0.75, 2048, 0.1, True], auroc: 0.796003086419753
+Hyperparam: [1.0, 2048, 0.1, True], auroc: 0.7085118312757201
+Hyperparam: [1.5, 2048, 0.1, True], auroc: 0.40375102880658437
+Hyperparam: [2.0, 2048, 0.1, True], auroc: 0.3604336419753086
+Hyperparam: [0.05, 4096, 0.1, True], auroc: 0.4883683127572017
+Hyperparam: [0.1, 4096, 0.1, True], auroc: 0.5059104938271605
+Hyperparam: [0.2, 4096, 0.1, True], auroc: 0.68920987654321
+Hyperparam: [0.3, 4096, 0.1, True], auroc: 0.8366574074074075
+Hyperparam: [0.5, 4096, 0.1, True], auroc: 0.8288364197530863
+Hyperparam: [0.75, 4096, 0.1, True], auroc: 0.7903641975308642
+Hyperparam: [1.0, 4096, 0.1, True], auroc: 0.6892901234567901
+Hyperparam: [1.5, 4096, 0.1, True], auroc: 0.48239711934156376
+Hyperparam: [2.0, 4096, 0.1, True], auroc: 0.3675138888888889
+Hyperparam: [0.05, 512, 0.025, False], auroc: 0.5126090534979424
+Hyperparam: [0.1, 512, 0.025, False], auroc: 0.5065812757201645
+Hyperparam: [0.2, 512, 0.025, False], auroc: 0.5218991769547325
+Hyperparam: [0.3, 512, 0.025, False], auroc: 0.490264403292181
+Hyperparam: [0.5, 512, 0.025, False], auroc: 0.5014706790123457
+Hyperparam: [0.75, 512, 0.025, False], auroc: 0.5059248971193415
+Hyperparam: [1.0, 512, 0.025, False], auroc: 0.4938086419753087
+Hyperparam: [1.5, 512, 0.025, False], auroc: 0.5053148148148148
+Hyperparam: [2.0, 512, 0.025, False], auroc: 0.523233024691358
+Hyperparam: [0.05, 1024, 0.025, False], auroc: 0.5005709876543211
+Hyperparam: [0.1, 1024, 0.025, False], auroc: 0.5140133744855967
+Hyperparam: [0.2, 1024, 0.025, False], auroc: 0.5244176954732511
+Hyperparam: [0.3, 1024, 0.025, False], auroc: 0.48776954732510286
+Hyperparam: [0.5, 1024, 0.025, False], auroc: 0.5228384773662551
+Hyperparam: [0.75, 1024, 0.025, False], auroc: 0.4954104938271605
+Hyperparam: [1.0, 1024, 0.025, False], auroc: 0.48997839506172836
+Hyperparam: [1.5, 1024, 0.025, False], auroc: 0.5081738683127572
+Hyperparam: [2.0, 1024, 0.025, False], auroc: 0.5483034979423869
+Hyperparam: [0.05, 2048, 0.025, False], auroc: 0.4915648148148148
+Hyperparam: [0.1, 2048, 0.025, False], auroc: 0.508679012345679
+Hyperparam: [0.2, 2048, 0.025, False], auroc: 0.4889382716049383
+Hyperparam: [0.3, 2048, 0.025, False], auroc: 0.49398868312757194
+Hyperparam: [0.5, 2048, 0.025, False], auroc: 0.4833734567901235
+Hyperparam: [0.75, 2048, 0.025, False], auroc: 0.5008765432098766
+Hyperparam: [1.0, 2048, 0.025, False], auroc: 0.48673456790123454
+Hyperparam: [1.5, 2048, 0.025, False], auroc: 0.5060329218106996
+Hyperparam: [2.0, 2048, 0.025, False], auroc: 0.550537037037037
+Hyperparam: [0.05, 4096, 0.025, False], auroc: 0.49991049382716046
+Hyperparam: [0.1, 4096, 0.025, False], auroc: 0.5145864197530865
+Hyperparam: [0.2, 4096, 0.025, False], auroc: 0.520008230452675
+Hyperparam: [0.3, 4096, 0.025, False], auroc: 0.5102890946502058
+Hyperparam: [0.5, 4096, 0.025, False], auroc: 0.48820781893004117
+Hyperparam: [0.75, 4096, 0.025, False], auroc: 0.5028765432098765
+Hyperparam: [1.0, 4096, 0.025, False], auroc: 0.4835828189300411
+Hyperparam: [1.5, 4096, 0.025, False], auroc: 0.5155421810699589
+Hyperparam: [2.0, 4096, 0.025, False], auroc: 0.5673179012345679
+Hyperparam: [0.05, 512, 0.05, False], auroc: 0.49271759259259257
+Hyperparam: [0.1, 512, 0.05, False], auroc: 0.5212952674897119
+Hyperparam: [0.2, 512, 0.05, False], auroc: 0.5165987654320987
+Hyperparam: [0.3, 512, 0.05, False], auroc: 0.5081635802469135
+Hyperparam: [0.5, 512, 0.05, False], auroc: 0.4826275720164609
+Hyperparam: [0.75, 512, 0.05, False], auroc: 0.47234465020576133
+Hyperparam: [1.0, 512, 0.05, False], auroc: 0.49946965020576134
+Hyperparam: [1.5, 512, 0.05, False], auroc: 0.5070699588477366
+Hyperparam: [2.0, 512, 0.05, False], auroc: 0.5305318930041152
+Hyperparam: [0.05, 1024, 0.05, False], auroc: 0.48226851851851854
+Hyperparam: [0.1, 1024, 0.05, False], auroc: 0.4980622427983539
+Hyperparam: [0.2, 1024, 0.05, False], auroc: 0.5158045267489713
+Hyperparam: [0.3, 1024, 0.05, False], auroc: 0.5205236625514403
+Hyperparam: [0.5, 1024, 0.05, False], auroc: 0.528849279835391
+Hyperparam: [0.75, 1024, 0.05, False], auroc: 0.5189115226337448
+Hyperparam: [1.0, 1024, 0.05, False], auroc: 0.4961944444444444
+Hyperparam: [1.5, 1024, 0.05, False], auroc: 0.5010473251028806
+Hyperparam: [2.0, 1024, 0.05, False], auroc: 0.5358755144032922
+Hyperparam: [0.05, 2048, 0.05, False], auroc: 0.5012232510288066
+Hyperparam: [0.1, 2048, 0.05, False], auroc: 0.4977674897119341
+Hyperparam: [0.2, 2048, 0.05, False], auroc: 0.506863683127572
+Hyperparam: [0.3, 2048, 0.05, False], auroc: 0.4860354938271605
+Hyperparam: [0.5, 2048, 0.05, False], auroc: 0.5044351851851852
+Hyperparam: [0.75, 2048, 0.05, False], auroc: 0.49517695473251033
+Hyperparam: [1.0, 2048, 0.05, False], auroc: 0.4805751028806584
+Hyperparam: [1.5, 2048, 0.05, False], auroc: 0.5103636831275721
+Hyperparam: [2.0, 2048, 0.05, False], auroc: 0.5349794238683128
+Hyperparam: [0.05, 4096, 0.05, False], auroc: 0.5050853909465021
+Hyperparam: [0.1, 4096, 0.05, False], auroc: 0.5025401234567901
+Hyperparam: [0.2, 4096, 0.05, False], auroc: 0.5107746913580247
+Hyperparam: [0.3, 4096, 0.05, False], auroc: 0.4968940329218107
+Hyperparam: [0.5, 4096, 0.05, False], auroc: 0.4873837448559671
+Hyperparam: [0.75, 4096, 0.05, False], auroc: 0.45943364197530867
+Hyperparam: [1.0, 4096, 0.05, False], auroc: 0.508320987654321
+Hyperparam: [1.5, 4096, 0.05, False], auroc: 0.49794238683127573
+Hyperparam: [2.0, 4096, 0.05, False], auroc: 0.5512808641975309
+Hyperparam: [0.05, 512, 0.1, False], auroc: 0.49103703703703705
+Hyperparam: [0.1, 512, 0.1, False], auroc: 0.4967762345679012
+Hyperparam: [0.2, 512, 0.1, False], auroc: 0.48838374485596703
+Hyperparam: [0.3, 512, 0.1, False], auroc: 0.4813425925925926
+Hyperparam: [0.5, 512, 0.1, False], auroc: 0.48272222222222216
+Hyperparam: [0.75, 512, 0.1, False], auroc: 0.4976862139917695
+Hyperparam: [1.0, 512, 0.1, False], auroc: 0.5087366255144032
+Hyperparam: [1.5, 512, 0.1, False], auroc: 0.4938446502057613
+Hyperparam: [2.0, 512, 0.1, False], auroc: 0.5191965020576131
+Hyperparam: [0.05, 1024, 0.1, False], auroc: 0.5310627572016461
+Hyperparam: [0.1, 1024, 0.1, False], auroc: 0.5054897119341564
+Hyperparam: [0.2, 1024, 0.1, False], auroc: 0.49844135802469136
+Hyperparam: [0.3, 1024, 0.1, False], auroc: 0.4879320987654321
+Hyperparam: [0.5, 1024, 0.1, False], auroc: 0.48755195473251023
+Hyperparam: [0.75, 1024, 0.1, False], auroc: 0.4863338477366255
+Hyperparam: [1.0, 1024, 0.1, False], auroc: 0.48386265432098763
+Hyperparam: [1.5, 1024, 0.1, False], auroc: 0.4957736625514403
+Hyperparam: [2.0, 1024, 0.1, False], auroc: 0.5297006172839507
+Hyperparam: [0.05, 2048, 0.1, False], auroc: 0.489727366255144
+Hyperparam: [0.1, 2048, 0.1, False], auroc: 0.5238374485596707
+Hyperparam: [0.2, 2048, 0.1, False], auroc: 0.4830401234567901
+Hyperparam: [0.3, 2048, 0.1, False], auroc: 0.515119341563786
+Hyperparam: [0.5, 2048, 0.1, False], auroc: 0.5058508230452675
+Hyperparam: [0.75, 2048, 0.1, False], auroc: 0.5114506172839506
+Hyperparam: [1.0, 2048, 0.1, False], auroc: 0.5146769547325103
+Hyperparam: [1.5, 2048, 0.1, False], auroc: 0.510488683127572
+Hyperparam: [2.0, 2048, 0.1, False], auroc: 0.5474526748971194
+Hyperparam: [0.05, 4096, 0.1, False], auroc: 0.5011502057613169
+Hyperparam: [0.1, 4096, 0.1, False], auroc: 0.508108024691358
+Hyperparam: [0.2, 4096, 0.1, False], auroc: 0.4805277777777777
+Hyperparam: [0.3, 4096, 0.1, False], auroc: 0.518380658436214
+Hyperparam: [0.5, 4096, 0.1, False], auroc: 0.48719598765432093
+Hyperparam: [0.75, 4096, 0.1, False], auroc: 0.5235185185185186
+Hyperparam: [1.0, 4096, 0.1, False], auroc: 0.49734773662551446
+Hyperparam: [1.5, 4096, 0.1, False], auroc: 0.5118899176954733
+Hyperparam: [2.0, 4096, 0.1, False], auroc: 0.5359362139917695
+Final hyperparam: [0.3, 4096, 0.05, True]
+Performing inference on cifar100 test set...
+Processing near ood...
+Performing inference on cifar10 dataset...
+Computing metrics on cifar10 dataset...
+FPR@95: 64.42, AUROC: 77.07 AUPR_IN: 77.36, AUPR_OUT: 73.70
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on tin dataset...
+Computing metrics on tin dataset...
+FPR@95: 50.84, AUROC: 82.05 AUPR_IN: 87.82, AUPR_OUT: 70.81
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 57.63, AUROC: 79.56 AUPR_IN: 82.59, AUPR_OUT: 72.25
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Performing inference on mnist dataset...
+Computing metrics on mnist dataset...
+FPR@95: 40.96, AUROC: 86.26 AUPR_IN: 65.37, AUPR_OUT: 97.02
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on svhn dataset...
+Computing metrics on svhn dataset...
+FPR@95: 39.48, AUROC: 88.86 AUPR_IN: 80.68, AUPR_OUT: 94.73
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on texture dataset...
+Computing metrics on texture dataset...
+FPR@95: 50.88, AUROC: 84.49 AUPR_IN: 90.17, AUPR_OUT: 74.91
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on places365 dataset...
+Computing metrics on places365 dataset...
+FPR@95: 53.92, AUROC: 82.66 AUPR_IN: 64.93, AUPR_OUT: 93.14
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 46.31, AUROC: 85.57 AUPR_IN: 75.29, AUPR_OUT: 89.95
+──────────────────────────────────────────────────────────────────────
+
+           FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+cifar10     64.42  77.07    77.36     73.70 77.20
+tin         50.84  82.05    87.82     70.81 77.20
+nearood     57.63  79.56    82.59     72.25 77.20
+mnist       40.96  86.26    65.37     97.02 77.20
+svhn        39.48  88.86    80.68     94.73 77.20
+texture     50.88  84.49    90.17     74.91 77.20
+places365   53.92  82.66    64.93     93.14 77.20
+farood      46.31  85.57    75.29     89.95 77.20
+
+--- RFF Diagnostics (586923 samples) ./results/cifar100_resnet18_32x32_base_e100_lr0.1_default/s2/diagnostics/rff_max_vw.npz ---
+  Classes above threshold: mean=2.2, zero=13.8%, one=30.5%, multi(>1)=55.7%
+  Max score: mean=11.3693, std=27.8474
+  Margin (max-2nd): mean=0.9729, std=1.9512
+
+--- RFF Per-Class Analysis → ./results/cifar100_resnet18_32x32_base_e100_lr0.1_default/s2/diagnostics/rff_max_vw_per_class.csv ---
+  id_test  multi_rate: mean=0.3199, max=0.7753
+  cifar10         multi_rate: mean=0.2723, max=0.6667
+  tin             multi_rate: mean=0.2775, max=0.6364
+  mnist           multi_rate: mean=0.0607, max=0.3295
+  svhn            multi_rate: mean=0.0468, max=0.2308
+  texture         multi_rate: mean=0.1252, max=0.5000
+  places365       multi_rate: mean=0.1816, max=0.4286
+
+--- RFF Debug Plots → ./results/cifar100_resnet18_32x32_base_e100_lr0.1_default/s2/diagnostics ---
+  Kernel dist: mean=0.0021, std=0.0273, min=-0.0451, max=0.5468
+  φ(x) stats per split:
+    train          : mean=0.00000, std=0.01563
+    val            : mean=0.00000, std=0.01562
+    id_test        : mean=0.00001, std=0.01563
+    cifar10        : mean=0.00003, std=0.01563
+    tin            : mean=0.00003, std=0.01562
+    mnist          : mean=0.00001, std=0.01562
+    svhn           : mean=-0.00000, std=0.01562
+    texture        : mean=0.00000, std=0.01562
+    places365      : mean=0.00001, std=0.01563
+  Score dist:
+    id_test        : mean=2.2126, std=1.3738, n=9000
+    cifar10        : mean=1.0326, std=0.7583, n=10000
+    tin            : mean=0.8508, std=0.5694, n=6526
+    mnist          : mean=0.7143, std=0.4195, n=70000
+    svhn           : mean=0.6438, std=0.4007, n=26032
+    texture        : mean=0.7863, std=0.5817, n=5640
+    places365      : mean=0.8434, std=0.6146, n=33773
+  Debug stats → ./results/cifar100_resnet18_32x32_base_e100_lr0.1_default/s2/diagnostics/rff_debug_stats.csv
+=== Done | Wed Mar 18 06:48:16 AM EDT 2026 ===
+---------------------------------------
+Begin Slurm Epilog: Mar-18-2026 06:48:16
+Job ID:        4495809
+Array Job ID:  4489333_1
+User ID:       ksalzman3
+Account:       coc
+Job name:      rff_max_vw
+Resources:     cpu=4,gres/gpu:a100=1,mem=32G,node=1
+Rsrc Used:     cput=01:29:04,vmem=0,walltime=00:22:16,mem=6066476K,energy_used=0
+Partition:     ice-gpu
+QOS:           coc-ice
+Nodes:         atl1-1-01-005-15-0
+---------------------------------------

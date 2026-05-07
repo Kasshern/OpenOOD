@@ -1,0 +1,290 @@
+---------------------------------------
+Begin Slurm Prolog: Apr-23-2026 00:43:41
+Job ID:    5045299
+User ID:   ksalzman3
+Account:   coc
+Job name:  rff_max_vw_clip
+Partition: ice-gpu
+QOS:       coc-ice
+---------------------------------------
+=== rff_max_vw_clip | cifar10 | Thu Apr 23 12:43:47 AM EDT 2026 ===
+
+==================================================
+Setting up RFF Kernel Attention OOD detector...
+  sigma (bandwidth): 0.5
+  D (RFF dimension): 2048
+  alpha (target FPR): 0.05
+  feature_space: penultimate
+  normalize: True
+  score_mode: max
+  variance_weighted: True
+==================================================
+Extracted 50000 train features of dim 512
+  Feature norm (mean): 6.3358
+  Number of classes: 10
+Extracted 1000 val features for threshold
+Per-class embedding norms (mean): 1.0000
+Per-class score variance (mean): 0.003967
+Threshold (max) at 5.0%: 7.3102
+Max threshold (for diagnostics) at 5.0%: 7.3102
+RFF setup complete.
+
+[RFFClip] Loading CLIP ViT-B/16 with 10 classes (cifar10)...
+Starting automatic parameter search...
+Hyperparam: [0.0], auroc: 0.8458410000000001
+Hyperparam: [0.1], auroc: 0.873926
+Hyperparam: [0.2], auroc: 0.899764
+Hyperparam: [0.3], auroc: 0.922606
+Hyperparam: [0.4], auroc: 0.941377
+Hyperparam: [0.5], auroc: 0.954626
+Hyperparam: [0.6], auroc: 0.961921
+Hyperparam: [0.7], auroc: 0.9647990000000001
+Hyperparam: [0.8], auroc: 0.964865
+Hyperparam: [0.9], auroc: 0.962186
+Hyperparam: [1.0], auroc: 0.9566184999999999
+Final hyperparam: [0.8]
+[Timing] Setup: 75.5s
+Performing inference on cifar10 test set...
+Processing near ood...
+Performing inference on cifar100 dataset...
+Computing metrics on cifar100 dataset...
+FPR@95: 24.64, AUROC: 94.09 AUPR_IN: 94.73, AUPR_OUT: 93.46
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on tin dataset...
+Computing metrics on tin dataset...
+FPR@95: 18.74, AUROC: 96.08 AUPR_IN: 96.75, AUPR_OUT: 95.14
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 21.69, AUROC: 95.08 AUPR_IN: 95.74, AUPR_OUT: 94.30
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Performing inference on mnist dataset...
+Computing metrics on mnist dataset...
+FPR@95: 1.34, AUROC: 99.59 AUPR_IN: 98.51, AUPR_OUT: 99.93
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on svhn dataset...
+Computing metrics on svhn dataset...
+FPR@95: 3.14, AUROC: 99.13 AUPR_IN: 98.46, AUPR_OUT: 99.59
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on texture dataset...
+Computing metrics on texture dataset...
+FPR@95: 5.39, AUROC: 98.68 AUPR_IN: 99.25, AUPR_OUT: 97.48
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on places365 dataset...
+Computing metrics on places365 dataset...
+FPR@95: 13.31, AUROC: 97.29 AUPR_IN: 92.61, AUPR_OUT: 99.18
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 5.80, AUROC: 98.67 AUPR_IN: 97.21, AUPR_OUT: 99.05
+──────────────────────────────────────────────────────────────────────
+
+           FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+cifar100    24.64  94.09    94.73     93.46 95.22
+tin         18.74  96.08    96.75     95.14 95.22
+nearood     21.69  95.08    95.74     94.30 95.22
+mnist        1.34  99.59    98.51     99.93 95.22
+svhn         3.14  99.13    98.46     99.59 95.22
+texture      5.39  98.68    99.25     97.48 95.22
+places365   13.31  97.29    92.61     99.18 95.22
+farood       5.80  98.67    97.21     99.05 95.22
+[Timing] Eval:  110.4s
+
+==================================================
+Setting up RFF Kernel Attention OOD detector...
+  sigma (bandwidth): 0.5
+  D (RFF dimension): 2048
+  alpha (target FPR): 0.05
+  feature_space: penultimate
+  normalize: True
+  score_mode: max
+  variance_weighted: True
+==================================================
+Extracted 50000 train features of dim 512
+  Feature norm (mean): 6.1819
+  Number of classes: 10
+Extracted 1000 val features for threshold
+Per-class embedding norms (mean): 1.0000
+Per-class score variance (mean): 0.004763
+Threshold (max) at 5.0%: 6.7517
+Max threshold (for diagnostics) at 5.0%: 6.7517
+RFF setup complete.
+
+[RFFClip] Loading CLIP ViT-B/16 with 10 classes (cifar10)...
+Starting automatic parameter search...
+Hyperparam: [0.0], auroc: 0.849092
+Hyperparam: [0.1], auroc: 0.876676
+Hyperparam: [0.2], auroc: 0.9028900000000001
+Hyperparam: [0.3], auroc: 0.925465
+Hyperparam: [0.4], auroc: 0.943809
+Hyperparam: [0.5], auroc: 0.95726
+Hyperparam: [0.6], auroc: 0.964536
+Hyperparam: [0.7], auroc: 0.9670679999999999
+Hyperparam: [0.8], auroc: 0.966397
+Hyperparam: [0.9], auroc: 0.9631719999999999
+Hyperparam: [1.0], auroc: 0.9566184999999999
+Final hyperparam: [0.7]
+[Timing] Setup: 26.2s
+Performing inference on cifar10 test set...
+Processing near ood...
+Performing inference on cifar100 dataset...
+Computing metrics on cifar100 dataset...
+FPR@95: 23.33, AUROC: 94.54 AUPR_IN: 95.02, AUPR_OUT: 93.95
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on tin dataset...
+Computing metrics on tin dataset...
+FPR@95: 16.66, AUROC: 96.47 AUPR_IN: 97.10, AUPR_OUT: 95.53
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 19.99, AUROC: 95.50 AUPR_IN: 96.06, AUPR_OUT: 94.74
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Performing inference on mnist dataset...
+Computing metrics on mnist dataset...
+FPR@95: 2.16, AUROC: 99.43 AUPR_IN: 98.06, AUPR_OUT: 99.90
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on svhn dataset...
+Computing metrics on svhn dataset...
+FPR@95: 3.46, AUROC: 99.08 AUPR_IN: 98.41, AUPR_OUT: 99.55
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on texture dataset...
+Computing metrics on texture dataset...
+FPR@95: 5.48, AUROC: 98.62 AUPR_IN: 99.21, AUPR_OUT: 97.31
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on places365 dataset...
+Computing metrics on places365 dataset...
+FPR@95: 11.78, AUROC: 97.52 AUPR_IN: 93.41, AUPR_OUT: 99.24
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 5.72, AUROC: 98.66 AUPR_IN: 97.27, AUPR_OUT: 99.00
+──────────────────────────────────────────────────────────────────────
+
+           FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+cifar100    23.33  94.54    95.02     93.95 94.63
+tin         16.66  96.47    97.10     95.53 94.63
+nearood     19.99  95.50    96.06     94.74 94.63
+mnist        2.16  99.43    98.06     99.90 94.63
+svhn         3.46  99.08    98.41     99.55 94.63
+texture      5.48  98.62    99.21     97.31 94.63
+places365   11.78  97.52    93.41     99.24 94.63
+farood       5.72  98.66    97.27     99.00 94.63
+[Timing] Eval:  54.8s
+
+==================================================
+Setting up RFF Kernel Attention OOD detector...
+  sigma (bandwidth): 0.5
+  D (RFF dimension): 2048
+  alpha (target FPR): 0.05
+  feature_space: penultimate
+  normalize: True
+  score_mode: max
+  variance_weighted: True
+==================================================
+Extracted 50000 train features of dim 512
+  Feature norm (mean): 6.1273
+  Number of classes: 10
+Extracted 1000 val features for threshold
+Per-class embedding norms (mean): 1.0000
+Per-class score variance (mean): 0.003850
+Threshold (max) at 5.0%: 8.0627
+Max threshold (for diagnostics) at 5.0%: 8.0627
+RFF setup complete.
+
+[RFFClip] Loading CLIP ViT-B/16 with 10 classes (cifar10)...
+Starting automatic parameter search...
+Hyperparam: [0.0], auroc: 0.8673379999999999
+Hyperparam: [0.1], auroc: 0.893383
+Hyperparam: [0.2], auroc: 0.917057
+Hyperparam: [0.3], auroc: 0.9374514999999999
+Hyperparam: [0.4], auroc: 0.9530230000000001
+Hyperparam: [0.5], auroc: 0.963865
+Hyperparam: [0.6], auroc: 0.968883
+Hyperparam: [0.7], auroc: 0.969787
+Hyperparam: [0.8], auroc: 0.968021
+Hyperparam: [0.9], auroc: 0.9639759999999999
+Hyperparam: [1.0], auroc: 0.9566184999999999
+Final hyperparam: [0.7]
+[Timing] Setup: 27.0s
+Performing inference on cifar10 test set...
+Processing near ood...
+Performing inference on cifar100 dataset...
+Computing metrics on cifar100 dataset...
+FPR@95: 23.46, AUROC: 94.63 AUPR_IN: 95.15, AUPR_OUT: 94.09
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on tin dataset...
+Computing metrics on tin dataset...
+FPR@95: 15.87, AUROC: 96.71 AUPR_IN: 97.38, AUPR_OUT: 95.87
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 19.66, AUROC: 95.67 AUPR_IN: 96.27, AUPR_OUT: 94.98
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Performing inference on mnist dataset...
+Computing metrics on mnist dataset...
+FPR@95: 2.40, AUROC: 99.33 AUPR_IN: 97.86, AUPR_OUT: 99.89
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on svhn dataset...
+Computing metrics on svhn dataset...
+FPR@95: 3.46, AUROC: 98.94 AUPR_IN: 98.24, AUPR_OUT: 99.51
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on texture dataset...
+Computing metrics on texture dataset...
+FPR@95: 4.97, AUROC: 98.69 AUPR_IN: 99.26, AUPR_OUT: 97.60
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on places365 dataset...
+Computing metrics on places365 dataset...
+FPR@95: 12.16, AUROC: 97.42 AUPR_IN: 93.24, AUPR_OUT: 99.22
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 5.74, AUROC: 98.59 AUPR_IN: 97.15, AUPR_OUT: 99.05
+──────────────────────────────────────────────────────────────────────
+
+           FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+cifar100    23.46  94.63    95.15     94.09 95.32
+tin         15.87  96.71    97.38     95.87 95.32
+nearood     19.66  95.67    96.27     94.98 95.32
+mnist        2.40  99.33    97.86     99.89 95.32
+svhn         3.46  98.94    98.24     99.51 95.32
+texture      4.97  98.69    99.26     97.60 95.32
+places365   12.16  97.42    93.24     99.22 95.32
+farood       5.74  98.59    97.15     99.05 95.32
+[Timing] Eval:  55.4s
+
+[Timing Summary]
+  Setup: 42.9s ± 23.0s per seed
+  Eval:  73.5s ± 26.1s per seed
+  Total: 349.3s across 3 seeds
+=== Done | Thu Apr 23 12:51:54 AM EDT 2026 ===
+---------------------------------------
+Begin Slurm Epilog: Apr-23-2026 00:51:54
+Job ID:        5045299
+Array Job ID:  5040273_0
+User ID:       ksalzman3
+Account:       coc
+Job name:      rff_max_vw_clip
+Resources:     cpu=4,gres/gpu:h100=1,mem=48G,node=1
+Rsrc Used:     cput=00:32:56,vmem=0,walltime=00:08:14,mem=6866684K,energy_used=0
+Partition:     ice-gpu
+QOS:           coc-ice
+Nodes:         atl1-1-03-012-28-0
+---------------------------------------

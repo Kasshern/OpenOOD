@@ -1,0 +1,843 @@
+/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+
+==================================================
+Setting up RFF Kernel Attention OOD detector...
+  sigma (bandwidth): 0.5
+  D (RFF dimension): 1024
+  alpha (target FPR): 0.05
+  feature_space: penultimate
+  normalize: True
+  score_mode: max
+  variance_weighted: False
+==================================================
+Extracting train features:   0%|          | 0/250 [00:00<?, ?it/s]Extracting train features:   0%|          | 1/250 [00:01<07:38,  1.84s/it]Extracting train features:   4%|▎         | 9/250 [00:02<00:51,  4.70it/s]Extracting train features:   4%|▍         | 10/250 [00:02<00:51,  4.65it/s]Extracting train features:   4%|▍         | 11/250 [00:02<00:55,  4.29it/s]Extracting train features:   7%|▋         | 17/250 [00:03<00:31,  7.31it/s]Extracting train features:   7%|▋         | 18/250 [00:03<00:36,  6.36it/s]Extracting train features:   8%|▊         | 19/250 [00:04<00:49,  4.69it/s]Extracting train features:  10%|█         | 25/250 [00:04<00:30,  7.48it/s]Extracting train features:  10%|█         | 26/250 [00:04<00:30,  7.36it/s]Extracting train features:  11%|█         | 27/250 [00:05<00:34,  6.39it/s]Extracting train features:  12%|█▏        | 29/250 [00:05<00:34,  6.37it/s]Extracting train features:  12%|█▏        | 30/250 [00:05<00:34,  6.30it/s]Extracting train features:  12%|█▏        | 31/250 [00:05<00:34,  6.34it/s]Extracting train features:  13%|█▎        | 33/250 [00:05<00:26,  8.07it/s]Extracting train features:  14%|█▍        | 35/250 [00:05<00:23,  9.10it/s]Extracting train features:  15%|█▍        | 37/250 [00:06<00:27,  7.64it/s]Extracting train features:  15%|█▌        | 38/250 [00:06<00:32,  6.62it/s]Extracting train features:  16%|█▌        | 39/250 [00:07<00:49,  4.29it/s]Extracting train features:  18%|█▊        | 45/250 [00:07<00:21,  9.54it/s]Extracting train features:  19%|█▉        | 47/250 [00:08<00:33,  6.04it/s]Extracting train features:  21%|██        | 53/250 [00:08<00:19,  9.93it/s]Extracting train features:  22%|██▏       | 55/250 [00:09<00:30,  6.45it/s]Extracting train features:  24%|██▍       | 60/250 [00:09<00:19,  9.91it/s]Extracting train features:  25%|██▌       | 63/250 [00:09<00:26,  6.95it/s]Extracting train features:  27%|██▋       | 68/250 [00:10<00:19,  9.10it/s]Extracting train features:  28%|██▊       | 70/250 [00:10<00:23,  7.73it/s]Extracting train features:  30%|███       | 76/250 [00:11<00:18,  9.50it/s]Extracting train features:  31%|███       | 78/250 [00:11<00:21,  7.83it/s]Extracting train features:  32%|███▏      | 80/250 [00:11<00:19,  8.60it/s]Extracting train features:  34%|███▎      | 84/250 [00:11<00:13, 11.87it/s]Extracting train features:  34%|███▍      | 86/250 [00:12<00:18,  8.75it/s]Extracting train features:  35%|███▌      | 88/250 [00:12<00:18,  8.96it/s]Extracting train features:  38%|███▊      | 94/250 [00:12<00:14, 10.84it/s]Extracting train features:  38%|███▊      | 96/250 [00:13<00:20,  7.38it/s]Extracting train features:  41%|████      | 103/250 [00:13<00:12, 12.13it/s]Extracting train features:  42%|████▏     | 105/250 [00:14<00:15,  9.51it/s]Extracting train features:  44%|████▍     | 111/250 [00:14<00:14,  9.71it/s]Extracting train features:  45%|████▌     | 113/250 [00:15<00:14,  9.31it/s]Extracting train features:  46%|████▋     | 116/250 [00:15<00:14,  9.49it/s]Extracting train features:  48%|████▊     | 119/250 [00:15<00:11, 11.55it/s]Extracting train features:  48%|████▊     | 121/250 [00:15<00:12, 10.06it/s]Extracting train features:  50%|████▉     | 124/250 [00:15<00:11, 11.08it/s]Extracting train features:  50%|█████     | 126/250 [00:16<00:10, 11.76it/s]Extracting train features:  51%|█████     | 128/250 [00:16<00:15,  7.89it/s]Extracting train features:  54%|█████▎    | 134/250 [00:16<00:10, 11.29it/s]Extracting train features:  54%|█████▍    | 136/250 [00:17<00:13,  8.48it/s]Extracting train features:  57%|█████▋    | 142/250 [00:17<00:09, 11.35it/s]Extracting train features:  58%|█████▊    | 144/250 [00:17<00:10, 10.35it/s]Extracting train features:  60%|█████▉    | 149/250 [00:18<00:08, 11.77it/s]Extracting train features:  60%|██████    | 151/250 [00:18<00:08, 12.11it/s]Extracting train features:  61%|██████    | 153/250 [00:18<00:07, 12.75it/s]Extracting train features:  62%|██████▏   | 156/250 [00:18<00:07, 13.06it/s]Extracting train features:  63%|██████▎   | 158/250 [00:19<00:10,  8.41it/s]Extracting train features:  64%|██████▍   | 160/250 [00:19<00:09,  9.62it/s]Extracting train features:  66%|██████▌   | 165/250 [00:19<00:05, 15.06it/s]Extracting train features:  67%|██████▋   | 168/250 [00:20<00:09,  8.95it/s]Extracting train features:  69%|██████▉   | 173/250 [00:20<00:06, 11.77it/s]Extracting train features:  70%|███████   | 175/250 [00:21<00:09,  8.12it/s]Extracting train features:  73%|███████▎  | 182/250 [00:21<00:06, 10.81it/s]Extracting train features:  74%|███████▎  | 184/250 [00:21<00:07,  9.08it/s]Extracting train features:  76%|███████▋  | 191/250 [00:22<00:05,  9.96it/s]Extracting train features:  78%|███████▊  | 194/250 [00:22<00:04, 11.65it/s]Extracting train features:  79%|███████▉  | 198/250 [00:22<00:03, 14.37it/s]Extracting train features:  80%|████████  | 201/250 [00:23<00:04, 10.23it/s]Extracting train features:  82%|████████▏ | 206/250 [00:23<00:05,  8.78it/s]Extracting train features:  83%|████████▎ | 208/250 [00:24<00:04,  8.85it/s]Extracting train features:  84%|████████▍ | 210/250 [00:24<00:04,  9.45it/s]Extracting train features:  86%|████████▌ | 214/250 [00:24<00:03,  9.45it/s]Extracting train features:  86%|████████▋ | 216/250 [00:25<00:04,  8.24it/s]Extracting train features:  89%|████████▉ | 222/250 [00:25<00:02, 11.74it/s]Extracting train features:  90%|████████▉ | 224/250 [00:25<00:02,  9.59it/s]Extracting train features:  90%|█████████ | 226/250 [00:25<00:02, 10.60it/s]Extracting train features:  92%|█████████▏| 230/250 [00:26<00:01, 12.37it/s]Extracting train features:  93%|█████████▎| 232/250 [00:26<00:01,  9.69it/s]Extracting train features:  95%|█████████▌| 238/250 [00:26<00:01, 11.44it/s]Extracting train features:  96%|█████████▌| 240/250 [00:27<00:01,  9.80it/s]Extracting train features:  98%|█████████▊| 246/250 [00:27<00:00, 13.87it/s]Extracting train features:  99%|█████████▉| 248/250 [00:27<00:00, 11.50it/s]Extracting train features: 100%|██████████| 250/250 [00:27<00:00,  8.98it/s]
+Extracted 50000 train features of dim 512
+  Feature norm (mean): 1.0000
+  Number of classes: 100
+Extracting val features:   0%|          | 0/5 [00:00<?, ?it/s]Extracting val features:  20%|██        | 1/5 [00:00<00:02,  1.77it/s]Extracting val features: 100%|██████████| 5/5 [00:00<00:00,  7.84it/s]
+Extracted 1000 val features for threshold
+Per-class embedding norms (mean): 0.6979
+Threshold (max) at 5.0%: 0.2208
+Max threshold (for diagnostics) at 5.0%: 0.2208
+RFF setup complete.
+
+Starting automatic parameter search...
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:01,  2.08it/s]100%|██████████| 5/5 [00:00<00:00,  8.78it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.70it/s]100%|██████████| 5/5 [00:00<00:00,  7.02it/s]
+Hyperparam: [0.1, 512, 0.025], auroc: 0.5005648148148149
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.03it/s]100%|██████████| 5/5 [00:00<00:00,  8.79it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.93it/s]100%|██████████| 5/5 [00:00<00:00,  8.36it/s]
+Hyperparam: [0.5, 512, 0.025], auroc: 0.8416059670781895
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.08it/s]100%|██████████| 5/5 [00:00<00:00,  8.88it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.94it/s]100%|██████████| 5/5 [00:00<00:00,  8.34it/s]
+Hyperparam: [1.0, 512, 0.025], auroc: 0.8454701646090536
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.08it/s]100%|██████████| 5/5 [00:00<00:00,  8.78it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.99it/s]100%|██████████| 5/5 [00:00<00:00,  8.17it/s]
+Hyperparam: [2.0, 512, 0.025], auroc: 0.7638256172839506
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.04it/s]100%|██████████| 5/5 [00:00<00:00,  8.64it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:01,  2.05it/s]100%|██████████| 5/5 [00:00<00:00,  8.54it/s]
+Hyperparam: [0.1, 1024, 0.025], auroc: 0.5162047325102881
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.06it/s]100%|██████████| 5/5 [00:00<00:00,  8.74it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:01,  2.02it/s]100%|██████████| 5/5 [00:00<00:00,  8.51it/s]
+Hyperparam: [0.5, 1024, 0.025], auroc: 0.848945473251029
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.03it/s]100%|██████████| 5/5 [00:00<00:00,  8.80it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.94it/s]100%|██████████| 5/5 [00:00<00:00,  8.43it/s]
+Hyperparam: [1.0, 1024, 0.025], auroc: 0.8318276748971194
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.03it/s]100%|██████████| 5/5 [00:00<00:00,  8.66it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:01,  2.00it/s]100%|██████████| 5/5 [00:00<00:00,  8.38it/s]
+Hyperparam: [2.0, 1024, 0.025], auroc: 0.819520061728395
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.06it/s]100%|██████████| 5/5 [00:00<00:00,  8.85it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.86it/s]100%|██████████| 5/5 [00:00<00:00,  8.08it/s]
+Hyperparam: [0.1, 2048, 0.025], auroc: 0.49501697530864197
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.07it/s]100%|██████████| 5/5 [00:00<00:00,  8.83it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.91it/s]100%|██████████| 5/5 [00:00<00:00,  8.19it/s]
+Hyperparam: [0.5, 2048, 0.025], auroc: 0.8529166666666667
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.08it/s]100%|██████████| 5/5 [00:00<00:00,  8.93it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.95it/s]100%|██████████| 5/5 [00:00<00:00,  8.37it/s]
+Hyperparam: [1.0, 2048, 0.025], auroc: 0.8414778806584362
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.02it/s]100%|██████████| 5/5 [00:00<00:00,  8.56it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.93it/s]100%|██████████| 5/5 [00:00<00:00,  8.37it/s]
+Hyperparam: [2.0, 2048, 0.025], auroc: 0.8286172839506173
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.98it/s]100%|██████████| 5/5 [00:00<00:00,  8.52it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.93it/s]100%|██████████| 5/5 [00:00<00:00,  8.31it/s]
+Hyperparam: [0.1, 512, 0.05], auroc: 0.5257880658436215
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.10it/s]100%|██████████| 5/5 [00:00<00:00,  8.93it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.93it/s]100%|██████████| 5/5 [00:00<00:00,  8.38it/s]
+Hyperparam: [0.5, 512, 0.05], auroc: 0.8436327160493828
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.07it/s]100%|██████████| 5/5 [00:00<00:00,  8.88it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.91it/s]100%|██████████| 5/5 [00:00<00:00,  8.24it/s]
+Hyperparam: [1.0, 512, 0.05], auroc: 0.8375041152263374
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.01it/s]100%|██████████| 5/5 [00:00<00:00,  8.72it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:01,  2.00it/s]100%|██████████| 5/5 [00:00<00:00,  8.47it/s]
+Hyperparam: [2.0, 512, 0.05], auroc: 0.7810339506172841
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.09it/s]100%|██████████| 5/5 [00:00<00:00,  8.91it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.91it/s]100%|██████████| 5/5 [00:00<00:00,  8.26it/s]
+Hyperparam: [0.1, 1024, 0.05], auroc: 0.5116388888888888
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.02it/s]100%|██████████| 5/5 [00:00<00:00,  8.69it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.92it/s]100%|██████████| 5/5 [00:00<00:00,  8.23it/s]
+Hyperparam: [0.5, 1024, 0.05], auroc: 0.8482716049382715
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.11it/s]100%|██████████| 5/5 [00:00<00:00,  8.88it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.92it/s]100%|██████████| 5/5 [00:00<00:00,  8.24it/s]
+Hyperparam: [1.0, 1024, 0.05], auroc: 0.8459382716049384
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.07it/s]100%|██████████| 5/5 [00:00<00:00,  8.58it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:01,  2.02it/s]100%|██████████| 5/5 [00:00<00:00,  8.47it/s]
+Hyperparam: [2.0, 1024, 0.05], auroc: 0.8094768518518518
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.02it/s]100%|██████████| 5/5 [00:00<00:00,  8.76it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.97it/s]100%|██████████| 5/5 [00:00<00:00,  8.30it/s]
+Hyperparam: [0.1, 2048, 0.05], auroc: 0.5116316872427984
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.07it/s]100%|██████████| 5/5 [00:00<00:00,  8.60it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.96it/s]100%|██████████| 5/5 [00:00<00:00,  8.36it/s]
+Hyperparam: [0.5, 2048, 0.05], auroc: 0.8492757201646092
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.03it/s]100%|██████████| 5/5 [00:00<00:00,  8.58it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:01,  2.06it/s]100%|██████████| 5/5 [00:00<00:00,  8.48it/s]
+Hyperparam: [1.0, 2048, 0.05], auroc: 0.8465468106995884
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.20it/s]100%|██████████| 5/5 [00:00<00:00,  8.71it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.95it/s]100%|██████████| 5/5 [00:00<00:00,  8.41it/s]
+Hyperparam: [2.0, 2048, 0.05], auroc: 0.8366707818930041
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.06it/s]100%|██████████| 5/5 [00:00<00:00,  8.79it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.94it/s]100%|██████████| 5/5 [00:00<00:00,  8.29it/s]
+Hyperparam: [0.1, 512, 0.1], auroc: 0.5033672839506173
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.16it/s]100%|██████████| 5/5 [00:00<00:00,  9.06it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.94it/s]100%|██████████| 5/5 [00:00<00:00,  8.36it/s]
+Hyperparam: [0.5, 512, 0.1], auroc: 0.8459156378600824
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.01it/s]100%|██████████| 5/5 [00:00<00:00,  8.68it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.94it/s]100%|██████████| 5/5 [00:00<00:00,  8.41it/s]
+Hyperparam: [1.0, 512, 0.1], auroc: 0.8387458847736626
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.09it/s]100%|██████████| 5/5 [00:00<00:00,  8.71it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:01,  2.00it/s]100%|██████████| 5/5 [00:00<00:00,  8.38it/s]
+Hyperparam: [2.0, 512, 0.1], auroc: 0.7783590534979423
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.01it/s]100%|██████████| 5/5 [00:00<00:00,  8.63it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.87it/s]100%|██████████| 5/5 [00:00<00:00,  8.13it/s]
+Hyperparam: [0.1, 1024, 0.1], auroc: 0.5033662551440329
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.03it/s]100%|██████████| 5/5 [00:00<00:00,  8.80it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.93it/s]100%|██████████| 5/5 [00:00<00:00,  8.25it/s]
+Hyperparam: [0.5, 1024, 0.1], auroc: 0.846971193415638
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.05it/s]100%|██████████| 5/5 [00:00<00:00,  8.80it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.92it/s]100%|██████████| 5/5 [00:00<00:00,  8.41it/s]
+Hyperparam: [1.0, 1024, 0.1], auroc: 0.8489393004115227
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.03it/s]100%|██████████| 5/5 [00:00<00:00,  8.71it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.91it/s]100%|██████████| 5/5 [00:00<00:00,  8.20it/s]
+Hyperparam: [2.0, 1024, 0.1], auroc: 0.7951661522633744
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.15it/s]100%|██████████| 5/5 [00:00<00:00,  8.58it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.94it/s]100%|██████████| 5/5 [00:00<00:00,  8.39it/s]
+Hyperparam: [0.1, 2048, 0.1], auroc: 0.5326234567901234
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.11it/s]100%|██████████| 5/5 [00:00<00:00,  8.96it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:01,  2.08it/s]100%|██████████| 5/5 [00:00<00:00,  8.17it/s]
+Hyperparam: [0.5, 2048, 0.1], auroc: 0.8485370370370371
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.03it/s]100%|██████████| 5/5 [00:00<00:00,  8.66it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.91it/s]100%|██████████| 5/5 [00:00<00:00,  8.17it/s]
+Hyperparam: [1.0, 2048, 0.1], auroc: 0.8454948559670782
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.13it/s]100%|██████████| 5/5 [00:00<00:00,  8.91it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.91it/s]100%|██████████| 5/5 [00:00<00:00,  8.31it/s]
+Hyperparam: [2.0, 2048, 0.1], auroc: 0.8356934156378599
+Final hyperparam: [0.5, 2048, 0.025]
+Performing inference on cifar100 test set...
+  0%|          | 0/45 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+  2%|▏         | 1/45 [00:00<00:33,  1.33it/s] 20%|██        | 9/45 [00:01<00:04,  8.63it/s] 38%|███▊      | 17/45 [00:01<00:02, 12.02it/s] 49%|████▉     | 22/45 [00:01<00:01, 16.10it/s] 56%|█████▌    | 25/45 [00:02<00:01, 12.75it/s] 67%|██████▋   | 30/45 [00:02<00:00, 17.09it/s] 73%|███████▎  | 33/45 [00:02<00:00, 14.22it/s] 84%|████████▍ | 38/45 [00:02<00:00, 18.95it/s] 93%|█████████▎| 42/45 [00:03<00:00, 17.16it/s]100%|██████████| 45/45 [00:03<00:00, 14.49it/s]
+Processing near ood...
+Performing inference on cifar10 dataset...
+  0%|          | 0/50 [00:00<?, ?it/s]  2%|▏         | 1/50 [00:00<00:33,  1.46it/s] 14%|█▍        | 7/50 [00:00<00:03, 11.45it/s] 22%|██▏       | 11/50 [00:01<00:03, 11.54it/s] 34%|███▍      | 17/50 [00:01<00:02, 14.01it/s] 40%|████      | 20/50 [00:01<00:01, 16.16it/s] 50%|█████     | 25/50 [00:01<00:01, 15.82it/s] 56%|█████▌    | 28/50 [00:02<00:01, 17.89it/s] 66%|██████▌   | 33/50 [00:02<00:01, 16.16it/s] 76%|███████▌  | 38/50 [00:02<00:00, 20.63it/s] 82%|████████▏ | 41/50 [00:02<00:00, 16.95it/s] 98%|█████████▊| 49/50 [00:02<00:00, 22.30it/s]100%|██████████| 50/50 [00:03<00:00, 16.33it/s]
+Computing metrics on cifar10 dataset...
+FPR@95: 77.23, AUROC: 75.81 AUPR_IN: 71.61, AUPR_OUT: 74.47
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on tin dataset...
+  0%|          | 0/33 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+  3%|▎         | 1/33 [00:00<00:26,  1.22it/s] 27%|██▋       | 9/33 [00:01<00:02,  8.60it/s] 33%|███▎      | 11/33 [00:01<00:02,  8.87it/s] 52%|█████▏    | 17/33 [00:01<00:01, 11.71it/s] 58%|█████▊    | 19/33 [00:02<00:01, 11.45it/s] 76%|███████▌  | 25/33 [00:02<00:00, 12.97it/s] 82%|████████▏ | 27/33 [00:02<00:00, 12.36it/s]100%|██████████| 33/33 [00:02<00:00, 11.98it/s]
+Computing metrics on tin dataset...
+FPR@95: 51.56, AUROC: 82.77 AUPR_IN: 87.75, AUPR_OUT: 73.42
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 64.39, AUROC: 79.29 AUPR_IN: 79.68, AUPR_OUT: 73.94
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Performing inference on mnist dataset...
+  0%|          | 0/350 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+  0%|          | 1/350 [00:00<04:14,  1.37it/s]  2%|▏         | 7/350 [00:00<00:31, 10.83it/s]  3%|▎         | 11/350 [00:01<00:29, 11.41it/s]  5%|▍         | 16/350 [00:01<00:19, 17.49it/s]  6%|▌         | 20/350 [00:01<00:23, 14.19it/s]  7%|▋         | 25/350 [00:02<00:24, 13.33it/s]  9%|▉         | 31/350 [00:02<00:16, 18.93it/s] 10%|█         | 35/350 [00:02<00:19, 15.90it/s] 11%|█         | 39/350 [00:02<00:16, 18.67it/s] 12%|█▏        | 42/350 [00:02<00:19, 15.57it/s] 13%|█▎        | 45/350 [00:03<00:17, 17.06it/s] 14%|█▍        | 49/350 [00:03<00:19, 15.23it/s] 15%|█▍        | 52/350 [00:03<00:17, 16.69it/s] 16%|█▋        | 57/350 [00:03<00:18, 16.18it/s] 17%|█▋        | 60/350 [00:03<00:16, 17.32it/s] 19%|█▊        | 65/350 [00:04<00:17, 16.68it/s] 19%|█▉        | 68/350 [00:04<00:15, 17.76it/s] 21%|██        | 73/350 [00:04<00:16, 16.78it/s] 22%|██▏       | 76/350 [00:04<00:14, 18.50it/s] 23%|██▎       | 81/350 [00:05<00:16, 16.15it/s] 25%|██▍       | 86/350 [00:05<00:12, 20.60it/s] 25%|██▌       | 89/350 [00:05<00:16, 15.82it/s] 27%|██▋       | 94/350 [00:05<00:12, 20.64it/s] 28%|██▊       | 97/350 [00:06<00:16, 15.57it/s] 30%|██▉       | 104/350 [00:06<00:10, 23.13it/s] 31%|███       | 108/350 [00:06<00:13, 17.41it/s] 32%|███▏      | 113/350 [00:07<00:15, 15.02it/s] 34%|███▍      | 119/350 [00:07<00:11, 20.42it/s] 35%|███▌      | 123/350 [00:07<00:14, 15.96it/s] 37%|███▋      | 129/350 [00:08<00:14, 15.02it/s] 39%|███▊      | 135/350 [00:08<00:10, 19.60it/s] 40%|███▉      | 139/350 [00:08<00:13, 15.94it/s] 41%|████▏     | 145/350 [00:09<00:13, 15.14it/s] 43%|████▎     | 151/350 [00:09<00:09, 20.04it/s] 44%|████▍     | 155/350 [00:09<00:11, 16.40it/s] 46%|████▌     | 161/350 [00:09<00:12, 15.46it/s] 48%|████▊     | 168/350 [00:10<00:08, 21.27it/s] 49%|████▉     | 172/350 [00:10<00:10, 16.85it/s] 51%|█████     | 177/350 [00:10<00:11, 15.44it/s] 53%|█████▎    | 185/350 [00:11<00:10, 15.82it/s] 55%|█████▌    | 193/350 [00:11<00:09, 15.99it/s] 57%|█████▋    | 200/350 [00:11<00:07, 20.95it/s] 58%|█████▊    | 204/350 [00:12<00:08, 17.30it/s] 60%|█████▉    | 209/350 [00:12<00:09, 15.40it/s] 62%|██████▏   | 216/350 [00:12<00:06, 20.54it/s] 63%|██████▎   | 220/350 [00:13<00:07, 17.12it/s] 64%|██████▍   | 225/350 [00:13<00:08, 15.39it/s] 66%|██████▌   | 231/350 [00:13<00:05, 20.29it/s] 67%|██████▋   | 235/350 [00:14<00:06, 16.71it/s] 69%|██████▉   | 241/350 [00:14<00:06, 15.63it/s] 71%|███████   | 248/350 [00:14<00:04, 21.39it/s] 72%|███████▏  | 252/350 [00:15<00:05, 17.05it/s] 73%|███████▎  | 257/350 [00:15<00:06, 15.25it/s] 75%|███████▌  | 264/350 [00:15<00:04, 21.31it/s] 77%|███████▋  | 268/350 [00:15<00:04, 17.11it/s] 78%|███████▊  | 273/350 [00:16<00:05, 15.11it/s] 80%|████████  | 280/350 [00:16<00:03, 21.06it/s] 81%|████████  | 284/350 [00:16<00:03, 17.17it/s] 83%|████████▎ | 289/350 [00:17<00:04, 15.17it/s] 85%|████████▍ | 296/350 [00:17<00:02, 21.22it/s] 86%|████████▌ | 300/350 [00:17<00:02, 17.53it/s] 87%|████████▋ | 305/350 [00:18<00:02, 15.23it/s] 89%|████████▉ | 312/350 [00:18<00:01, 20.49it/s] 90%|█████████ | 316/350 [00:18<00:01, 17.72it/s] 92%|█████████▏| 321/350 [00:19<00:01, 15.23it/s] 94%|█████████▎| 328/350 [00:19<00:01, 21.09it/s] 95%|█████████▍| 332/350 [00:19<00:01, 16.93it/s] 96%|█████████▋| 337/350 [00:19<00:00, 16.59it/s] 99%|█████████▊| 345/350 [00:20<00:00, 20.19it/s]100%|██████████| 350/350 [00:20<00:00, 17.27it/s]
+Computing metrics on mnist dataset...
+FPR@95: 53.31, AUROC: 78.82 AUPR_IN: 55.16, AUPR_OUT: 95.58
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on svhn dataset...
+  0%|          | 0/131 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+  1%|          | 1/131 [00:00<01:29,  1.46it/s]  4%|▍         | 5/131 [00:00<00:15,  8.08it/s]  7%|▋         | 9/131 [00:01<00:12,  9.66it/s] 11%|█▏        | 15/131 [00:01<00:06, 17.30it/s] 15%|█▍        | 19/131 [00:01<00:07, 14.87it/s] 18%|█▊        | 24/131 [00:01<00:05, 19.52it/s] 21%|██        | 27/131 [00:02<00:06, 15.42it/s] 24%|██▍       | 32/131 [00:02<00:04, 19.93it/s] 27%|██▋       | 35/131 [00:02<00:06, 14.89it/s] 31%|███▏      | 41/131 [00:02<00:06, 14.64it/s] 37%|███▋      | 48/131 [00:03<00:03, 21.34it/s] 40%|███▉      | 52/131 [00:03<00:04, 17.54it/s] 44%|████▎     | 57/131 [00:03<00:04, 15.37it/s] 48%|████▊     | 63/131 [00:03<00:03, 20.21it/s] 51%|█████     | 67/131 [00:04<00:03, 17.60it/s] 56%|█████▌    | 73/131 [00:04<00:03, 15.98it/s] 61%|██████    | 80/131 [00:04<00:02, 21.85it/s] 64%|██████▍   | 84/131 [00:05<00:02, 16.91it/s] 68%|██████▊   | 89/131 [00:05<00:02, 15.33it/s] 74%|███████▍  | 97/131 [00:06<00:02, 16.46it/s] 80%|████████  | 105/131 [00:06<00:01, 16.87it/s] 86%|████████▋ | 113/131 [00:06<00:01, 17.05it/s] 92%|█████████▏| 121/131 [00:07<00:00, 18.92it/s] 98%|█████████▊| 129/131 [00:07<00:00, 22.45it/s]100%|██████████| 131/131 [00:07<00:00, 17.23it/s]
+Computing metrics on svhn dataset...
+FPR@95: 54.17, AUROC: 82.12 AUPR_IN: 69.45, AUPR_OUT: 91.51
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on texture dataset...
+  0%|          | 0/29 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+  3%|▎         | 1/29 [00:02<01:13,  2.62s/it]  7%|▋         | 2/29 [00:02<00:34,  1.29s/it] 31%|███       | 9/29 [00:04<00:08,  2.43it/s] 34%|███▍      | 10/29 [00:05<00:07,  2.39it/s] 48%|████▊     | 14/29 [00:05<00:03,  4.21it/s] 59%|█████▊    | 17/29 [00:07<00:04,  2.57it/s] 66%|██████▌   | 19/29 [00:07<00:03,  3.19it/s] 86%|████████▌ | 25/29 [00:08<00:01,  3.97it/s] 90%|████████▉ | 26/29 [00:08<00:00,  4.06it/s]100%|██████████| 29/29 [00:09<00:00,  3.21it/s]
+Computing metrics on texture dataset...
+FPR@95: 52.88, AUROC: 83.47 AUPR_IN: 89.47, AUPR_OUT: 73.90
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on places365 dataset...
+  0%|          | 0/169 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+  1%|          | 1/169 [00:01<03:42,  1.32s/it]  1%|          | 2/169 [00:01<01:46,  1.57it/s]  5%|▍         | 8/169 [00:01<00:19,  8.34it/s]  7%|▋         | 11/169 [00:02<00:27,  5.65it/s] 10%|█         | 17/169 [00:03<00:23,  6.53it/s] 11%|█         | 19/169 [00:03<00:21,  6.99it/s] 15%|█▍        | 25/169 [00:04<00:19,  7.43it/s] 16%|█▌        | 27/169 [00:04<00:19,  7.46it/s] 20%|█▉        | 33/169 [00:05<00:17,  7.66it/s] 20%|██        | 34/169 [00:05<00:17,  7.80it/s] 21%|██        | 35/169 [00:05<00:18,  7.34it/s] 24%|██▍       | 41/169 [00:06<00:15,  8.08it/s] 25%|██▍       | 42/169 [00:06<00:15,  8.17it/s] 25%|██▌       | 43/169 [00:06<00:17,  7.34it/s] 29%|██▉       | 49/169 [00:07<00:14,  8.31it/s] 30%|██▉       | 50/169 [00:07<00:14,  8.30it/s] 30%|███       | 51/169 [00:07<00:15,  7.54it/s] 34%|███▎      | 57/169 [00:08<00:12,  8.62it/s] 34%|███▍      | 58/169 [00:08<00:13,  8.27it/s] 35%|███▍      | 59/169 [00:08<00:13,  7.91it/s] 38%|███▊      | 65/169 [00:08<00:11,  8.95it/s] 39%|███▉      | 66/169 [00:09<00:18,  5.69it/s] 42%|████▏     | 71/169 [00:09<00:10,  9.43it/s] 43%|████▎     | 73/169 [00:09<00:09, 10.03it/s] 44%|████▍     | 75/169 [00:10<00:15,  6.07it/s] 48%|████▊     | 81/169 [00:10<00:09,  9.39it/s] 49%|████▉     | 83/169 [00:11<00:13,  6.53it/s] 52%|█████▏    | 88/169 [00:11<00:08, 10.06it/s] 54%|█████▍    | 91/169 [00:12<00:12,  6.31it/s] 58%|█████▊    | 98/169 [00:13<00:10,  6.62it/s] 62%|██████▏   | 105/169 [00:13<00:06, 10.22it/s] 64%|██████▍   | 108/169 [00:14<00:08,  7.37it/s] 67%|██████▋   | 114/169 [00:15<00:07,  6.95it/s] 72%|███████▏  | 122/169 [00:16<00:06,  7.48it/s] 77%|███████▋  | 130/169 [00:17<00:05,  7.16it/s] 82%|████████▏ | 138/169 [00:18<00:04,  7.40it/s] 86%|████████▋ | 146/169 [00:19<00:03,  7.62it/s] 91%|█████████ | 153/169 [00:19<00:01, 10.27it/s] 92%|█████████▏| 156/169 [00:20<00:01,  7.90it/s] 96%|█████████▌| 162/169 [00:21<00:00,  8.73it/s]100%|██████████| 169/169 [00:21<00:00,  7.89it/s]
+Computing metrics on places365 dataset...
+FPR@95: 61.22, AUROC: 79.17 AUPR_IN: 58.06, AUPR_OUT: 91.92
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 55.39, AUROC: 80.89 AUPR_IN: 68.03, AUPR_OUT: 88.23
+──────────────────────────────────────────────────────────────────────
+
+ID Acc Eval:   0%|          | 0/45 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ID Acc Eval:   2%|▏         | 1/45 [00:00<00:30,  1.45it/s]ID Acc Eval:  13%|█▎        | 6/45 [00:00<00:04,  9.73it/s]ID Acc Eval:  20%|██        | 9/45 [00:01<00:03,  9.56it/s]ID Acc Eval:  38%|███▊      | 17/45 [00:01<00:02, 13.55it/s]ID Acc Eval:  53%|█████▎    | 24/45 [00:01<00:01, 20.76it/s]ID Acc Eval:  62%|██████▏   | 28/45 [00:02<00:01, 16.50it/s]ID Acc Eval:  73%|███████▎  | 33/45 [00:02<00:00, 15.53it/s]ID Acc Eval:  91%|█████████ | 41/45 [00:02<00:00, 19.06it/s]ID Acc Eval: 100%|██████████| 45/45 [00:02<00:00, 16.26it/s]
+/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+           FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+cifar10     77.23  75.81    71.61     74.47 77.18
+tin         51.56  82.77    87.75     73.42 77.18
+nearood     64.39  79.29    79.68     73.94 77.18
+mnist       53.31  78.82    55.16     95.58 77.18
+svhn        54.17  82.12    69.45     91.51 77.18
+texture     52.88  83.47    89.47     73.90 77.18
+places365   61.22  79.17    58.06     91.92 77.18
+farood      55.39  80.89    68.03     88.23 77.18
+
+--- RFF Diagnostics (231963 samples) ./results/cifar100_resnet18_32x32_base_e100_lr0.1_default/s0/diagnostics/rff_max_novw.npz ---
+  Classes above threshold: mean=1.5, zero=12.9%, one=50.0%, multi(>1)=37.2%
+  Max score: mean=0.3607, std=0.2395
+  Margin (max-2nd): mean=0.0861, std=0.1009
+
+==================================================
+Setting up RFF Kernel Attention OOD detector...
+  sigma (bandwidth): 0.5
+  D (RFF dimension): 1024
+  alpha (target FPR): 0.05
+  feature_space: penultimate
+  normalize: True
+  score_mode: max
+  variance_weighted: False
+==================================================
+Extracting train features:   0%|          | 0/250 [00:00<?, ?it/s]Extracting train features:   0%|          | 1/250 [00:00<02:50,  1.46it/s]Extracting train features:   3%|▎         | 8/250 [00:00<00:18, 12.98it/s]Extracting train features:   5%|▍         | 12/250 [00:01<00:19, 12.38it/s]Extracting train features:   7%|▋         | 17/250 [00:01<00:18, 12.56it/s]Extracting train features:   9%|▉         | 23/250 [00:01<00:12, 18.84it/s]Extracting train features:  11%|█         | 27/250 [00:02<00:14, 14.96it/s]Extracting train features:  13%|█▎        | 33/250 [00:02<00:14, 14.76it/s]Extracting train features:  16%|█▋        | 41/250 [00:02<00:12, 16.15it/s]Extracting train features:  20%|█▉        | 49/250 [00:03<00:11, 17.12it/s]Extracting train features:  23%|██▎       | 57/250 [00:03<00:10, 17.67it/s]Extracting train features:  26%|██▌       | 65/250 [00:04<00:10, 17.67it/s]Extracting train features:  29%|██▉       | 73/250 [00:04<00:09, 17.78it/s]Extracting train features:  32%|███▏      | 81/250 [00:05<00:09, 18.11it/s]Extracting train features:  35%|███▌      | 88/250 [00:05<00:07, 22.69it/s]Extracting train features:  37%|███▋      | 92/250 [00:05<00:08, 18.22it/s]Extracting train features:  39%|███▉      | 97/250 [00:05<00:08, 17.52it/s]Extracting train features:  40%|████      | 100/250 [00:06<00:08, 18.14it/s]Extracting train features:  42%|████▏     | 105/250 [00:06<00:08, 17.54it/s]Extracting train features:  43%|████▎     | 108/250 [00:06<00:07, 18.93it/s]Extracting train features:  45%|████▌     | 113/250 [00:06<00:07, 17.74it/s]Extracting train features:  46%|████▋     | 116/250 [00:06<00:07, 19.00it/s]Extracting train features:  48%|████▊     | 121/250 [00:07<00:07, 17.56it/s]Extracting train features:  50%|████▉     | 124/250 [00:07<00:06, 19.30it/s]Extracting train features:  52%|█████▏    | 129/250 [00:07<00:06, 17.47it/s]Extracting train features:  53%|█████▎    | 133/250 [00:07<00:05, 20.78it/s]Extracting train features:  55%|█████▍    | 137/250 [00:08<00:06, 17.40it/s]Extracting train features:  56%|█████▌    | 140/250 [00:08<00:05, 18.68it/s]Extracting train features:  58%|█████▊    | 145/250 [00:08<00:06, 17.47it/s]Extracting train features:  59%|█████▉    | 148/250 [00:08<00:05, 19.34it/s]Extracting train features:  61%|██████    | 153/250 [00:08<00:05, 17.39it/s]Extracting train features:  63%|██████▎   | 157/250 [00:09<00:04, 20.48it/s]Extracting train features:  64%|██████▍   | 161/250 [00:09<00:05, 17.17it/s]Extracting train features:  66%|██████▌   | 165/250 [00:09<00:04, 20.45it/s]Extracting train features:  68%|██████▊   | 169/250 [00:09<00:04, 17.37it/s]Extracting train features:  70%|██████▉   | 174/250 [00:09<00:03, 22.04it/s]Extracting train features:  71%|███████   | 177/250 [00:10<00:04, 16.34it/s]Extracting train features:  73%|███████▎  | 182/250 [00:10<00:03, 21.33it/s]Extracting train features:  74%|███████▍  | 186/250 [00:10<00:03, 16.39it/s]Extracting train features:  77%|███████▋  | 193/250 [00:11<00:03, 17.66it/s]Extracting train features:  79%|███████▉  | 198/250 [00:11<00:02, 21.81it/s]Extracting train features:  81%|████████  | 202/250 [00:11<00:02, 16.74it/s]Extracting train features:  84%|████████▎ | 209/250 [00:11<00:02, 17.30it/s]Extracting train features:  86%|████████▋ | 216/250 [00:12<00:01, 23.47it/s]Extracting train features:  88%|████████▊ | 220/250 [00:12<00:01, 18.09it/s]Extracting train features:  90%|█████████ | 225/250 [00:12<00:01, 16.63it/s]Extracting train features:  92%|█████████▏| 231/250 [00:12<00:00, 21.36it/s]Extracting train features:  94%|█████████▍| 235/250 [00:13<00:00, 16.72it/s]Extracting train features:  96%|█████████▋| 241/250 [00:13<00:00, 17.63it/s]Extracting train features: 100%|█████████▉| 249/250 [00:13<00:00, 22.05it/s]Extracting train features: 100%|██████████| 250/250 [00:13<00:00, 17.89it/s]
+Extracted 50000 train features of dim 512
+  Feature norm (mean): 1.0000
+  Number of classes: 100
+Extracting val features:   0%|          | 0/5 [00:00<?, ?it/s]Extracting val features:  20%|██        | 1/5 [00:00<00:01,  2.13it/s]Extracting val features: 100%|██████████| 5/5 [00:00<00:00,  9.10it/s]
+Extracted 1000 val features for threshold
+Per-class embedding norms (mean): 0.6952
+Threshold (max) at 5.0%: 0.2257
+Max threshold (for diagnostics) at 5.0%: 0.2257
+RFF setup complete.
+
+Starting automatic parameter search...
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:01,  2.00it/s]100%|██████████| 5/5 [00:00<00:00,  8.49it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.95it/s]100%|██████████| 5/5 [00:00<00:00,  8.16it/s]
+Hyperparam: [0.1, 512, 0.025], auroc: 0.5179012345679013
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.98it/s]100%|██████████| 5/5 [00:00<00:00,  8.51it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.89it/s]100%|██████████| 5/5 [00:00<00:00,  8.13it/s]
+Hyperparam: [0.5, 512, 0.025], auroc: 0.8339989711934156
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.02it/s]100%|██████████| 5/5 [00:00<00:00,  8.53it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.89it/s]100%|██████████| 5/5 [00:00<00:00,  8.19it/s]
+Hyperparam: [1.0, 512, 0.025], auroc: 0.8253960905349794
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.99it/s]100%|██████████| 5/5 [00:00<00:00,  8.41it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.95it/s]100%|██████████| 5/5 [00:00<00:00,  8.17it/s]
+Hyperparam: [2.0, 512, 0.025], auroc: 0.7316177983539095
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.97it/s]100%|██████████| 5/5 [00:00<00:00,  8.42it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.84it/s]100%|██████████| 5/5 [00:00<00:00,  8.00it/s]
+Hyperparam: [0.1, 1024, 0.025], auroc: 0.47893004115226334
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.94it/s]100%|██████████| 5/5 [00:00<00:00,  8.41it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.87it/s]100%|██████████| 5/5 [00:00<00:00,  8.07it/s]
+Hyperparam: [0.5, 1024, 0.025], auroc: 0.8421738683127571
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.96it/s]100%|██████████| 5/5 [00:00<00:00,  8.36it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.89it/s]100%|██████████| 5/5 [00:00<00:00,  8.10it/s]
+Hyperparam: [1.0, 1024, 0.025], auroc: 0.8351358024691358
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.03it/s]100%|██████████| 5/5 [00:00<00:00,  8.32it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.90it/s]100%|██████████| 5/5 [00:00<00:00,  8.08it/s]
+Hyperparam: [2.0, 1024, 0.025], auroc: 0.7920473251028806
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.02it/s]100%|██████████| 5/5 [00:00<00:00,  8.64it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.98it/s]100%|██████████| 5/5 [00:00<00:00,  8.22it/s]
+Hyperparam: [0.1, 2048, 0.025], auroc: 0.5111008230452675
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.01it/s]100%|██████████| 5/5 [00:00<00:00,  8.61it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.89it/s]100%|██████████| 5/5 [00:00<00:00,  8.06it/s]
+Hyperparam: [0.5, 2048, 0.025], auroc: 0.8409166666666668
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.96it/s]100%|██████████| 5/5 [00:00<00:00,  8.28it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  2.00it/s]100%|██████████| 5/5 [00:00<00:00,  8.25it/s]
+Hyperparam: [1.0, 2048, 0.025], auroc: 0.8331615226337448
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.00it/s]100%|██████████| 5/5 [00:00<00:00,  8.45it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.96it/s]100%|██████████| 5/5 [00:00<00:00,  8.01it/s]
+Hyperparam: [2.0, 2048, 0.025], auroc: 0.8139819958847737
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.04it/s]100%|██████████| 5/5 [00:00<00:00,  8.48it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.90it/s]100%|██████████| 5/5 [00:00<00:00,  8.12it/s]
+Hyperparam: [0.1, 512, 0.05], auroc: 0.5288168724279836
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.90it/s]100%|██████████| 5/5 [00:00<00:00,  8.26it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.89it/s]100%|██████████| 5/5 [00:00<00:00,  8.17it/s]
+Hyperparam: [0.5, 512, 0.05], auroc: 0.8444773662551441
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.12it/s]100%|██████████| 5/5 [00:00<00:00,  8.83it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.79it/s]100%|██████████| 5/5 [00:00<00:00,  7.68it/s]
+Hyperparam: [1.0, 512, 0.05], auroc: 0.8203086419753086
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.09it/s]100%|██████████| 5/5 [00:00<00:00,  8.65it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.91it/s]100%|██████████| 5/5 [00:00<00:00,  8.11it/s]
+Hyperparam: [2.0, 512, 0.05], auroc: 0.742608024691358
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.91it/s]100%|██████████| 5/5 [00:00<00:00,  8.17it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.70it/s]100%|██████████| 5/5 [00:00<00:00,  7.28it/s]
+Hyperparam: [0.1, 1024, 0.05], auroc: 0.4925349794238683
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.81it/s]100%|██████████| 5/5 [00:00<00:00,  7.78it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.76it/s]100%|██████████| 5/5 [00:00<00:00,  7.37it/s]
+Hyperparam: [0.5, 1024, 0.05], auroc: 0.8426100823045265
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.80it/s]100%|██████████| 5/5 [00:00<00:00,  7.60it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.74it/s]100%|██████████| 5/5 [00:00<00:00,  7.51it/s]
+Hyperparam: [1.0, 1024, 0.05], auroc: 0.8153395061728395
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.80it/s]100%|██████████| 5/5 [00:00<00:00,  7.75it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.81it/s]100%|██████████| 5/5 [00:00<00:00,  7.50it/s]
+Hyperparam: [2.0, 1024, 0.05], auroc: 0.8220884773662551
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.87it/s]100%|██████████| 5/5 [00:00<00:00,  7.77it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.81it/s]100%|██████████| 5/5 [00:00<00:00,  7.56it/s]
+Hyperparam: [0.1, 2048, 0.05], auroc: 0.5157777777777778
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.91it/s]100%|██████████| 5/5 [00:00<00:00,  7.87it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.78it/s]100%|██████████| 5/5 [00:00<00:00,  7.57it/s]
+Hyperparam: [0.5, 2048, 0.05], auroc: 0.841753086419753
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.86it/s]100%|██████████| 5/5 [00:00<00:00,  7.98it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.76it/s]100%|██████████| 5/5 [00:00<00:00,  7.53it/s]
+Hyperparam: [1.0, 2048, 0.05], auroc: 0.838230452674897
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.84it/s]100%|██████████| 5/5 [00:00<00:00,  7.68it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.77it/s]100%|██████████| 5/5 [00:00<00:00,  7.56it/s]
+Hyperparam: [2.0, 2048, 0.05], auroc: 0.8048117283950617
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.93it/s]100%|██████████| 5/5 [00:00<00:00,  7.73it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.72it/s]100%|██████████| 5/5 [00:00<00:00,  7.51it/s]
+Hyperparam: [0.1, 512, 0.1], auroc: 0.5153194444444444
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.91it/s]100%|██████████| 5/5 [00:00<00:00,  7.73it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.79it/s]100%|██████████| 5/5 [00:00<00:00,  7.56it/s]
+Hyperparam: [0.5, 512, 0.1], auroc: 0.8370216049382716
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.86it/s]100%|██████████| 5/5 [00:00<00:00,  8.00it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.72it/s]100%|██████████| 5/5 [00:00<00:00,  7.36it/s]
+Hyperparam: [1.0, 512, 0.1], auroc: 0.8317119341563786
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.85it/s]100%|██████████| 5/5 [00:00<00:00,  7.93it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.84it/s]100%|██████████| 5/5 [00:00<00:00,  7.46it/s]
+Hyperparam: [2.0, 512, 0.1], auroc: 0.715772633744856
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.89it/s]100%|██████████| 5/5 [00:00<00:00,  7.90it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.73it/s]100%|██████████| 5/5 [00:00<00:00,  7.43it/s]
+Hyperparam: [0.1, 1024, 0.1], auroc: 0.5050925925925926
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.89it/s]100%|██████████| 5/5 [00:00<00:00,  7.94it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.75it/s]100%|██████████| 5/5 [00:00<00:00,  7.58it/s]
+Hyperparam: [0.5, 1024, 0.1], auroc: 0.8414362139917696
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.97it/s]100%|██████████| 5/5 [00:00<00:00,  7.77it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.80it/s]100%|██████████| 5/5 [00:00<00:00,  7.37it/s]
+Hyperparam: [1.0, 1024, 0.1], auroc: 0.8303302469135803
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.98it/s]100%|██████████| 5/5 [00:00<00:00,  7.89it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.77it/s]100%|██████████| 5/5 [00:00<00:00,  7.58it/s]
+Hyperparam: [2.0, 1024, 0.1], auroc: 0.785957304526749
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.88it/s]100%|██████████| 5/5 [00:00<00:00,  7.94it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.84it/s]100%|██████████| 5/5 [00:00<00:00,  7.47it/s]
+Hyperparam: [0.1, 2048, 0.1], auroc: 0.49588271604938267
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.95it/s]100%|██████████| 5/5 [00:00<00:00,  8.20it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.75it/s]100%|██████████| 5/5 [00:00<00:00,  7.63it/s]
+Hyperparam: [0.5, 2048, 0.1], auroc: 0.8439084362139917
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.92it/s]100%|██████████| 5/5 [00:00<00:00,  7.85it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.72it/s]100%|██████████| 5/5 [00:00<00:00,  7.45it/s]
+Hyperparam: [1.0, 2048, 0.1], auroc: 0.8384022633744856
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.98it/s]100%|██████████| 5/5 [00:00<00:00,  8.05it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.75it/s]100%|██████████| 5/5 [00:00<00:00,  7.62it/s]
+Hyperparam: [2.0, 2048, 0.1], auroc: 0.8079984567901234
+Final hyperparam: [0.5, 512, 0.05]
+Performing inference on cifar100 test set...
+  0%|          | 0/45 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+  2%|▏         | 1/45 [00:00<00:30,  1.42it/s] 11%|█         | 5/45 [00:00<00:05,  7.74it/s] 20%|██        | 9/45 [00:01<00:03,  9.72it/s] 36%|███▌      | 16/45 [00:01<00:01, 18.77it/s] 44%|████▍     | 20/45 [00:01<00:01, 14.94it/s] 56%|█████▌    | 25/45 [00:01<00:01, 14.90it/s] 62%|██████▏   | 28/45 [00:02<00:01, 16.16it/s] 73%|███████▎  | 33/45 [00:02<00:00, 16.71it/s] 80%|████████  | 36/45 [00:02<00:00, 17.69it/s] 91%|█████████ | 41/45 [00:02<00:00, 20.47it/s]100%|██████████| 45/45 [00:02<00:00, 15.72it/s]
+Processing near ood...
+Performing inference on cifar10 dataset...
+  0%|          | 0/50 [00:00<?, ?it/s]  2%|▏         | 1/50 [00:00<00:35,  1.37it/s] 12%|█▏        | 6/50 [00:00<00:04,  9.22it/s] 18%|█▊        | 9/50 [00:01<00:04,  9.90it/s] 26%|██▌       | 13/50 [00:01<00:02, 14.60it/s] 34%|███▍      | 17/50 [00:01<00:02, 13.92it/s] 42%|████▏     | 21/50 [00:01<00:01, 17.94it/s] 50%|█████     | 25/50 [00:01<00:01, 15.60it/s] 56%|█████▌    | 28/50 [00:02<00:01, 17.47it/s] 66%|██████▌   | 33/50 [00:02<00:01, 16.54it/s] 72%|███████▏  | 36/50 [00:02<00:00, 17.25it/s] 82%|████████▏ | 41/50 [00:02<00:00, 17.16it/s] 98%|█████████▊| 49/50 [00:03<00:00, 22.34it/s]100%|██████████| 50/50 [00:03<00:00, 15.69it/s]
+Computing metrics on cifar10 dataset...
+FPR@95: 76.59, AUROC: 75.44 AUPR_IN: 72.54, AUPR_OUT: 73.97
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on tin dataset...
+  0%|          | 0/33 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+  3%|▎         | 1/33 [00:00<00:24,  1.33it/s] 15%|█▌        | 5/33 [00:00<00:03,  7.40it/s] 27%|██▋       | 9/33 [00:01<00:02,  8.60it/s] 42%|████▏     | 14/33 [00:01<00:01, 14.36it/s] 52%|█████▏    | 17/33 [00:01<00:01, 10.82it/s] 70%|██████▉   | 23/33 [00:01<00:00, 17.12it/s] 82%|████████▏ | 27/33 [00:02<00:00, 14.39it/s]100%|██████████| 33/33 [00:02<00:00, 19.47it/s]100%|██████████| 33/33 [00:02<00:00, 13.18it/s]
+Computing metrics on tin dataset...
+FPR@95: 53.78, AUROC: 81.16 AUPR_IN: 86.73, AUPR_OUT: 70.49
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 65.18, AUROC: 78.30 AUPR_IN: 79.64, AUPR_OUT: 72.23
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Performing inference on mnist dataset...
+  0%|          | 0/350 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+  0%|          | 1/350 [00:00<04:29,  1.29it/s]  2%|▏         | 8/350 [00:00<00:28, 11.84it/s]  3%|▎         | 12/350 [00:01<00:29, 11.45it/s]  5%|▍         | 17/350 [00:01<00:28, 11.82it/s]  6%|▋         | 22/350 [00:01<00:20, 16.35it/s]  7%|▋         | 25/350 [00:02<00:25, 12.67it/s]  9%|▉         | 32/350 [00:02<00:15, 19.90it/s] 10%|█         | 36/350 [00:02<00:20, 15.67it/s] 12%|█▏        | 41/350 [00:03<00:21, 14.30it/s] 14%|█▎        | 48/350 [00:03<00:14, 20.54it/s] 15%|█▍        | 52/350 [00:03<00:18, 15.95it/s] 16%|█▋        | 57/350 [00:04<00:20, 14.59it/s] 18%|█▊        | 63/350 [00:04<00:14, 19.42it/s] 19%|█▉        | 67/350 [00:04<00:16, 16.72it/s] 21%|██        | 73/350 [00:04<00:18, 15.30it/s] 23%|██▎       | 79/350 [00:05<00:13, 19.85it/s] 24%|██▎       | 83/350 [00:05<00:15, 16.90it/s] 25%|██▌       | 88/350 [00:05<00:12, 20.89it/s] 26%|██▋       | 92/350 [00:05<00:15, 16.22it/s] 28%|██▊       | 97/350 [00:06<00:16, 14.98it/s] 30%|███       | 105/350 [00:06<00:15, 16.08it/s] 32%|███▏      | 112/350 [00:06<00:10, 21.79it/s] 33%|███▎      | 116/350 [00:07<00:13, 17.77it/s] 35%|███▍      | 121/350 [00:07<00:14, 15.41it/s] 37%|███▋      | 129/350 [00:08<00:13, 15.96it/s] 38%|███▊      | 134/350 [00:08<00:11, 19.36it/s] 39%|███▉      | 137/350 [00:08<00:13, 15.41it/s] 41%|████      | 144/350 [00:08<00:09, 21.22it/s] 42%|████▏     | 148/350 [00:09<00:12, 16.61it/s] 44%|████▎     | 153/350 [00:09<00:13, 14.75it/s] 46%|████▌     | 161/350 [00:10<00:11, 15.78it/s] 48%|████▊     | 168/350 [00:10<00:08, 21.26it/s] 49%|████▉     | 172/350 [00:10<00:10, 16.85it/s] 51%|█████     | 177/350 [00:10<00:11, 15.51it/s] 53%|█████▎    | 184/350 [00:11<00:07, 21.42it/s] 54%|█████▎    | 188/350 [00:11<00:09, 16.96it/s] 55%|█████▌    | 193/350 [00:11<00:10, 15.47it/s] 57%|█████▋    | 198/350 [00:11<00:07, 19.16it/s] 58%|█████▊    | 202/350 [00:12<00:09, 15.58it/s] 60%|█████▉    | 209/350 [00:12<00:08, 15.67it/s] 61%|██████    | 214/350 [00:12<00:07, 19.39it/s] 62%|██████▏   | 217/350 [00:13<00:09, 14.62it/s] 63%|██████▎   | 222/350 [00:13<00:06, 18.83it/s] 65%|██████▍   | 226/350 [00:13<00:07, 15.95it/s] 67%|██████▋   | 233/350 [00:14<00:07, 15.81it/s] 68%|██████▊   | 239/350 [00:14<00:05, 20.44it/s] 69%|██████▉   | 243/350 [00:14<00:06, 16.10it/s] 71%|███████   | 249/350 [00:15<00:06, 15.31it/s] 73%|███████▎  | 257/350 [00:15<00:05, 15.98it/s] 76%|███████▌  | 265/350 [00:16<00:05, 16.08it/s] 78%|███████▊  | 272/350 [00:16<00:03, 20.90it/s] 79%|███████▉  | 276/350 [00:16<00:04, 16.58it/s] 80%|████████  | 281/350 [00:17<00:04, 14.83it/s] 82%|████████▏ | 288/350 [00:17<00:03, 20.29it/s] 83%|████████▎ | 292/350 [00:17<00:03, 16.75it/s] 85%|████████▍ | 297/350 [00:18<00:03, 15.08it/s] 87%|████████▋ | 304/350 [00:18<00:02, 20.99it/s] 88%|████████▊ | 308/350 [00:18<00:02, 16.92it/s] 89%|████████▉ | 313/350 [00:18<00:02, 15.09it/s] 91%|█████████▏| 320/350 [00:19<00:01, 21.05it/s] 93%|█████████▎| 324/350 [00:19<00:01, 16.67it/s] 94%|█████████▍| 329/350 [00:19<00:01, 15.05it/s] 96%|█████████▌| 335/350 [00:19<00:00, 19.97it/s] 97%|█████████▋| 339/350 [00:20<00:00, 16.98it/s] 99%|█████████▊| 345/350 [00:20<00:00, 19.27it/s]100%|██████████| 350/350 [00:20<00:00, 16.94it/s]
+Computing metrics on mnist dataset...
+FPR@95: 43.37, AUROC: 83.69 AUPR_IN: 64.45, AUPR_OUT: 96.71
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on svhn dataset...
+  0%|          | 0/131 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+  1%|          | 1/131 [00:00<01:34,  1.37it/s]  4%|▍         | 5/131 [00:00<00:16,  7.67it/s]  7%|▋         | 9/131 [00:01<00:12,  9.69it/s] 11%|█▏        | 15/131 [00:01<00:06, 17.63it/s] 15%|█▍        | 19/131 [00:01<00:07, 14.58it/s] 19%|█▉        | 25/131 [00:02<00:07, 14.66it/s] 23%|██▎       | 30/131 [00:02<00:05, 18.96it/s] 25%|██▌       | 33/131 [00:02<00:06, 15.61it/s] 28%|██▊       | 37/131 [00:02<00:04, 19.01it/s] 31%|███▏      | 41/131 [00:02<00:05, 15.85it/s] 35%|███▌      | 46/131 [00:03<00:04, 20.70it/s] 38%|███▊      | 50/131 [00:03<00:04, 16.39it/s] 44%|████▎     | 57/131 [00:03<00:04, 17.31it/s] 46%|████▌     | 60/131 [00:03<00:03, 18.78it/s] 50%|████▉     | 65/131 [00:04<00:03, 17.41it/s] 53%|█████▎    | 69/131 [00:04<00:03, 20.36it/s] 56%|█████▌    | 73/131 [00:04<00:03, 17.47it/s] 58%|█████▊    | 76/131 [00:04<00:02, 19.31it/s] 62%|██████▏   | 81/131 [00:05<00:02, 17.63it/s] 65%|██████▍   | 85/131 [00:05<00:02, 20.79it/s] 68%|██████▊   | 89/131 [00:05<00:02, 17.49it/s] 70%|███████   | 92/131 [00:05<00:02, 19.31it/s] 74%|███████▍  | 97/131 [00:05<00:01, 17.64it/s] 77%|███████▋  | 101/131 [00:06<00:01, 20.77it/s] 80%|████████  | 105/131 [00:06<00:01, 17.01it/s] 82%|████████▏ | 108/131 [00:06<00:01, 18.97it/s] 86%|████████▋ | 113/131 [00:06<00:01, 17.72it/s] 89%|████████▊ | 116/131 [00:06<00:00, 18.62it/s] 92%|█████████▏| 121/131 [00:07<00:00, 18.21it/s] 95%|█████████▍| 124/131 [00:07<00:00, 19.69it/s] 98%|█████████▊| 129/131 [00:07<00:00, 23.29it/s]100%|██████████| 131/131 [00:07<00:00, 17.36it/s]
+Computing metrics on svhn dataset...
+FPR@95: 62.32, AUROC: 79.29 AUPR_IN: 64.75, AUPR_OUT: 90.04
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on texture dataset...
+  0%|          | 0/29 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+  3%|▎         | 1/29 [00:02<01:15,  2.69s/it]  7%|▋         | 2/29 [00:03<00:35,  1.30s/it] 28%|██▊       | 8/29 [00:03<00:04,  4.33it/s] 38%|███▊      | 11/29 [00:05<00:07,  2.33it/s] 59%|█████▊    | 17/29 [00:07<00:04,  2.60it/s] 66%|██████▌   | 19/29 [00:07<00:03,  3.04it/s] 86%|████████▌ | 25/29 [00:08<00:01,  3.80it/s] 90%|████████▉ | 26/29 [00:09<00:00,  3.84it/s]100%|██████████| 29/29 [00:09<00:00,  3.19it/s]
+Computing metrics on texture dataset...
+FPR@95: 53.44, AUROC: 82.59 AUPR_IN: 89.21, AUPR_OUT: 71.47
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on places365 dataset...
+  0%|          | 0/169 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+  1%|          | 1/169 [00:01<03:37,  1.29s/it]  5%|▌         | 9/169 [00:02<00:34,  4.70it/s]  8%|▊         | 14/169 [00:02<00:19,  7.83it/s] 10%|█         | 17/169 [00:03<00:26,  5.74it/s] 14%|█▍        | 24/169 [00:03<00:14, 10.14it/s] 17%|█▋        | 28/169 [00:04<00:19,  7.30it/s] 20%|█▉        | 33/169 [00:05<00:21,  6.47it/s] 24%|██▎       | 40/169 [00:05<00:12, 10.16it/s] 26%|██▌       | 44/169 [00:06<00:16,  7.65it/s] 29%|██▉       | 49/169 [00:07<00:17,  6.88it/s] 32%|███▏      | 54/169 [00:07<00:12,  9.32it/s] 34%|███▎      | 57/169 [00:08<00:16,  6.72it/s] 38%|███▊      | 64/169 [00:08<00:10, 10.40it/s] 40%|███▉      | 67/169 [00:09<00:14,  7.26it/s] 43%|████▎     | 73/169 [00:10<00:13,  6.95it/s] 45%|████▍     | 76/169 [00:10<00:11,  8.25it/s] 48%|████▊     | 81/169 [00:11<00:12,  7.17it/s] 50%|█████     | 85/169 [00:11<00:09,  9.16it/s] 53%|█████▎    | 89/169 [00:12<00:11,  7.24it/s] 54%|█████▍    | 91/169 [00:12<00:09,  7.85it/s] 57%|█████▋    | 97/169 [00:13<00:09,  7.56it/s] 59%|█████▊    | 99/169 [00:13<00:08,  7.87it/s] 62%|██████▏   | 105/169 [00:14<00:08,  7.72it/s] 63%|██████▎   | 107/169 [00:14<00:07,  7.88it/s] 66%|██████▋   | 112/169 [00:14<00:05, 11.34it/s] 68%|██████▊   | 115/169 [00:15<00:07,  7.30it/s] 71%|███████   | 120/169 [00:15<00:04, 10.48it/s] 73%|███████▎  | 123/169 [00:16<00:06,  7.17it/s] 76%|███████▌  | 128/169 [00:16<00:03, 10.27it/s] 78%|███████▊  | 131/169 [00:17<00:05,  7.13it/s] 81%|████████  | 137/169 [00:18<00:04,  7.08it/s] 82%|████████▏ | 139/169 [00:18<00:03,  7.67it/s] 86%|████████▌ | 145/169 [00:19<00:03,  7.34it/s] 87%|████████▋ | 147/169 [00:19<00:02,  8.10it/s] 91%|█████████ | 153/169 [00:20<00:02,  7.49it/s] 92%|█████████▏| 155/169 [00:20<00:01,  8.10it/s] 95%|█████████▌| 161/169 [00:21<00:01,  7.76it/s] 96%|█████████▋| 163/169 [00:21<00:00,  8.56it/s]100%|██████████| 169/169 [00:21<00:00, 11.07it/s]100%|██████████| 169/169 [00:21<00:00,  7.85it/s]
+Computing metrics on places365 dataset...
+FPR@95: 65.48, AUROC: 76.98 AUPR_IN: 53.94, AUPR_OUT: 90.74
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 56.15, AUROC: 80.64 AUPR_IN: 68.09, AUPR_OUT: 87.24
+──────────────────────────────────────────────────────────────────────
+
+ID Acc Eval:   0%|          | 0/45 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ID Acc Eval:   2%|▏         | 1/45 [00:00<00:29,  1.49it/s]ID Acc Eval:   9%|▉         | 4/45 [00:00<00:06,  6.49it/s]ID Acc Eval:  20%|██        | 9/45 [00:01<00:03, 10.77it/s]ID Acc Eval:  29%|██▉       | 13/45 [00:01<00:02, 15.34it/s]ID Acc Eval:  38%|███▊      | 17/45 [00:01<00:01, 14.07it/s]ID Acc Eval:  44%|████▍     | 20/45 [00:01<00:01, 15.91it/s]ID Acc Eval:  56%|█████▌    | 25/45 [00:01<00:01, 16.34it/s]ID Acc Eval:  60%|██████    | 27/45 [00:02<00:01, 15.23it/s]ID Acc Eval:  73%|███████▎  | 33/45 [00:02<00:00, 18.10it/s]ID Acc Eval:  78%|███████▊  | 35/45 [00:02<00:00, 16.76it/s]ID Acc Eval:  91%|█████████ | 41/45 [00:02<00:00, 21.62it/s]ID Acc Eval: 100%|██████████| 45/45 [00:02<00:00, 15.82it/s]
+/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+           FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+cifar10     76.59  75.44    72.54     73.97 77.38
+tin         53.78  81.16    86.73     70.49 77.38
+nearood     65.18  78.30    79.64     72.23 77.38
+mnist       43.37  83.69    64.45     96.71 77.38
+svhn        62.32  79.29    64.75     90.04 77.38
+texture     53.44  82.59    89.21     71.47 77.38
+places365   65.48  76.98    53.94     90.74 77.38
+farood      56.15  80.64    68.09     87.24 77.38
+
+--- RFF Diagnostics (231963 samples) ./results/cifar100_resnet18_32x32_base_e100_lr0.1_default/s1/diagnostics/rff_max_novw.npz ---
+  Classes above threshold: mean=1.3, zero=19.5%, one=48.8%, multi(>1)=31.7%
+  Max score: mean=0.3522, std=0.2402
+  Margin (max-2nd): mean=0.0782, std=0.0964
+
+==================================================
+Setting up RFF Kernel Attention OOD detector...
+  sigma (bandwidth): 0.5
+  D (RFF dimension): 1024
+  alpha (target FPR): 0.05
+  feature_space: penultimate
+  normalize: True
+  score_mode: max
+  variance_weighted: False
+==================================================
+Extracting train features:   0%|          | 0/250 [00:00<?, ?it/s]Extracting train features:   0%|          | 1/250 [00:00<02:53,  1.44it/s]Extracting train features:   2%|▏         | 5/250 [00:00<00:30,  7.95it/s]Extracting train features:   4%|▎         | 9/250 [00:01<00:24,  9.94it/s]Extracting train features:   6%|▌         | 15/250 [00:01<00:13, 17.97it/s]Extracting train features:   8%|▊         | 19/250 [00:01<00:15, 14.80it/s]Extracting train features:  10%|▉         | 24/250 [00:01<00:11, 20.10it/s]Extracting train features:  11%|█         | 28/250 [00:02<00:14, 15.45it/s]Extracting train features:  13%|█▎        | 33/250 [00:02<00:14, 14.57it/s]Extracting train features:  16%|█▋        | 41/250 [00:02<00:12, 16.28it/s]Extracting train features:  19%|█▉        | 47/250 [00:02<00:09, 21.12it/s]Extracting train features:  20%|██        | 51/250 [00:03<00:11, 17.40it/s]Extracting train features:  23%|██▎       | 57/250 [00:03<00:11, 16.09it/s]Extracting train features:  25%|██▍       | 62/250 [00:03<00:09, 19.89it/s]Extracting train features:  26%|██▋       | 66/250 [00:04<00:10, 17.10it/s]Extracting train features:  28%|██▊       | 69/250 [00:04<00:09, 18.51it/s]Extracting train features:  29%|██▉       | 73/250 [00:04<00:10, 16.79it/s]Extracting train features:  30%|███       | 76/250 [00:04<00:09, 18.12it/s]Extracting train features:  32%|███▏      | 81/250 [00:05<00:09, 17.22it/s]Extracting train features:  34%|███▎      | 84/250 [00:05<00:08, 18.48it/s]Extracting train features:  36%|███▌      | 89/250 [00:05<00:09, 17.49it/s]Extracting train features:  37%|███▋      | 92/250 [00:05<00:08, 18.42it/s]Extracting train features:  39%|███▉      | 97/250 [00:05<00:09, 17.00it/s]Extracting train features:  40%|████      | 100/250 [00:06<00:08, 18.62it/s]Extracting train features:  42%|████▏     | 105/250 [00:06<00:08, 16.96it/s]Extracting train features:  43%|████▎     | 108/250 [00:06<00:07, 18.58it/s]Extracting train features:  45%|████▌     | 113/250 [00:06<00:07, 17.76it/s]Extracting train features:  46%|████▋     | 116/250 [00:06<00:07, 18.24it/s]Extracting train features:  48%|████▊     | 121/250 [00:07<00:07, 17.98it/s]Extracting train features:  50%|████▉     | 124/250 [00:07<00:06, 18.04it/s]Extracting train features:  52%|█████▏    | 129/250 [00:07<00:06, 18.58it/s]Extracting train features:  53%|█████▎    | 132/250 [00:07<00:06, 17.83it/s]Extracting train features:  55%|█████▍    | 137/250 [00:08<00:05, 19.21it/s]Extracting train features:  56%|█████▌    | 140/250 [00:08<00:06, 18.20it/s]Extracting train features:  58%|█████▊    | 145/250 [00:08<00:05, 18.60it/s]Extracting train features:  59%|█████▉    | 148/250 [00:08<00:05, 17.82it/s]Extracting train features:  61%|██████    | 153/250 [00:08<00:05, 18.60it/s]Extracting train features:  62%|██████▏   | 156/250 [00:09<00:05, 17.91it/s]Extracting train features:  64%|██████▍   | 161/250 [00:09<00:04, 19.14it/s]Extracting train features:  66%|██████▌   | 164/250 [00:09<00:04, 18.07it/s]Extracting train features:  68%|██████▊   | 169/250 [00:09<00:04, 19.25it/s]Extracting train features:  69%|██████▉   | 172/250 [00:10<00:04, 18.08it/s]Extracting train features:  71%|███████   | 177/250 [00:10<00:03, 19.56it/s]Extracting train features:  72%|███████▏  | 180/250 [00:10<00:03, 17.52it/s]Extracting train features:  74%|███████▍  | 185/250 [00:10<00:03, 20.13it/s]Extracting train features:  75%|███████▌  | 188/250 [00:10<00:03, 16.63it/s]Extracting train features:  77%|███████▋  | 193/250 [00:11<00:02, 19.35it/s]Extracting train features:  78%|███████▊  | 196/250 [00:11<00:03, 16.28it/s]Extracting train features:  80%|████████  | 201/250 [00:11<00:02, 20.14it/s]Extracting train features:  82%|████████▏ | 204/250 [00:11<00:02, 16.75it/s]Extracting train features:  84%|████████▎ | 209/250 [00:11<00:01, 20.73it/s]Extracting train features:  85%|████████▍ | 212/250 [00:12<00:02, 16.59it/s]Extracting train features:  87%|████████▋ | 217/250 [00:12<00:01, 19.80it/s]Extracting train features:  88%|████████▊ | 220/250 [00:12<00:01, 16.79it/s]Extracting train features:  90%|█████████ | 225/250 [00:12<00:01, 20.17it/s]Extracting train features:  91%|█████████ | 228/250 [00:13<00:01, 16.46it/s]Extracting train features:  93%|█████████▎| 233/250 [00:13<00:00, 20.44it/s]Extracting train features:  94%|█████████▍| 236/250 [00:13<00:00, 16.57it/s]Extracting train features:  96%|█████████▋| 241/250 [00:13<00:00, 21.70it/s]Extracting train features:  98%|█████████▊| 244/250 [00:13<00:00, 20.67it/s]Extracting train features: 100%|██████████| 250/250 [00:13<00:00, 17.88it/s]
+Extracted 50000 train features of dim 512
+  Feature norm (mean): 1.0000
+  Number of classes: 100
+Extracting val features:   0%|          | 0/5 [00:00<?, ?it/s]Extracting val features:  20%|██        | 1/5 [00:00<00:02,  1.92it/s]Extracting val features: 100%|██████████| 5/5 [00:00<00:00,  7.94it/s]
+Extracted 1000 val features for threshold
+Per-class embedding norms (mean): 0.6915
+Threshold (max) at 5.0%: 0.2213
+Max threshold (for diagnostics) at 5.0%: 0.2213
+RFF setup complete.
+
+Starting automatic parameter search...
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.83it/s]100%|██████████| 5/5 [00:00<00:00,  7.64it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.67it/s]100%|██████████| 5/5 [00:00<00:00,  7.15it/s]
+Hyperparam: [0.1, 512, 0.025], auroc: 0.509858024691358
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.77it/s]100%|██████████| 5/5 [00:00<00:00,  7.50it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.83it/s]100%|██████████| 5/5 [00:00<00:00,  7.46it/s]
+Hyperparam: [0.5, 512, 0.025], auroc: 0.8381141975308642
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.91it/s]100%|██████████| 5/5 [00:00<00:00,  7.81it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.85it/s]100%|██████████| 5/5 [00:00<00:00,  7.48it/s]
+Hyperparam: [1.0, 512, 0.025], auroc: 0.8211059670781893
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.79it/s]100%|██████████| 5/5 [00:00<00:00,  7.61it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.75it/s]100%|██████████| 5/5 [00:00<00:00,  7.43it/s]
+Hyperparam: [2.0, 512, 0.025], auroc: 0.7840370370370371
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.81it/s]100%|██████████| 5/5 [00:00<00:00,  7.80it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.72it/s]100%|██████████| 5/5 [00:00<00:00,  7.37it/s]
+Hyperparam: [0.1, 1024, 0.025], auroc: 0.5283590534979424
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.84it/s]100%|██████████| 5/5 [00:00<00:00,  7.88it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.70it/s]100%|██████████| 5/5 [00:00<00:00,  7.26it/s]
+Hyperparam: [0.5, 1024, 0.025], auroc: 0.8458724279835391
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.89it/s]100%|██████████| 5/5 [00:00<00:00,  7.90it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.83it/s]100%|██████████| 5/5 [00:00<00:00,  7.35it/s]
+Hyperparam: [1.0, 1024, 0.025], auroc: 0.8234485596707818
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.85it/s]100%|██████████| 5/5 [00:00<00:00,  7.90it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.72it/s]100%|██████████| 5/5 [00:00<00:00,  7.44it/s]
+Hyperparam: [2.0, 1024, 0.025], auroc: 0.8114444444444444
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.95it/s]100%|██████████| 5/5 [00:00<00:00,  8.23it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.68it/s]100%|██████████| 5/5 [00:00<00:00,  7.17it/s]
+Hyperparam: [0.1, 2048, 0.025], auroc: 0.4973899176954733
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.89it/s]100%|██████████| 5/5 [00:00<00:00,  8.00it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.82it/s]100%|██████████| 5/5 [00:00<00:00,  7.56it/s]
+Hyperparam: [0.5, 2048, 0.025], auroc: 0.8475534979423869
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.88it/s]100%|██████████| 5/5 [00:00<00:00,  7.87it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.73it/s]100%|██████████| 5/5 [00:00<00:00,  7.56it/s]
+Hyperparam: [1.0, 2048, 0.025], auroc: 0.8418544238683128
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.91it/s]100%|██████████| 5/5 [00:00<00:00,  7.84it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.74it/s]100%|██████████| 5/5 [00:00<00:00,  7.44it/s]
+Hyperparam: [2.0, 2048, 0.025], auroc: 0.8384182098765431
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.94it/s]100%|██████████| 5/5 [00:00<00:00,  7.81it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.80it/s]100%|██████████| 5/5 [00:00<00:00,  7.62it/s]
+Hyperparam: [0.1, 512, 0.05], auroc: 0.5183395061728394
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.91it/s]100%|██████████| 5/5 [00:00<00:00,  8.03it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.76it/s]100%|██████████| 5/5 [00:00<00:00,  7.62it/s]
+Hyperparam: [0.5, 512, 0.05], auroc: 0.8354012345679014
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.91it/s]100%|██████████| 5/5 [00:00<00:00,  7.67it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.82it/s]100%|██████████| 5/5 [00:00<00:00,  7.83it/s]
+Hyperparam: [1.0, 512, 0.05], auroc: 0.8272880658436215
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.82it/s]100%|██████████| 5/5 [00:00<00:00,  7.82it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.85it/s]100%|██████████| 5/5 [00:00<00:00,  7.71it/s]
+Hyperparam: [2.0, 512, 0.05], auroc: 0.7589315843621399
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.81it/s]100%|██████████| 5/5 [00:00<00:00,  7.77it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.80it/s]100%|██████████| 5/5 [00:00<00:00,  7.51it/s]
+Hyperparam: [0.1, 1024, 0.05], auroc: 0.4822232510288066
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.94it/s]100%|██████████| 5/5 [00:00<00:00,  8.12it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.81it/s]100%|██████████| 5/5 [00:00<00:00,  7.82it/s]
+Hyperparam: [0.5, 1024, 0.05], auroc: 0.8495133744855968
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.88it/s]100%|██████████| 5/5 [00:00<00:00,  8.09it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.83it/s]100%|██████████| 5/5 [00:00<00:00,  7.54it/s]
+Hyperparam: [1.0, 1024, 0.05], auroc: 0.8296286008230452
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.85it/s]100%|██████████| 5/5 [00:00<00:00,  7.95it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.77it/s]100%|██████████| 5/5 [00:00<00:00,  7.62it/s]
+Hyperparam: [2.0, 1024, 0.05], auroc: 0.8260504115226338
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.86it/s]100%|██████████| 5/5 [00:00<00:00,  7.96it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.78it/s]100%|██████████| 5/5 [00:00<00:00,  7.59it/s]
+Hyperparam: [0.1, 2048, 0.05], auroc: 0.5090128600823045
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.03it/s]100%|██████████| 5/5 [00:00<00:00,  7.96it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.83it/s]100%|██████████| 5/5 [00:00<00:00,  7.72it/s]
+Hyperparam: [0.5, 2048, 0.05], auroc: 0.8460730452674897
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.88it/s]100%|██████████| 5/5 [00:00<00:00,  8.06it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.81it/s]100%|██████████| 5/5 [00:00<00:00,  7.56it/s]
+Hyperparam: [1.0, 2048, 0.05], auroc: 0.8432741769547326
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.96it/s]100%|██████████| 5/5 [00:00<00:00,  8.33it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.80it/s]100%|██████████| 5/5 [00:00<00:00,  7.66it/s]
+Hyperparam: [2.0, 2048, 0.05], auroc: 0.8157510288065843
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.88it/s]100%|██████████| 5/5 [00:00<00:00,  8.06it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.68it/s]100%|██████████| 5/5 [00:00<00:00,  7.23it/s]
+Hyperparam: [0.1, 512, 0.1], auroc: 0.5144691358024691
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.97it/s]100%|██████████| 5/5 [00:00<00:00,  8.29it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.79it/s]100%|██████████| 5/5 [00:00<00:00,  7.71it/s]
+Hyperparam: [0.5, 512, 0.1], auroc: 0.8412654320987654
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.07it/s]100%|██████████| 5/5 [00:00<00:00,  8.16it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.84it/s]100%|██████████| 5/5 [00:00<00:00,  7.87it/s]
+Hyperparam: [1.0, 512, 0.1], auroc: 0.8164845679012345
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.89it/s]100%|██████████| 5/5 [00:00<00:00,  7.99it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.81it/s]100%|██████████| 5/5 [00:00<00:00,  7.78it/s]
+Hyperparam: [2.0, 512, 0.1], auroc: 0.7507551440329218
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.95it/s]100%|██████████| 5/5 [00:00<00:00,  8.29it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.81it/s]100%|██████████| 5/5 [00:00<00:00,  7.77it/s]
+Hyperparam: [0.1, 1024, 0.1], auroc: 0.5112139917695473
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.85it/s]100%|██████████| 5/5 [00:00<00:00,  7.93it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.89it/s]100%|██████████| 5/5 [00:00<00:00,  7.82it/s]
+Hyperparam: [0.5, 1024, 0.1], auroc: 0.8391460905349793
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.99it/s]100%|██████████| 5/5 [00:00<00:00,  8.18it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.83it/s]100%|██████████| 5/5 [00:00<00:00,  7.84it/s]
+Hyperparam: [1.0, 1024, 0.1], auroc: 0.8369104938271605
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.92it/s]100%|██████████| 5/5 [00:00<00:00,  8.21it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.81it/s]100%|██████████| 5/5 [00:00<00:00,  7.77it/s]
+Hyperparam: [2.0, 1024, 0.1], auroc: 0.7575216049382715
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.92it/s]100%|██████████| 5/5 [00:00<00:00,  7.98it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.88it/s]100%|██████████| 5/5 [00:00<00:00,  7.99it/s]
+Hyperparam: [0.1, 2048, 0.1], auroc: 0.5145205761316872
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.89it/s]100%|██████████| 5/5 [00:00<00:00,  8.10it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.78it/s]100%|██████████| 5/5 [00:00<00:00,  7.77it/s]
+Hyperparam: [0.5, 2048, 0.1], auroc: 0.8456923868312758
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:02,  1.90it/s]100%|██████████| 5/5 [00:00<00:00,  8.04it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.83it/s]100%|██████████| 5/5 [00:00<00:00,  7.93it/s]
+Hyperparam: [1.0, 2048, 0.1], auroc: 0.8379058641975309
+  0%|          | 0/5 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ 20%|██        | 1/5 [00:00<00:01,  2.09it/s]100%|██████████| 5/5 [00:00<00:00,  8.33it/s]
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:02,  1.84it/s]100%|██████████| 5/5 [00:00<00:00,  7.83it/s]
+Hyperparam: [2.0, 2048, 0.1], auroc: 0.8204022633744855
+Final hyperparam: [0.5, 1024, 0.05]
+Performing inference on cifar100 test set...
+  0%|          | 0/45 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+  2%|▏         | 1/45 [00:00<00:32,  1.36it/s] 13%|█▎        | 6/45 [00:00<00:04,  8.88it/s] 20%|██        | 9/45 [00:01<00:03,  9.58it/s] 31%|███       | 14/45 [00:01<00:01, 15.94it/s] 38%|███▊      | 17/45 [00:01<00:02, 12.95it/s] 47%|████▋     | 21/45 [00:01<00:01, 16.92it/s] 56%|█████▌    | 25/45 [00:02<00:01, 13.88it/s] 71%|███████   | 32/45 [00:02<00:00, 21.93it/s] 80%|████████  | 36/45 [00:02<00:00, 17.61it/s] 91%|█████████ | 41/45 [00:02<00:00, 17.90it/s]100%|██████████| 45/45 [00:02<00:00, 15.59it/s]
+Processing near ood...
+Performing inference on cifar10 dataset...
+  0%|          | 0/50 [00:00<?, ?it/s]  2%|▏         | 1/50 [00:00<00:35,  1.39it/s] 14%|█▍        | 7/50 [00:00<00:03, 11.02it/s] 22%|██▏       | 11/50 [00:01<00:03, 11.29it/s] 32%|███▏      | 16/50 [00:01<00:02, 16.93it/s] 40%|████      | 20/50 [00:01<00:02, 14.79it/s] 50%|█████     | 25/50 [00:02<00:01, 13.48it/s] 60%|██████    | 30/50 [00:02<00:01, 18.03it/s] 66%|██████▌   | 33/50 [00:02<00:01, 14.34it/s] 82%|████████▏ | 41/50 [00:02<00:00, 16.78it/s] 98%|█████████▊| 49/50 [00:03<00:00, 21.10it/s]100%|██████████| 50/50 [00:03<00:00, 15.63it/s]
+Computing metrics on cifar10 dataset...
+FPR@95: 74.81, AUROC: 76.61 AUPR_IN: 74.20, AUPR_OUT: 74.98
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on tin dataset...
+  0%|          | 0/33 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+  3%|▎         | 1/33 [00:00<00:24,  1.28it/s] 15%|█▌        | 5/33 [00:00<00:03,  7.17it/s] 27%|██▋       | 9/33 [00:01<00:02,  8.99it/s] 39%|███▉      | 13/33 [00:01<00:01, 13.36it/s] 52%|█████▏    | 17/33 [00:01<00:01, 11.68it/s] 67%|██████▋   | 22/33 [00:01<00:00, 16.91it/s] 76%|███████▌  | 25/33 [00:02<00:00, 12.84it/s]100%|██████████| 33/33 [00:02<00:00, 20.46it/s]100%|██████████| 33/33 [00:02<00:00, 13.29it/s]
+Computing metrics on tin dataset...
+FPR@95: 52.03, AUROC: 82.29 AUPR_IN: 87.48, AUPR_OUT: 72.14
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 63.42, AUROC: 79.45 AUPR_IN: 80.84, AUPR_OUT: 73.56
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Performing inference on mnist dataset...
+  0%|          | 0/350 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+  0%|          | 1/350 [00:00<04:21,  1.33it/s]  2%|▏         | 8/350 [00:00<00:28, 11.85it/s]  3%|▎         | 12/350 [00:01<00:29, 11.53it/s]  5%|▍         | 16/350 [00:01<00:21, 15.56it/s]  5%|▌         | 19/350 [00:01<00:25, 12.87it/s]  7%|▋         | 25/350 [00:02<00:23, 13.75it/s]  8%|▊         | 29/350 [00:02<00:18, 17.07it/s]  9%|▉         | 33/350 [00:02<00:22, 14.27it/s] 11%|█         | 39/350 [00:02<00:15, 19.96it/s] 12%|█▏        | 43/350 [00:03<00:19, 15.85it/s] 14%|█▎        | 48/350 [00:03<00:14, 20.38it/s] 15%|█▍        | 52/350 [00:03<00:18, 16.44it/s] 16%|█▋        | 57/350 [00:03<00:19, 14.99it/s] 17%|█▋        | 60/350 [00:04<00:17, 16.80it/s] 19%|█▊        | 65/350 [00:04<00:17, 16.11it/s] 19%|█▉        | 68/350 [00:04<00:16, 17.38it/s] 21%|██        | 73/350 [00:04<00:16, 16.62it/s] 22%|██▏       | 76/350 [00:04<00:15, 17.81it/s] 23%|██▎       | 81/350 [00:05<00:16, 16.05it/s] 24%|██▎       | 83/350 [00:05<00:16, 16.26it/s] 25%|██▌       | 89/350 [00:05<00:16, 16.31it/s] 27%|██▋       | 93/350 [00:05<00:13, 19.51it/s] 28%|██▊       | 97/350 [00:06<00:15, 16.49it/s] 29%|██▉       | 101/350 [00:06<00:12, 19.61it/s] 30%|███       | 105/350 [00:06<00:14, 16.50it/s] 31%|███       | 108/350 [00:06<00:13, 18.11it/s] 32%|███▏      | 113/350 [00:07<00:14, 16.27it/s] 34%|███▎      | 118/350 [00:07<00:11, 20.78it/s] 35%|███▍      | 121/350 [00:07<00:14, 15.99it/s] 35%|███▌      | 124/350 [00:07<00:12, 18.03it/s] 37%|███▋      | 129/350 [00:08<00:13, 16.16it/s] 38%|███▊      | 133/350 [00:08<00:11, 19.31it/s] 39%|███▉      | 137/350 [00:08<00:13, 15.87it/s] 41%|████      | 142/350 [00:08<00:10, 20.42it/s] 41%|████▏     | 145/350 [00:09<00:13, 15.04it/s] 43%|████▎     | 149/350 [00:09<00:10, 18.29it/s] 44%|████▎     | 153/350 [00:09<00:13, 15.03it/s] 45%|████▌     | 158/350 [00:09<00:09, 19.66it/s] 46%|████▌     | 161/350 [00:10<00:13, 13.99it/s] 47%|████▋     | 166/350 [00:10<00:09, 18.70it/s] 49%|████▊     | 170/350 [00:10<00:11, 15.14it/s] 50%|█████     | 175/350 [00:10<00:08, 19.74it/s] 51%|█████     | 179/350 [00:11<00:10, 16.22it/s] 53%|█████▎    | 184/350 [00:11<00:08, 20.49it/s] 54%|█████▎    | 188/350 [00:11<00:09, 17.24it/s] 55%|█████▌    | 193/350 [00:11<00:10, 15.00it/s] 57%|█████▋    | 199/350 [00:11<00:07, 20.23it/s] 58%|█████▊    | 203/350 [00:12<00:08, 16.92it/s] 60%|█████▉    | 209/350 [00:12<00:08, 15.82it/s] 61%|██████▏   | 215/350 [00:12<00:06, 20.90it/s] 63%|██████▎   | 219/350 [00:13<00:07, 17.19it/s] 64%|██████▎   | 223/350 [00:13<00:06, 20.13it/s] 65%|██████▍   | 227/350 [00:13<00:07, 16.44it/s] 66%|██████▋   | 232/350 [00:13<00:05, 20.64it/s] 67%|██████▋   | 236/350 [00:14<00:07, 15.95it/s] 69%|██████▉   | 241/350 [00:14<00:07, 14.74it/s] 70%|███████   | 246/350 [00:14<00:05, 18.90it/s] 71%|███████   | 249/350 [00:15<00:06, 15.13it/s] 73%|███████▎  | 254/350 [00:15<00:05, 19.20it/s] 73%|███████▎  | 257/350 [00:15<00:05, 15.57it/s] 75%|███████▍  | 261/350 [00:15<00:04, 18.80it/s] 76%|███████▌  | 265/350 [00:15<00:05, 15.93it/s] 77%|███████▋  | 268/350 [00:16<00:04, 17.44it/s] 78%|███████▊  | 273/350 [00:16<00:04, 16.73it/s] 79%|███████▉  | 276/350 [00:16<00:04, 16.88it/s] 80%|████████  | 281/350 [00:16<00:03, 17.39it/s] 81%|████████  | 283/350 [00:16<00:04, 16.52it/s] 82%|████████▏ | 288/350 [00:17<00:02, 21.96it/s] 83%|████████▎ | 291/350 [00:17<00:03, 15.58it/s] 85%|████████▍ | 297/350 [00:17<00:03, 16.75it/s] 86%|████████▌ | 300/350 [00:17<00:02, 16.86it/s] 87%|████████▋ | 304/350 [00:18<00:02, 20.29it/s] 88%|████████▊ | 307/350 [00:18<00:02, 15.60it/s] 89%|████████▉ | 312/350 [00:18<00:01, 20.62it/s] 90%|█████████ | 315/350 [00:18<00:02, 15.67it/s] 91%|█████████ | 319/350 [00:18<00:01, 18.56it/s] 92%|█████████▏| 322/350 [00:19<00:01, 15.55it/s] 93%|█████████▎| 327/350 [00:19<00:01, 17.93it/s] 94%|█████████▍| 330/350 [00:19<00:01, 15.58it/s] 96%|█████████▌| 335/350 [00:19<00:00, 16.97it/s] 96%|█████████▋| 337/350 [00:20<00:00, 14.52it/s] 98%|█████████▊| 343/350 [00:20<00:00, 18.54it/s] 99%|█████████▉| 346/350 [00:20<00:00, 20.18it/s]100%|██████████| 350/350 [00:20<00:00, 17.00it/s]
+Computing metrics on mnist dataset...
+FPR@95: 46.14, AUROC: 82.19 AUPR_IN: 60.43, AUPR_OUT: 96.07
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on svhn dataset...
+  0%|          | 0/131 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+  1%|          | 1/131 [00:00<01:31,  1.43it/s]  4%|▍         | 5/131 [00:00<00:16,  7.87it/s]  7%|▋         | 9/131 [00:01<00:11, 10.24it/s] 11%|█         | 14/131 [00:01<00:07, 16.43it/s] 13%|█▎        | 17/131 [00:01<00:08, 13.10it/s] 17%|█▋        | 22/131 [00:01<00:06, 17.86it/s] 19%|█▉        | 25/131 [00:02<00:07, 14.39it/s] 23%|██▎       | 30/131 [00:02<00:05, 19.47it/s] 25%|██▌       | 33/131 [00:02<00:06, 14.96it/s] 29%|██▉       | 38/131 [00:02<00:04, 19.96it/s] 31%|███▏      | 41/131 [00:02<00:05, 15.88it/s] 36%|███▌      | 47/131 [00:02<00:03, 22.30it/s] 39%|███▉      | 51/131 [00:03<00:04, 17.69it/s] 43%|████▎     | 56/131 [00:03<00:03, 22.28it/s] 46%|████▌     | 60/131 [00:03<00:04, 17.29it/s] 50%|████▉     | 65/131 [00:04<00:04, 15.34it/s] 54%|█████▍    | 71/131 [00:04<00:02, 20.79it/s] 57%|█████▋    | 75/131 [00:04<00:03, 16.32it/s] 62%|██████▏   | 81/131 [00:05<00:03, 16.08it/s] 66%|██████▋   | 87/131 [00:05<00:02, 21.09it/s] 69%|██████▉   | 91/131 [00:05<00:02, 17.45it/s] 74%|███████▍  | 97/131 [00:05<00:02, 16.32it/s] 79%|███████▉  | 104/131 [00:06<00:01, 22.60it/s] 82%|████████▏ | 108/131 [00:06<00:01, 17.58it/s] 86%|████████▋ | 113/131 [00:06<00:01, 15.65it/s] 92%|█████████▏| 120/131 [00:07<00:00, 21.56it/s] 95%|█████████▍| 124/131 [00:07<00:00, 18.57it/s] 98%|█████████▊| 129/131 [00:07<00:00, 20.20it/s]100%|██████████| 131/131 [00:07<00:00, 17.28it/s]
+Computing metrics on svhn dataset...
+FPR@95: 54.89, AUROC: 81.76 AUPR_IN: 69.51, AUPR_OUT: 91.20
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on texture dataset...
+  0%|          | 0/29 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+  3%|▎         | 1/29 [00:02<01:13,  2.63s/it]  7%|▋         | 2/29 [00:02<00:34,  1.28s/it] 24%|██▍       | 7/29 [00:03<00:05,  3.77it/s] 34%|███▍      | 10/29 [00:05<00:08,  2.12it/s] 55%|█████▌    | 16/29 [00:05<00:02,  4.40it/s] 66%|██████▌   | 19/29 [00:07<00:03,  2.71it/s] 86%|████████▌ | 25/29 [00:08<00:01,  3.48it/s] 93%|█████████▎| 27/29 [00:09<00:00,  3.84it/s]100%|██████████| 29/29 [00:09<00:00,  3.17it/s]
+Computing metrics on texture dataset...
+FPR@95: 59.51, AUROC: 81.81 AUPR_IN: 87.99, AUPR_OUT: 71.87
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on places365 dataset...
+  0%|          | 0/169 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+  1%|          | 1/169 [00:01<03:30,  1.25s/it]  3%|▎         | 5/169 [00:01<00:34,  4.74it/s]  5%|▌         | 9/169 [00:02<00:35,  4.54it/s]  8%|▊         | 14/169 [00:02<00:18,  8.24it/s] 10%|█         | 17/169 [00:03<00:26,  5.78it/s] 14%|█▍        | 24/169 [00:03<00:13, 10.59it/s] 17%|█▋        | 28/169 [00:04<00:19,  7.37it/s] 20%|█▉        | 33/169 [00:05<00:20,  6.55it/s] 22%|██▏       | 38/169 [00:05<00:14,  9.00it/s] 24%|██▍       | 41/169 [00:06<00:19,  6.54it/s] 28%|██▊       | 48/169 [00:06<00:11, 10.55it/s] 31%|███       | 52/169 [00:07<00:14,  7.80it/s] 34%|███▎      | 57/169 [00:08<00:16,  6.65it/s] 37%|███▋      | 63/169 [00:08<00:11,  9.52it/s] 39%|███▉      | 66/169 [00:09<00:14,  6.88it/s] 42%|████▏     | 71/169 [00:09<00:10,  9.50it/s] 44%|████▍     | 74/169 [00:10<00:14,  6.59it/s] 47%|████▋     | 79/169 [00:10<00:09,  9.25it/s] 49%|████▊     | 82/169 [00:11<00:13,  6.48it/s] 51%|█████▏    | 87/169 [00:11<00:08,  9.27it/s] 53%|█████▎    | 90/169 [00:12<00:12,  6.48it/s] 56%|█████▌    | 95/169 [00:12<00:07,  9.28it/s] 58%|█████▊    | 98/169 [00:13<00:10,  6.67it/s] 61%|██████    | 103/169 [00:13<00:06,  9.57it/s] 63%|██████▎   | 106/169 [00:14<00:09,  6.81it/s] 66%|██████▋   | 112/169 [00:14<00:05, 10.40it/s] 68%|██████▊   | 115/169 [00:15<00:07,  7.14it/s] 71%|███████   | 120/169 [00:15<00:04, 10.11it/s] 73%|███████▎  | 123/169 [00:16<00:06,  6.79it/s] 76%|███████▋  | 129/169 [00:17<00:06,  6.51it/s] 80%|███████▉  | 135/169 [00:17<00:03,  9.51it/s] 82%|████████▏ | 138/169 [00:18<00:04,  6.72it/s] 85%|████████▍ | 143/169 [00:18<00:02,  9.35it/s] 86%|████████▋ | 146/169 [00:19<00:03,  6.73it/s] 89%|████████▉ | 151/169 [00:19<00:01,  9.52it/s] 91%|█████████ | 154/169 [00:20<00:02,  6.53it/s] 94%|█████████▍| 159/169 [00:20<00:01,  9.37it/s] 96%|█████████▌| 162/169 [00:21<00:00,  7.74it/s]100%|██████████| 169/169 [00:21<00:00, 10.14it/s]100%|██████████| 169/169 [00:21<00:00,  7.76it/s]
+Computing metrics on places365 dataset...
+FPR@95: 65.07, AUROC: 78.24 AUPR_IN: 54.45, AUPR_OUT: 91.46
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 56.40, AUROC: 81.00 AUPR_IN: 68.09, AUPR_OUT: 87.65
+──────────────────────────────────────────────────────────────────────
+
+ID Acc Eval:   0%|          | 0/45 [00:00<?, ?it/s]/home/hice1/ksalzman3/scratch/conda_venvs/openood/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+ID Acc Eval:   2%|▏         | 1/45 [00:00<00:30,  1.46it/s]ID Acc Eval:  18%|█▊        | 8/45 [00:00<00:02, 13.21it/s]ID Acc Eval:  27%|██▋       | 12/45 [00:01<00:02, 11.89it/s]ID Acc Eval:  38%|███▊      | 17/45 [00:01<00:02, 12.27it/s]ID Acc Eval:  49%|████▉     | 22/45 [00:01<00:01, 17.08it/s]ID Acc Eval:  58%|█████▊    | 26/45 [00:02<00:01, 14.16it/s]ID Acc Eval:  73%|███████▎  | 33/45 [00:02<00:00, 15.21it/s]ID Acc Eval:  91%|█████████ | 41/45 [00:02<00:00, 19.23it/s]ID Acc Eval: 100%|██████████| 45/45 [00:02<00:00, 15.96it/s]
+           FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+cifar10     74.81  76.61    74.20     74.98 77.20
+tin         52.03  82.29    87.48     72.14 77.20
+nearood     63.42  79.45    80.84     73.56 77.20
+mnist       46.14  82.19    60.43     96.07 77.20
+svhn        54.89  81.76    69.51     91.20 77.20
+texture     59.51  81.81    87.99     71.87 77.20
+places365   65.07  78.24    54.45     91.46 77.20
+farood      56.40  81.00    68.09     87.65 77.20
+
+--- RFF Diagnostics (231963 samples) ./results/cifar100_resnet18_32x32_base_e100_lr0.1_default/s2/diagnostics/rff_max_novw.npz ---
+  Classes above threshold: mean=1.2, zero=21.4%, one=53.8%, multi(>1)=24.8%
+  Max score: mean=0.3532, std=0.2382
+  Margin (max-2nd): mean=0.0808, std=0.0966

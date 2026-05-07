@@ -1,0 +1,97 @@
+---------------------------------------
+Begin Slurm Prolog: Apr-02-2026 16:03:59
+Job ID:    4592834
+User ID:   ksalzman3
+Account:   coc
+Job name:  layer_probe_diagnostic
+Partition: ice-gpu
+QOS:       coc-ice
+---------------------------------------
+=== layer_probe_diagnostic | cifar100 | Thu Apr  2 04:04:07 PM EDT 2026 ===
+Loaded checkpoint: ./results/cifar100_resnet18_32x32_base_e100_lr0.1_default/s0/best.ckpt
+Postprocessor_name is ignored because postprocessor is passed
+
+Extracting ID test features...
+
+Probing layers for OOD dataset: cifar10 (near)
+  layer1: AUROC=0.6651
+  layer2: AUROC=0.7124
+  layer3: AUROC=0.7870
+  penultimate: AUROC=0.8619
+
+Probing layers for OOD dataset: tin (near)
+  layer1: AUROC=0.8559
+  layer2: AUROC=0.8401
+  layer3: AUROC=0.8421
+  penultimate: AUROC=0.8135
+
+Probing layers for OOD dataset: mnist (far)
+  layer1: AUROC=1.0000
+  layer2: AUROC=1.0000
+  layer3: AUROC=1.0000
+  penultimate: AUROC=1.0000
+
+Probing layers for OOD dataset: svhn (far)
+  layer1: AUROC=0.9998
+  layer2: AUROC=0.9999
+  layer3: AUROC=0.9998
+  penultimate: AUROC=0.9995
+
+Probing layers for OOD dataset: texture (far)
+  layer1: AUROC=0.9280
+  layer2: AUROC=0.9354
+  layer3: AUROC=0.9732
+  penultimate: AUROC=0.9545
+
+Probing layers for OOD dataset: places365 (far)
+  layer1: AUROC=0.8605
+  layer2: AUROC=0.8896
+  layer3: AUROC=0.9131
+  penultimate: AUROC=0.9026
+
+======================================================================
+Per-Layer AUROC Table
+======================================================================
+OOD Dataset                   layer1        layer2        layer3   penultimate
+------------------------------------------------------------------------------
+cifar10 (near)                0.6651        0.7124        0.7870        0.8619
+tin (near)                    0.8559        0.8401        0.8421        0.8135
+mnist (far)                   1.0000        1.0000        1.0000        1.0000
+svhn (far)                    0.9998        0.9999        0.9998        0.9995
+texture (far)                 0.9280        0.9354        0.9732        0.9545
+places365 (far)               0.8605        0.8896        0.9131        0.9026
+------------------------------------------------------------------------------
+near avg                      0.7605        0.7763        0.8146        0.8377
+far avg                       0.9759        0.9784        0.9910        0.9847
+
+======================================================================
+Layer Weight Computation
+======================================================================
+Layer                   near_avg     far_avg   raw (product)    normalized
+------------------------------------------------------------------------
+layer1                    0.7605      0.9759        0.742156      0.236828
+layer2                    0.7763      0.9784        0.759505      0.242364
+layer3                    0.8146      0.9910        0.807255      0.257602
+penultimate               0.8377      0.9847        0.824816      0.263206
+
+======================================================================
+Suggested config addition (normalized):
+======================================================================
+  yosinski_weights: [0.2368, 0.2424, 0.2576, 0.2632]
+
+(Add this under postprocessor_args in your variant yml.)
+(Indices correspond to --layers: [1, 2, 3, 4] )
+=== Done | Thu Apr  2 04:09:10 PM EDT 2026 ===
+---------------------------------------
+Begin Slurm Epilog: Apr-02-2026 16:09:11
+Job ID:        4592834
+Array Job ID:  4592830_1
+User ID:       ksalzman3
+Account:       coc
+Job name:      layer_probe_diagnostic
+Resources:     cpu=4,gres/gpu:v100=1,mem=32G,node=1
+Rsrc Used:     cput=00:20:44,vmem=0,walltime=00:05:11,mem=4119916K,energy_used=0
+Partition:     ice-gpu
+QOS:           coc-ice
+Nodes:         atl1-1-02-009-31-0
+---------------------------------------

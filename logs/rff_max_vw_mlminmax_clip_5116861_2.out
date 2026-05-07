@@ -1,0 +1,212 @@
+---------------------------------------
+Begin Slurm Prolog: Apr-29-2026 10:33:33
+Job ID:    5116861
+User ID:   ksalzman3
+Account:   coc
+Job name:  rff_max_mlmx_cl
+Partition: ice-gpu
+QOS:       coc-ice
+---------------------------------------
+=== rff_max_vw_mlminmax_clip | imagenet200 | Wed Apr 29 10:33:42 AM EDT 2026 ===
+
+==================================================
+Setting up RFFCLIPConcat OOD detector (ResNet + CLIP feature concat)...
+  sigma=0.5  D=2048  alpha=0.05
+  clip_backbone=ViT-B/16  score_mode=max
+==================================================
+[CLIPPrior] Could not load imagenet synset meta from ./data/imagenet: The meta file ./data/imagenet/meta.bin is not present in the root directory or is corrupted. This file is automatically created by the ImageNet dataset.
+  Falling back to synset IDs as class names.
+[CLIPConcat] Loading CLIP ViT-B/16 with 200 classes (imagenet200)...
+Train: 258951 samples, feature_dim=2432
+Val:   1000 samples
+Per-class embedding norms (mean): 1.0000
+Threshold at 5.0%: 5.9277
+RFFCLIPConcat setup complete.
+
+[Timing] Setup: 828.0s
+Performing inference on imagenet200 test set...
+Processing near ood...
+Performing inference on ssb_hard dataset...
+Computing metrics on ssb_hard dataset...
+FPR@95: 74.89, AUROC: 76.83 AUPR_IN: 38.46, AUPR_OUT: 93.72
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on ninco dataset...
+Computing metrics on ninco dataset...
+FPR@95: 58.63, AUROC: 80.99 AUPR_IN: 86.91, AUPR_OUT: 69.25
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 66.76, AUROC: 78.91 AUPR_IN: 62.69, AUPR_OUT: 81.48
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Performing inference on inaturalist dataset...
+Computing metrics on inaturalist dataset...
+FPR@95: 29.70, AUROC: 90.98 AUPR_IN: 92.04, AUPR_OUT: 88.73
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on textures dataset...
+Computing metrics on textures dataset...
+FPR@95: 25.62, AUROC: 92.31 AUPR_IN: 95.84, AUPR_OUT: 84.56
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on openimage_o dataset...
+Computing metrics on openimage_o dataset...
+FPR@95: 35.98, AUROC: 87.71 AUPR_IN: 85.28, AUPR_OUT: 90.24
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 30.43, AUROC: 90.33 AUPR_IN: 91.05, AUPR_OUT: 87.85
+──────────────────────────────────────────────────────────────────────
+
+             FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+ssb_hard      74.89  76.83    38.46     93.72 86.39
+ninco         58.63  80.99    86.91     69.25 86.39
+nearood       66.76  78.91    62.69     81.48 86.39
+inaturalist   29.70  90.98    92.04     88.73 86.39
+textures      25.62  92.31    95.84     84.56 86.39
+openimage_o   35.98  87.71    85.28     90.24 86.39
+farood        30.43  90.33    91.05     87.85 86.39
+[Timing] Eval:  313.3s
+
+==================================================
+Setting up RFFCLIPConcat OOD detector (ResNet + CLIP feature concat)...
+  sigma=0.5  D=2048  alpha=0.05
+  clip_backbone=ViT-B/16  score_mode=max
+==================================================
+[CLIPPrior] Could not load imagenet synset meta from ./data/imagenet: The meta file ./data/imagenet/meta.bin is not present in the root directory or is corrupted. This file is automatically created by the ImageNet dataset.
+  Falling back to synset IDs as class names.
+[CLIPConcat] Loading CLIP ViT-B/16 with 200 classes (imagenet200)...
+Train: 258951 samples, feature_dim=2432
+Val:   1000 samples
+Per-class embedding norms (mean): 1.0000
+Threshold at 5.0%: 5.8168
+RFFCLIPConcat setup complete.
+
+[Timing] Setup: 779.4s
+Performing inference on imagenet200 test set...
+Processing near ood...
+Performing inference on ssb_hard dataset...
+Computing metrics on ssb_hard dataset...
+FPR@95: 75.80, AUROC: 76.39 AUPR_IN: 37.50, AUPR_OUT: 93.57
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on ninco dataset...
+Computing metrics on ninco dataset...
+FPR@95: 61.39, AUROC: 80.45 AUPR_IN: 86.40, AUPR_OUT: 69.08
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 68.59, AUROC: 78.42 AUPR_IN: 61.95, AUPR_OUT: 81.32
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Performing inference on inaturalist dataset...
+Computing metrics on inaturalist dataset...
+FPR@95: 28.52, AUROC: 91.38 AUPR_IN: 92.44, AUPR_OUT: 89.10
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on textures dataset...
+Computing metrics on textures dataset...
+FPR@95: 21.81, AUROC: 93.87 AUPR_IN: 96.63, AUPR_OUT: 87.69
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on openimage_o dataset...
+Computing metrics on openimage_o dataset...
+FPR@95: 38.00, AUROC: 87.37 AUPR_IN: 84.29, AUPR_OUT: 90.26
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 29.44, AUROC: 90.87 AUPR_IN: 91.12, AUPR_OUT: 89.01
+──────────────────────────────────────────────────────────────────────
+
+             FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+ssb_hard      75.80  76.39    37.50     93.57 86.46
+ninco         61.39  80.45    86.40     69.08 86.46
+nearood       68.59  78.42    61.95     81.32 86.46
+inaturalist   28.52  91.38    92.44     89.10 86.46
+textures      21.81  93.87    96.63     87.69 86.46
+openimage_o   38.00  87.37    84.29     90.26 86.46
+farood        29.44  90.87    91.12     89.01 86.46
+[Timing] Eval:  310.2s
+
+==================================================
+Setting up RFFCLIPConcat OOD detector (ResNet + CLIP feature concat)...
+  sigma=0.5  D=2048  alpha=0.05
+  clip_backbone=ViT-B/16  score_mode=max
+==================================================
+[CLIPPrior] Could not load imagenet synset meta from ./data/imagenet: The meta file ./data/imagenet/meta.bin is not present in the root directory or is corrupted. This file is automatically created by the ImageNet dataset.
+  Falling back to synset IDs as class names.
+[CLIPConcat] Loading CLIP ViT-B/16 with 200 classes (imagenet200)...
+Train: 258951 samples, feature_dim=2432
+Val:   1000 samples
+Per-class embedding norms (mean): 1.0000
+Threshold at 5.0%: 5.9124
+RFFCLIPConcat setup complete.
+
+[Timing] Setup: 786.6s
+Performing inference on imagenet200 test set...
+Processing near ood...
+Performing inference on ssb_hard dataset...
+Computing metrics on ssb_hard dataset...
+FPR@95: 75.44, AUROC: 76.22 AUPR_IN: 37.92, AUPR_OUT: 93.40
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on ninco dataset...
+Computing metrics on ninco dataset...
+FPR@95: 62.08, AUROC: 80.04 AUPR_IN: 86.15, AUPR_OUT: 67.47
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 68.76, AUROC: 78.13 AUPR_IN: 62.04, AUPR_OUT: 80.44
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Performing inference on inaturalist dataset...
+Computing metrics on inaturalist dataset...
+FPR@95: 26.52, AUROC: 90.01 AUPR_IN: 91.97, AUPR_OUT: 85.87
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on textures dataset...
+Computing metrics on textures dataset...
+FPR@95: 26.12, AUROC: 92.21 AUPR_IN: 95.78, AUPR_OUT: 83.72
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on openimage_o dataset...
+Computing metrics on openimage_o dataset...
+FPR@95: 34.30, AUROC: 87.75 AUPR_IN: 85.35, AUPR_OUT: 89.99
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 28.98, AUROC: 89.99 AUPR_IN: 91.04, AUPR_OUT: 86.53
+──────────────────────────────────────────────────────────────────────
+
+             FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+ssb_hard      75.44  76.22    37.92     93.40 86.27
+ninco         62.08  80.04    86.15     67.47 86.27
+nearood       68.76  78.13    62.04     80.44 86.27
+inaturalist   26.52  90.01    91.97     85.87 86.27
+textures      26.12  92.21    95.78     83.72 86.27
+openimage_o   34.30  87.75    85.35     89.99 86.27
+farood        28.98  89.99    91.04     86.53 86.27
+[Timing] Eval:  314.4s
+
+[Timing Summary]
+  Setup: 798.0s ± 21.4s per seed
+  Eval:  312.6s ± 1.8s per seed
+  Total: 3331.8s across 3 seeds
+=== Done | Wed Apr 29 11:31:51 AM EDT 2026 ===
+---------------------------------------
+Begin Slurm Epilog: Apr-29-2026 11:31:52
+Job ID:        5116861
+Array Job ID:  5116861_2
+User ID:       ksalzman3
+Account:       coc
+Job name:      rff_max_mlmx_cl
+Resources:     cpu=4,gres/gpu:rtx_6000=1,mem=64G,node=1
+Rsrc Used:     cput=01:14:40,vmem=0,walltime=00:18:40,mem=5656020K,energy_used=0
+Partition:     ice-gpu
+QOS:           coc-ice
+Nodes:         atl1-1-01-005-5-0
+---------------------------------------

@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/storage/ice1/9/5/ksalzman3/openood/src/OpenOOD/scripts/eval_ood.py", line 91, in <module>
+    raise ValueError(f'No subfolders found in {root}')
+ValueError: No subfolders found in ./results/imagenet200_res18_v1.5

@@ -1,0 +1,227 @@
+---------------------------------------
+Begin Slurm Prolog: Apr-19-2026 16:18:17
+Job ID:    5016360
+User ID:   ksalzman3
+Account:   coc
+Job name:  clip_prior
+Partition: ice-gpu
+QOS:       coc-ice
+---------------------------------------
+=== clip_prior | cifar100 | Sun Apr 19 04:18:25 PM EDT 2026 ===
+[CLIPPrior] Loading CLIP ViT-B/16 with 100 classes (cifar100)...
+Starting automatic parameter search...
+Hyperparam: [0.0], auroc: 0.8386203703703704
+Hyperparam: [0.1], auroc: 0.8491028806584363
+Hyperparam: [0.2], auroc: 0.8598446502057613
+Hyperparam: [0.3], auroc: 0.8704022633744857
+Hyperparam: [0.4], auroc: 0.8804269547325103
+Hyperparam: [0.5], auroc: 0.885977366255144
+Hyperparam: [0.6], auroc: 0.8887746913580248
+Hyperparam: [0.7], auroc: 0.8822047325102881
+Hyperparam: [0.8], auroc: 0.8654156378600824
+Hyperparam: [0.9], auroc: 0.8332160493827161
+Hyperparam: [1.0], auroc: 0.7856728395061727
+Final hyperparam: [0.6]
+[Timing] Setup: 52.5s
+Performing inference on cifar100 test set...
+Processing near ood...
+Performing inference on cifar10 dataset...
+Computing metrics on cifar10 dataset...
+FPR@95: 53.76, AUROC: 82.97 AUPR_IN: 83.37, AUPR_OUT: 80.79
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on tin dataset...
+Computing metrics on tin dataset...
+FPR@95: 42.04, AUROC: 87.53 AUPR_IN: 91.47, AUPR_OUT: 80.26
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 47.90, AUROC: 85.25 AUPR_IN: 87.42, AUPR_OUT: 80.53
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Performing inference on mnist dataset...
+Computing metrics on mnist dataset...
+FPR@95: 37.34, AUROC: 88.47 AUPR_IN: 70.55, AUPR_OUT: 97.77
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on svhn dataset...
+Computing metrics on svhn dataset...
+FPR@95: 16.94, AUROC: 95.31 AUPR_IN: 92.16, AUPR_OUT: 97.67
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on texture dataset...
+Computing metrics on texture dataset...
+FPR@95: 39.08, AUROC: 88.66 AUPR_IN: 93.13, AUPR_OUT: 79.97
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on places365 dataset...
+Computing metrics on places365 dataset...
+FPR@95: 49.42, AUROC: 85.00 AUPR_IN: 68.68, AUPR_OUT: 94.39
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 35.70, AUROC: 89.36 AUPR_IN: 81.13, AUPR_OUT: 92.45
+──────────────────────────────────────────────────────────────────────
+
+           FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+cifar10     53.76  82.97    83.37     80.79 77.17
+tin         42.04  87.53    91.47     80.26 77.17
+nearood     47.90  85.25    87.42     80.53 77.17
+mnist       37.34  88.47    70.55     97.77 77.17
+svhn        16.94  95.31    92.16     97.67 77.17
+texture     39.08  88.66    93.13     79.97 77.17
+places365   49.42  85.00    68.68     94.39 77.17
+farood      35.70  89.36    81.13     92.45 77.17
+[Timing] Eval:  177.4s
+[CLIPPrior] Loading CLIP ViT-B/16 with 100 classes (cifar100)...
+Starting automatic parameter search...
+Hyperparam: [0.0], auroc: 0.8371033950617283
+Hyperparam: [0.1], auroc: 0.8476594650205762
+Hyperparam: [0.2], auroc: 0.8572818930041152
+Hyperparam: [0.3], auroc: 0.8674125514403291
+Hyperparam: [0.4], auroc: 0.8771008230452675
+Hyperparam: [0.5], auroc: 0.884707818930041
+Hyperparam: [0.6], auroc: 0.8881039094650206
+Hyperparam: [0.7], auroc: 0.8810360082304525
+Hyperparam: [0.8], auroc: 0.861280864197531
+Hyperparam: [0.9], auroc: 0.8311039094650206
+Hyperparam: [1.0], auroc: 0.7856728395061727
+Final hyperparam: [0.6]
+[Timing] Setup: 42.9s
+Performing inference on cifar100 test set...
+Processing near ood...
+Performing inference on cifar10 dataset...
+Computing metrics on cifar10 dataset...
+FPR@95: 53.17, AUROC: 83.06 AUPR_IN: 83.61, AUPR_OUT: 80.89
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on tin dataset...
+Computing metrics on tin dataset...
+FPR@95: 42.34, AUROC: 87.60 AUPR_IN: 91.54, AUPR_OUT: 80.42
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 47.76, AUROC: 85.33 AUPR_IN: 87.57, AUPR_OUT: 80.66
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Performing inference on mnist dataset...
+Computing metrics on mnist dataset...
+FPR@95: 29.33, AUROC: 91.41 AUPR_IN: 77.80, AUPR_OUT: 98.30
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on svhn dataset...
+Computing metrics on svhn dataset...
+FPR@95: 15.87, AUROC: 95.92 AUPR_IN: 92.74, AUPR_OUT: 98.11
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on texture dataset...
+Computing metrics on texture dataset...
+FPR@95: 40.62, AUROC: 88.48 AUPR_IN: 93.00, AUPR_OUT: 79.57
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on places365 dataset...
+Computing metrics on places365 dataset...
+FPR@95: 51.06, AUROC: 84.69 AUPR_IN: 67.72, AUPR_OUT: 94.28
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 34.22, AUROC: 90.13 AUPR_IN: 82.81, AUPR_OUT: 92.57
+──────────────────────────────────────────────────────────────────────
+
+           FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+cifar10     53.17  83.06    83.61     80.89 77.39
+tin         42.34  87.60    91.54     80.42 77.39
+nearood     47.76  85.33    87.57     80.66 77.39
+mnist       29.33  91.41    77.80     98.30 77.39
+svhn        15.87  95.92    92.74     98.11 77.39
+texture     40.62  88.48    93.00     79.57 77.39
+places365   51.06  84.69    67.72     94.28 77.39
+farood      34.22  90.13    82.81     92.57 77.39
+[Timing] Eval:  177.4s
+[CLIPPrior] Loading CLIP ViT-B/16 with 100 classes (cifar100)...
+Starting automatic parameter search...
+Hyperparam: [0.0], auroc: 0.8407402263374485
+Hyperparam: [0.1], auroc: 0.8510354938271606
+Hyperparam: [0.2], auroc: 0.8614619341563786
+Hyperparam: [0.3], auroc: 0.8705606995884773
+Hyperparam: [0.4], auroc: 0.877832304526749
+Hyperparam: [0.5], auroc: 0.8833960905349796
+Hyperparam: [0.6], auroc: 0.8854485596707818
+Hyperparam: [0.7], auroc: 0.8789948559670782
+Hyperparam: [0.8], auroc: 0.8631553497942387
+Hyperparam: [0.9], auroc: 0.8329639917695473
+Hyperparam: [1.0], auroc: 0.7856728395061727
+Final hyperparam: [0.6]
+[Timing] Setup: 43.2s
+Performing inference on cifar100 test set...
+Processing near ood...
+Performing inference on cifar10 dataset...
+Computing metrics on cifar10 dataset...
+FPR@95: 54.30, AUROC: 82.82 AUPR_IN: 83.21, AUPR_OUT: 80.67
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on tin dataset...
+Computing metrics on tin dataset...
+FPR@95: 42.54, AUROC: 87.55 AUPR_IN: 91.49, AUPR_OUT: 80.23
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 48.42, AUROC: 85.18 AUPR_IN: 87.35, AUPR_OUT: 80.45
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Performing inference on mnist dataset...
+Computing metrics on mnist dataset...
+FPR@95: 32.19, AUROC: 89.95 AUPR_IN: 75.04, AUPR_OUT: 97.92
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on svhn dataset...
+Computing metrics on svhn dataset...
+FPR@95: 17.18, AUROC: 95.42 AUPR_IN: 92.10, AUPR_OUT: 97.77
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on texture dataset...
+Computing metrics on texture dataset...
+FPR@95: 42.47, AUROC: 87.91 AUPR_IN: 92.56, AUPR_OUT: 79.10
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on places365 dataset...
+Computing metrics on places365 dataset...
+FPR@95: 50.44, AUROC: 84.72 AUPR_IN: 67.90, AUPR_OUT: 94.29
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 35.57, AUROC: 89.50 AUPR_IN: 81.90, AUPR_OUT: 92.27
+──────────────────────────────────────────────────────────────────────
+
+           FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+cifar10     54.30  82.82    83.21     80.67 77.19
+tin         42.54  87.55    91.49     80.23 77.19
+nearood     48.42  85.18    87.35     80.45 77.19
+mnist       32.19  89.95    75.04     97.92 77.19
+svhn        17.18  95.42    92.10     97.77 77.19
+texture     42.47  87.91    92.56     79.10 77.19
+places365   50.44  84.72    67.90     94.29 77.19
+farood      35.57  89.50    81.90     92.27 77.19
+[Timing] Eval:  180.2s
+
+[Timing Summary]
+  Setup: 46.2s ± 4.5s per seed
+  Eval:  178.3s ± 1.3s per seed
+  Total: 673.6s across 3 seeds
+=== Done | Sun Apr 19 04:31:28 PM EDT 2026 ===
+---------------------------------------
+Begin Slurm Epilog: Apr-19-2026 16:31:28
+Job ID:        5016360
+Array Job ID:  5016169_1
+User ID:       ksalzman3
+Account:       coc
+Job name:      clip_prior
+Resources:     cpu=4,gres/gpu:v100=1,mem=32G,node=1
+Rsrc Used:     cput=00:52:44,vmem=0,walltime=00:13:11,mem=4302012K,energy_used=0
+Partition:     ice-gpu
+QOS:           coc-ice
+Nodes:         atl1-1-01-002-6-0
+---------------------------------------
