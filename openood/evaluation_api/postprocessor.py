@@ -18,7 +18,7 @@ from openood.postprocessors import (
     T2FNormPostprocessor, ReweightOODPostprocessor, fDBDPostprocessor,
     AdaScalePostprocessor, IODINPostprocessor, NCIPostprocessor, CFOODPostprocessor,
     VRAPostprocessor, GrOODPostprocessor, RFFPostprocessor,
-    CLIPPriorPostprocessor, RFFCLIPPostprocessor, RFFPOEPostprocessor,
+    CLIPPriorPostprocessor, RFFCLIPPostprocessor,
     RFFCLIPConcatPostprocessor, RFFCLIPMlMinmaxPostprocessor,
     NystromOODPostprocessor)
 from openood.utils.config import Config, merge_configs
@@ -121,9 +121,6 @@ postprocessors = {
     'rff_max_vw_concat':              RFFCLIPConcatPostprocessor,
     'rff_softmax_vw_concat':          RFFCLIPConcatPostprocessor,
     'rff_predictor_aware_vw_concat':  RFFCLIPConcatPostprocessor,
-    'rff_max_vw_poe':              RFFPOEPostprocessor,
-    'rff_softmax_vw_poe':          RFFPOEPostprocessor,
-    'rff_predictor_aware_vw_poe':  RFFPOEPostprocessor,
     'nystrom_max_vw':              NystromOODPostprocessor,
     'nystrom_softmax_vw':          NystromOODPostprocessor,
     'nystrom_predictor_aware_vw':  NystromOODPostprocessor,
@@ -131,15 +128,6 @@ postprocessors = {
     'nystrom_predictor_aware_vw_idlw':  NystromOODPostprocessor,
     'nystrom_softmax_vw_idtopk':          NystromOODPostprocessor,
     'nystrom_predictor_aware_vw_idtopk':  NystromOODPostprocessor,
-    'rff_max_vw_clip':                    RFFCLIPPostprocessor,
-    'rff_centroid_vw_mlpca_minmax_clip':  RFFCLIPPostprocessor,
-    'rff_predictor_aware_vw_allpca_clip': RFFCLIPPostprocessor,
-    'rff_predictor_aware_vw_clip':        RFFCLIPPostprocessor,
-    'rff_max_novw_clip':                  RFFCLIPPostprocessor,
-    'rff_softmax_vw_clip':                RFFCLIPPostprocessor,
-    'rff_dual_gated_vw_clip':             RFFCLIPPostprocessor,
-    'rff_max_vw_mlpca_minmax_clip':       RFFCLIPPostprocessor,
-    'rff_softmax_vw_mlpca_minmax_yw_clip': RFFCLIPPostprocessor,
 }
 
 link_prefix = 'https://raw.githubusercontent.com/Jingkang50/OpenOOD/main/configs/postprocessors/'
