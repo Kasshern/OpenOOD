@@ -37,10 +37,10 @@ class NystromOODPostprocessor(RFFPostprocessor):
         super().__init__(config)
 
         # Nyström-specific hyperparameters
-        self.n_anchors   = int(getattr(self.args, 'n_anchors',   200))
-        self.anchor_init = str(getattr(self.args, 'anchor_init', 'kmeans'))
-        self.reg_lambda  = float(getattr(self.args, 'reg_lambda', 1e-4))
-        self.kmeans_iter = int(getattr(self.args, 'kmeans_iter', 50))
+        self.n_anchors   = int(getattr(self.args, 'n_anchors',   None) or 200)
+        self.anchor_init = str(getattr(self.args, 'anchor_init', None) or 'kmeans')
+        self.reg_lambda  = float(getattr(self.args, 'reg_lambda', None) or 1e-4)
+        self.kmeans_iter = int(getattr(self.args, 'kmeans_iter', None) or 50)
         # Entropy variant: use normalized kernel-attention entropy as OOD signal
         self.use_entropy = bool(getattr(self.args, 'use_entropy', False))
 

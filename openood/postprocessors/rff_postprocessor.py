@@ -81,7 +81,8 @@ class RFFPostprocessor(BasePostprocessor):
         self.score_mode = getattr(self.args, 'score_mode', 'max')
 
         # Whether to normalize class scores by per-class variance
-        self.variance_weighted = getattr(self.args, 'variance_weighted', True)
+        _vw = getattr(self.args, 'variance_weighted', None)
+        self.variance_weighted = _vw if _vw is not None else True
 
         # Dual-head gating (near OOD signal + far OOD signal, gated by gate_margin)
         self.dual_head     = bool(getattr(self.args, 'dual_head', None) or False)
@@ -126,8 +127,8 @@ class RFFPostprocessor(BasePostprocessor):
         self.mu_raw_per_class = None     # [num_classes, feature_dim]
 
         # Multi-layer PCA
-        self.pca_layers     = getattr(self.args, 'pca_layers', [2, 3, 4])
-        self.pca_components = getattr(self.args, 'pca_components', 128)
+        self.pca_layers     = getattr(self.args, 'pca_layers', None) or [2, 3, 4]
+        self.pca_components = getattr(self.args, 'pca_components', None) or 128
         self.layer_selection = getattr(self.args, 'layer_selection', None)
         self.layer_selection_k = int(getattr(self.args, 'layer_selection_k', 2) or 2)
         self.layer_selection_source = getattr(
@@ -143,7 +144,7 @@ class RFFPostprocessor(BasePostprocessor):
         # Kernel PCA (multilayer_kpca feature_space)
         self.kpca_kernel    = getattr(self.args, 'kpca_kernel', 'rbf')
         self.kpca_gamma     = getattr(self.args, 'kpca_gamma', None)
-        self.kpca_subsample = getattr(self.args, 'kpca_subsample', 5000)
+        self.kpca_subsample = getattr(self.args, 'kpca_subsample', None) or 5000
         self.kpca_models    = None  # list of fitted sklearn KernelPCA objects (one per layer)
 
         # Debug mode: φ(x) consistency, score distributions, kernel plots
