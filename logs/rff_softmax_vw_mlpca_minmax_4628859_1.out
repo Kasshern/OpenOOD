@@ -1,0 +1,248 @@
+---------------------------------------
+Begin Slurm Prolog: Apr-08-2026 17:59:49
+Job ID:    4628863
+User ID:   ksalzman3
+Account:   coc
+Job name:  rff_softmax_vw_mlpca_minmax
+Partition: ice-gpu
+QOS:       coc-ice
+---------------------------------------
+=== rff_softmax_vw_mlpca_minmax | cifar100 | Wed Apr  8 05:59:57 PM EDT 2026 ===
+Postprocessor_name is ignored because postprocessor is passed
+[Timing] Setup: 0.4s
+Loaded pre-computed scores from file.
+Processing near ood...
+Inference has been performed on cifar10 dataset...
+Computing metrics on cifar10 dataset...
+FPR@95: 73.01, AUROC: 77.39 AUPR_IN: 73.04, AUPR_OUT: 75.76
+──────────────────────────────────────────────────────────────────────
+
+Inference has been performed on tin dataset...
+Computing metrics on tin dataset...
+FPR@95: 49.31, AUROC: 83.69 AUPR_IN: 88.45, AUPR_OUT: 74.23
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 61.16, AUROC: 80.54 AUPR_IN: 80.75, AUPR_OUT: 75.00
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Inference has been performed on mnist dataset...
+Computing metrics on mnist dataset...
+FPR@95: 49.28, AUROC: 81.57 AUPR_IN: 58.16, AUPR_OUT: 95.88
+──────────────────────────────────────────────────────────────────────
+
+Inference has been performed on svhn dataset...
+Computing metrics on svhn dataset...
+FPR@95: 50.13, AUROC: 82.95 AUPR_IN: 71.84, AUPR_OUT: 90.91
+──────────────────────────────────────────────────────────────────────
+
+Inference has been performed on texture dataset...
+Computing metrics on texture dataset...
+FPR@95: 51.58, AUROC: 82.53 AUPR_IN: 89.09, AUPR_OUT: 70.07
+──────────────────────────────────────────────────────────────────────
+
+Inference has been performed on places365 dataset...
+Computing metrics on places365 dataset...
+FPR@95: 56.18, AUROC: 80.96 AUPR_IN: 62.24, AUPR_OUT: 92.36
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 51.79, AUROC: 82.00 AUPR_IN: 70.33, AUPR_OUT: 87.31
+──────────────────────────────────────────────────────────────────────
+
+           FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+cifar10     73.01  77.39    73.04     75.76 77.17
+tin         49.31  83.69    88.45     74.23 77.17
+nearood     61.16  80.54    80.75     75.00 77.17
+mnist       49.28  81.57    58.16     95.88 77.17
+svhn        50.13  82.95    71.84     90.91 77.17
+texture     51.58  82.53    89.09     70.07 77.17
+places365   56.18  80.96    62.24     92.36 77.17
+farood      51.79  82.00    70.33     87.31 77.17
+[Timing] Eval:  0.4s
+
+--- RFF Diagnostics (70992 samples) ./results/cifar100_resnet18_32x32_base_e100_lr0.1_default/s0/diagnostics/rff_softmax_vw_mlpca_minmax.npz ---
+  Classes above threshold: mean=1.9, zero=11.6%, one=39.6%, multi(>1)=48.8%
+  Max score: mean=26.5641, std=33.8339
+  Margin (max-2nd): mean=2.7252, std=3.7296
+
+--- RFF Debug Plots → ./results/cifar100_resnet18_32x32_base_e100_lr0.1_default/s0/diagnostics ---
+  Kernel dist: mean=0.0231, std=0.0468, min=-0.0832, max=0.6445
+  φ(x) stats per split:
+    train          : mean=0.00016, std=0.03125
+    val            : mean=0.00015, std=0.03126
+  Score dist:
+    id_test        : mean=3.8504, std=1.9341, n=9000
+    cifar10        : mean=2.0449, std=1.4801, n=10000
+    tin            : mean=1.6272, std=1.0560, n=6526
+    mnist          : mean=1.7620, std=0.9800, n=70000
+    svhn           : mean=1.6764, std=1.0324, n=26032
+    texture        : mean=1.6992, std=1.0905, n=5640
+    places365      : mean=1.8028, std=1.1578, n=33773
+  Debug stats → ./results/cifar100_resnet18_32x32_base_e100_lr0.1_default/s0/diagnostics/rff_debug_stats.csv
+Postprocessor_name is ignored because postprocessor is passed
+[Timing] Setup: 0.0s
+Loaded pre-computed scores from file.
+Processing near ood...
+Inference has been performed on cifar10 dataset...
+Computing metrics on cifar10 dataset...
+FPR@95: 67.98, AUROC: 77.68 AUPR_IN: 75.23, AUPR_OUT: 75.88
+──────────────────────────────────────────────────────────────────────
+
+Inference has been performed on tin dataset...
+Computing metrics on tin dataset...
+FPR@95: 48.67, AUROC: 83.70 AUPR_IN: 88.50, AUPR_OUT: 74.65
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 58.32, AUROC: 80.69 AUPR_IN: 81.86, AUPR_OUT: 75.27
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Inference has been performed on mnist dataset...
+Computing metrics on mnist dataset...
+FPR@95: 40.38, AUROC: 84.74 AUPR_IN: 66.05, AUPR_OUT: 96.61
+──────────────────────────────────────────────────────────────────────
+
+Inference has been performed on svhn dataset...
+Computing metrics on svhn dataset...
+FPR@95: 55.56, AUROC: 82.19 AUPR_IN: 69.58, AUPR_OUT: 91.28
+──────────────────────────────────────────────────────────────────────
+
+Inference has been performed on texture dataset...
+Computing metrics on texture dataset...
+FPR@95: 52.04, AUROC: 82.27 AUPR_IN: 89.11, AUPR_OUT: 69.30
+──────────────────────────────────────────────────────────────────────
+
+Inference has been performed on places365 dataset...
+Computing metrics on places365 dataset...
+FPR@95: 55.92, AUROC: 80.90 AUPR_IN: 62.03, AUPR_OUT: 92.37
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 50.98, AUROC: 82.52 AUPR_IN: 71.69, AUPR_OUT: 87.39
+──────────────────────────────────────────────────────────────────────
+
+           FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+cifar10     67.98  77.68    75.23     75.88 77.39
+tin         48.67  83.70    88.50     74.65 77.39
+nearood     58.32  80.69    81.86     75.27 77.39
+mnist       40.38  84.74    66.05     96.61 77.39
+svhn        55.56  82.19    69.58     91.28 77.39
+texture     52.04  82.27    89.11     69.30 77.39
+places365   55.92  80.90    62.03     92.37 77.39
+farood      50.98  82.52    71.69     87.39 77.39
+[Timing] Eval:  0.1s
+
+--- RFF Diagnostics (70992 samples) ./results/cifar100_resnet18_32x32_base_e100_lr0.1_default/s1/diagnostics/rff_softmax_vw_mlpca_minmax.npz ---
+  Classes above threshold: mean=2.1, zero=11.1%, one=31.8%, multi(>1)=57.1%
+  Max score: mean=25.4646, std=31.8964
+  Margin (max-2nd): mean=2.0610, std=2.7578
+
+--- RFF Debug Plots → ./results/cifar100_resnet18_32x32_base_e100_lr0.1_default/s1/diagnostics ---
+  Kernel dist: mean=0.0231, std=0.0395, min=-0.0570, max=0.5419
+  φ(x) stats per split:
+    train          : mean=-0.00010, std=0.02210
+    val            : mean=-0.00011, std=0.02209
+  Score dist:
+    id_test        : mean=3.9166, std=1.9532, n=9000
+    cifar10        : mean=2.0623, std=1.4118, n=10000
+    tin            : mean=1.6607, std=1.0685, n=6526
+    mnist          : mean=1.5885, std=0.8231, n=70000
+    svhn           : mean=1.7629, std=1.1579, n=26032
+    texture        : mean=1.7543, std=1.0915, n=5640
+    places365      : mean=1.8451, std=1.1748, n=33773
+  Debug stats → ./results/cifar100_resnet18_32x32_base_e100_lr0.1_default/s1/diagnostics/rff_debug_stats.csv
+Postprocessor_name is ignored because postprocessor is passed
+[Timing] Setup: 0.0s
+Loaded pre-computed scores from file.
+Processing near ood...
+Inference has been performed on cifar10 dataset...
+Computing metrics on cifar10 dataset...
+FPR@95: 66.44, AUROC: 78.23 AUPR_IN: 76.79, AUPR_OUT: 75.93
+──────────────────────────────────────────────────────────────────────
+
+Inference has been performed on tin dataset...
+Computing metrics on tin dataset...
+FPR@95: 48.98, AUROC: 83.61 AUPR_IN: 88.57, AUPR_OUT: 73.56
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 57.71, AUROC: 80.92 AUPR_IN: 82.68, AUPR_OUT: 74.75
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Inference has been performed on mnist dataset...
+Computing metrics on mnist dataset...
+FPR@95: 40.52, AUROC: 84.57 AUPR_IN: 65.25, AUPR_OUT: 96.45
+──────────────────────────────────────────────────────────────────────
+
+Inference has been performed on svhn dataset...
+Computing metrics on svhn dataset...
+FPR@95: 51.47, AUROC: 83.37 AUPR_IN: 72.41, AUPR_OUT: 91.63
+──────────────────────────────────────────────────────────────────────
+
+Inference has been performed on texture dataset...
+Computing metrics on texture dataset...
+FPR@95: 55.49, AUROC: 81.02 AUPR_IN: 88.09, AUPR_OUT: 67.97
+──────────────────────────────────────────────────────────────────────
+
+Inference has been performed on places365 dataset...
+Computing metrics on places365 dataset...
+FPR@95: 56.22, AUROC: 81.27 AUPR_IN: 62.49, AUPR_OUT: 92.47
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 50.92, AUROC: 82.56 AUPR_IN: 72.06, AUPR_OUT: 87.13
+──────────────────────────────────────────────────────────────────────
+
+           FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+cifar10     66.44  78.23    76.79     75.93 77.20
+tin         48.98  83.61    88.57     73.56 77.20
+nearood     57.71  80.92    82.68     74.75 77.20
+mnist       40.52  84.57    65.25     96.45 77.20
+svhn        51.47  83.37    72.41     91.63 77.20
+texture     55.49  81.02    88.09     67.97 77.20
+places365   56.22  81.27    62.49     92.47 77.20
+farood      50.92  82.56    72.06     87.13 77.20
+[Timing] Eval:  0.1s
+
+--- RFF Diagnostics (70992 samples) ./results/cifar100_resnet18_32x32_base_e100_lr0.1_default/s2/diagnostics/rff_softmax_vw_mlpca_minmax.npz ---
+  Classes above threshold: mean=1.9, zero=11.7%, one=36.5%, multi(>1)=51.8%
+  Max score: mean=25.8192, std=32.7290
+  Margin (max-2nd): mean=2.1971, std=2.7295
+
+--- RFF Debug Plots → ./results/cifar100_resnet18_32x32_base_e100_lr0.1_default/s2/diagnostics ---
+  Kernel dist: mean=0.0224, std=0.0464, min=-0.1004, max=0.6255
+  φ(x) stats per split:
+    train          : mean=0.00008, std=0.03124
+    val            : mean=0.00007, std=0.03124
+  Score dist:
+    id_test        : mean=3.7705, std=1.8834, n=9000
+    cifar10        : mean=1.9494, std=1.3129, n=10000
+    tin            : mean=1.6060, std=1.0188, n=6526
+    mnist          : mean=1.5443, std=0.8028, n=70000
+    svhn           : mean=1.6215, std=1.0317, n=26032
+    texture        : mean=1.7689, std=1.1228, n=5640
+    places365      : mean=1.7546, std=1.1320, n=33773
+  Debug stats → ./results/cifar100_resnet18_32x32_base_e100_lr0.1_default/s2/diagnostics/rff_debug_stats.csv
+
+[Timing Summary]
+  Setup: 0.1s ± 0.2s per seed
+  Eval:  0.2s ± 0.2s per seed
+  Total: 1.1s across 3 seeds
+=== Done | Wed Apr  8 06:02:34 PM EDT 2026 ===
+---------------------------------------
+Begin Slurm Epilog: Apr-08-2026 18:02:34
+Job ID:        4628863
+Array Job ID:  4628859_1
+User ID:       ksalzman3
+Account:       coc
+Job name:      rff_softmax_vw_mlpca_minmax
+Resources:     cpu=4,gres/gpu:v100=1,mem=32G,node=1
+Rsrc Used:     cput=00:11:00,vmem=0,walltime=00:02:45,mem=3136380K,energy_used=0
+Partition:     ice-gpu
+QOS:           coc-ice
+Nodes:         atl1-1-02-010-35-0
+---------------------------------------

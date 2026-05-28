@@ -1,0 +1,97 @@
+---------------------------------------
+Begin Slurm Prolog: Apr-23-2026 04:12:20
+Job ID:    5040338
+User ID:   ksalzman3
+Account:   coc
+Job name:  rff_predictor_aware_vw_allpca_imagenet
+Partition: ice-gpu
+QOS:       coc-ice
+---------------------------------------
+=== rff_predictor_aware_vw_allpca | imagenet | Thu Apr 23 04:12:26 AM EDT 2026 ===
+Warning: no write permission to create /storage/ice1/9/5/ksalzman3/openood/src/OpenOOD/scripts/../data/images_largescale/imagenet_es, skipping.
+
+==================================================
+Setting up RFF Kernel Attention OOD detector...
+  sigma (bandwidth): 0.5
+  D (RFF dimension): 1024
+  alpha (target FPR): 0.05
+  feature_space: multilayer_pca
+  normalize: True
+  score_mode: predictor_aware
+  variance_weighted: True
+==================================================
+[Fisher weights] layer0=0.135, layer1=0.139, layer2=0.138, layer3=0.159, layer4=0.429
+Extracted 1281167 train features of dim 576 (multilayer_pca, 5 layers)
+  Feature norm (mean): 7.7798
+  Number of classes: 1000
+Extracted 5000 val features for threshold
+Per-class embedding norms (mean): 1.0000
+Per-class score variance (mean): 0.018266
+Threshold (predictor_aware) at 5.0%: -1.2769
+Max threshold (for diagnostics) at 5.0%: 1.9124
+RFF setup complete.
+
+[Timing] Setup: 2578.2s
+Performing inference on imagenet test set...
+Processing near ood...
+Performing inference on ssb_hard dataset...
+Computing metrics on ssb_hard dataset...
+FPR@95: 81.59, AUROC: 70.60 AUPR_IN: 67.41, AUPR_OUT: 69.55
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on ninco dataset...
+Computing metrics on ninco dataset...
+FPR@95: 60.41, AUROC: 81.25 AUPR_IN: 96.89, AUPR_OUT: 32.22
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 71.00, AUROC: 75.93 AUPR_IN: 82.15, AUPR_OUT: 50.88
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Performing inference on inaturalist dataset...
+Computing metrics on inaturalist dataset...
+FPR@95: 29.48, AUROC: 91.69 AUPR_IN: 97.98, AUPR_OUT: 68.13
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on textures dataset...
+Computing metrics on textures dataset...
+FPR@95: 44.48, AUROC: 87.71 AUPR_IN: 98.32, AUPR_OUT: 47.61
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on openimage_o dataset...
+Computing metrics on openimage_o dataset...
+FPR@95: 39.57, AUROC: 88.13 AUPR_IN: 95.49, AUPR_OUT: 68.93
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 37.84, AUROC: 89.18 AUPR_IN: 97.26, AUPR_OUT: 61.56
+──────────────────────────────────────────────────────────────────────
+
+             FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+ssb_hard      81.59  70.60    67.41     69.55 76.19
+ninco         60.41  81.25    96.89     32.22 76.19
+nearood       71.00  75.93    82.15     50.88 76.19
+inaturalist   29.48  91.69    97.98     68.13 76.19
+textures      44.48  87.71    98.32     47.61 76.19
+openimage_o   39.57  88.13    95.49     68.93 76.19
+farood        37.84  89.18    97.26     61.56 76.19
+[Timing] Eval:  380.9s
+
+[Timing Summary]
+  Setup: 2578.2s ± 0.0s per seed
+  Eval:  380.9s ± 0.0s per seed
+  Total: 2959.2s across 1 seeds
+=== Done | Thu Apr 23 05:03:22 AM EDT 2026 ===
+---------------------------------------
+Begin Slurm Epilog: Apr-23-2026 05:03:22
+Job ID:        5040338
+User ID:       ksalzman3
+Account:       coc
+Job name:      rff_predictor_aware_vw_allpca_imagenet
+Resources:     cpu=4,gres/gpu:h100=1,mem=64G,node=1
+Rsrc Used:     cput=03:24:08,vmem=0,walltime=00:51:02,mem=67078868K,energy_used=0
+Partition:     ice-gpu
+QOS:           coc-ice
+Nodes:         atl1-1-03-013-3-0
+---------------------------------------

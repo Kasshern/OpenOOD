@@ -1,27 +1,15 @@
 """
-RFFCLIPPostprocessor: combines RFF OOD score with CLIP zero-shot prior.
+RFFCLIPPostprocessor: CLIP infrastructure base class for feature-level fusion variants.
 
-Score-level combination (both are scalar confidence scores, higher = more ID):
-    final_score = (1 - clip_weight) * rff_score + clip_weight * clip_score
+This class provides shared CLIP loading, image renormalization, and pickle handling
+for subclasses that concatenate CLIP features with ResNet features before the kernel
+method (RFFCLIPConcatPostprocessor, RFFCLIPMlMinmaxPostprocessor).
 
-clip_score  = max(softmax(CLIP_logits * logit_scale, dim=1))
-rff_score   = standard RFF score (any score_mode: max, centroid, softmax, etc.)
-
-rff_score is min-max normalized per batch to [0,1] before mixing, since RFF
-scores are not naturally bounded while CLIP softmax is in (0,1).
-
-APS sweeps clip_weight in [0.0 ... 1.0]. All RFF hyperparams (sigma, D, alpha)
-are fixed at best-known values in the config — no re-sweep needed.
-
-clip_weight=0.0 → pure RFF (equivalent to the base RFF variant)
-clip_weight=1.0 → pure CLIP zero-shot
+It does NOT implement OOD scoring itself — subclasses must define postprocess().
 """
-
-from typing import Any
 
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 
 from openood.preprocessors.transform import normalization_dict
 from openood.networks.clip import CLIPZeroshot
@@ -35,13 +23,16 @@ from .clip_prior_postprocessor import (
 
 
 class RFFCLIPPostprocessor(RFFPostprocessor):
-    """RFF OOD scorer augmented with a CLIP zero-shot prior."""
+    """CLIP infrastructure base for RFF+CLIP feature-concat postprocessors.
+
+    Subclasses (RFFCLIPConcatPostprocessor, RFFCLIPMlMinmaxPostprocessor) must
+    implement postprocess(). This class only provides CLIP loading and renorm.
+    """
 
     def __init__(self, config):
         super().__init__(config)
-        self.clip_weight   = float(getattr(self.args, 'clip_weight',  None) or 0.3)
-        self.clip_backbone = str(getattr(self.args,  'clip_backbone', None) or 'ViT-B/16')
-        self.data_root     = str(getattr(self.args,  'data_root',     None) or './data')
+        self.clip_backbone = str(getattr(self.args, 'clip_backbone', None) or 'ViT-B/16')
+        self.data_root     = str(getattr(self.args, 'data_root',     None) or './data')
         self.dataset_name  = self.config.dataset.name
 
         self.clip_model    = None
@@ -74,43 +65,6 @@ class RFFCLIPPostprocessor(RFFPostprocessor):
             cl_std   = torch.tensor(_CLIP_STD,   dtype=torch.float32).view(1,3,1,1).cuda()
             self._renorm_scale = src_std / cl_std
             self._renorm_shift = (src_mean - cl_mean) / cl_std
-
-    # ── Postprocess ───────────────────────────────────────────────────────────
-
-    @torch.no_grad()
-    def postprocess(self, net: nn.Module, data: Any):
-        # 1. RFF score — pred is argmax from RFF class scores
-        rff_pred, rff_conf = super().postprocess(net, data)
-
-        # 2. CLIP zero-shot score
-        clip_data = data.float() * self._renorm_scale + self._renorm_shift
-        if clip_data.shape[-1] != 224:
-            clip_data = F.interpolate(
-                clip_data, size=224, mode='bicubic', align_corners=False)
-        clip_logits = self.clip_model(clip_data)
-        logit_scale = self.clip_model.model.logit_scale.exp().item()
-        clip_conf   = torch.softmax(clip_logits * logit_scale, dim=1).max(dim=1).values
-
-        # 3. Min-max normalize rff_conf to [0, 1] for stable mixing
-        #    (CLIP softmax is naturally in (0,1); RFF scale varies by score_mode)
-        rff_min = rff_conf.min()
-        rff_max = rff_conf.max()
-        if rff_max > rff_min:
-            rff_conf_norm = (rff_conf - rff_min) / (rff_max - rff_min)
-        else:
-            rff_conf_norm = rff_conf
-
-        # 4. Weighted combination
-        conf = (1.0 - self.clip_weight) * rff_conf_norm + self.clip_weight * clip_conf
-        return rff_pred, conf
-
-    # ── APS interface — only clip_weight is swept; RFF params are fixed ───────
-
-    def set_hyperparam(self, hyperparam: list):
-        self.clip_weight = float(hyperparam[0])
-
-    def get_hyperparam(self):
-        return [self.clip_weight]
 
     # ── Pickle: exclude CLIP model (~340MB) from saved state ─────────────────
 

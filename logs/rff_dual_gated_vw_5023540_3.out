@@ -1,0 +1,99 @@
+---------------------------------------
+Begin Slurm Prolog: Apr-21-2026 00:48:14
+Job ID:    5023540
+User ID:   ksalzman3
+Account:   coc
+Job name:  rff_dual_gated_vw
+Partition: ice-gpu
+QOS:       coc-ice
+---------------------------------------
+=== rff_dual_gated_vw | imagenet | Tue Apr 21 12:48:20 AM EDT 2026 ===
+Warning: no write permission to create /storage/ice1/9/5/ksalzman3/openood/src/OpenOOD/scripts/../data/images_largescale/imagenet_es, skipping.
+
+==================================================
+Setting up RFF Kernel Attention OOD detector...
+  sigma (bandwidth): 0.5
+  D (RFF dimension): 1024
+  alpha (target FPR): 0.05
+  feature_space: penultimate
+  normalize: True
+  score_mode: dual_gated
+  variance_weighted: True
+==================================================
+Extracted 1281167 train features of dim 2048
+  Feature norm (mean): 29.8091
+  Number of classes: 1000
+Extracted 5000 val features for threshold
+  [dual_head] near: mean=6.1005 std=1.8817
+  [dual_head] far:  mean=7.3943  std=0.9404
+Per-class embedding norms (mean): 1.0000
+Per-class score variance (mean): 0.008517
+Threshold (dual_gated) at 5.0%: 5.8048
+Max threshold (for diagnostics) at 5.0%: 5.8048
+RFF setup complete.
+
+[Timing] Setup: 2670.2s
+Performing inference on imagenet test set...
+Processing near ood...
+Performing inference on ssb_hard dataset...
+Computing metrics on ssb_hard dataset...
+FPR@95: 82.38, AUROC: 71.29 AUPR_IN: 67.60, AUPR_OUT: 71.81
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on ninco dataset...
+Computing metrics on ninco dataset...
+FPR@95: 64.47, AUROC: 82.05 AUPR_IN: 96.83, AUPR_OUT: 39.03
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 73.42, AUROC: 76.67 AUPR_IN: 82.21, AUPR_OUT: 55.42
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Performing inference on inaturalist dataset...
+Computing metrics on inaturalist dataset...
+FPR@95: 14.42, AUROC: 96.49 AUPR_IN: 99.17, AUPR_OUT: 86.08
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on textures dataset...
+Computing metrics on textures dataset...
+FPR@95: 20.91, AUROC: 94.91 AUPR_IN: 99.35, AUPR_OUT: 71.81
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on openimage_o dataset...
+Computing metrics on openimage_o dataset...
+FPR@95: 38.57, AUROC: 90.82 AUPR_IN: 96.19, AUPR_OUT: 78.12
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 24.63, AUROC: 94.07 AUPR_IN: 98.24, AUPR_OUT: 78.67
+──────────────────────────────────────────────────────────────────────
+
+             FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+ssb_hard      82.38  71.29    67.60     71.81 76.19
+ninco         64.47  82.05    96.83     39.03 76.19
+nearood       73.42  76.67    82.21     55.42 76.19
+inaturalist   14.42  96.49    99.17     86.08 76.19
+textures      20.91  94.91    99.35     71.81 76.19
+openimage_o   38.57  90.82    96.19     78.12 76.19
+farood        24.63  94.07    98.24     78.67 76.19
+[Timing] Eval:  352.5s
+
+[Timing Summary]
+  Setup: 2670.2s ± 0.0s per seed
+  Eval:  352.5s ± 0.0s per seed
+  Total: 3022.6s across 1 seeds
+=== Done | Tue Apr 21 01:41:27 AM EDT 2026 ===
+---------------------------------------
+Begin Slurm Epilog: Apr-21-2026 01:41:27
+Job ID:        5023540
+Array Job ID:  5023540_3
+User ID:       ksalzman3
+Account:       coc
+Job name:      rff_dual_gated_vw
+Resources:     cpu=4,gres/gpu:h100=1,mem=32G,node=1
+Rsrc Used:     cput=00:29:04,vmem=0,walltime=00:07:16,mem=5540880K,energy_used=0
+Partition:     ice-gpu
+QOS:           coc-ice
+Nodes:         atl1-1-03-012-23-0
+---------------------------------------

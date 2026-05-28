@@ -1,0 +1,90 @@
+---------------------------------------
+Begin Slurm Prolog: Apr-19-2026 16:56:11
+Job ID:    5016169
+User ID:   ksalzman3
+Account:   coc
+Job name:  clip_prior
+Partition: ice-gpu
+QOS:       coc-ice
+---------------------------------------
+=== clip_prior | imagenet | Sun Apr 19 04:56:19 PM EDT 2026 ===
+Warning: no write permission to create /storage/ice1/9/5/ksalzman3/openood/src/OpenOOD/scripts/../data/images_largescale/imagenet_es, skipping.
+[CLIPPrior] Loading CLIP ViT-B/16 with 1000 classes (imagenet)...
+Starting automatic parameter search...
+Hyperparam: [0.0], auroc: 0.8476453771979581
+Hyperparam: [0.1], auroc: 0.8583929665343166
+Hyperparam: [0.2], auroc: 0.8686912081678957
+Hyperparam: [0.3], auroc: 0.8772950085082246
+Hyperparam: [0.4], auroc: 0.8838677254679523
+Hyperparam: [0.5], auroc: 0.887712535450936
+Hyperparam: [0.6], auroc: 0.888111798071469
+Hyperparam: [0.7], auroc: 0.8852331253545094
+Hyperparam: [0.8], auroc: 0.8772626205331822
+Hyperparam: [0.9], auroc: 0.862590867838911
+Hyperparam: [1.0], auroc: 0.8366290414066933
+Final hyperparam: [0.6]
+[Timing] Setup: 333.6s
+Performing inference on imagenet test set...
+Processing near ood...
+Performing inference on ssb_hard dataset...
+Computing metrics on ssb_hard dataset...
+FPR@95: 78.10, AUROC: 70.44 AUPR_IN: 69.09, AUPR_OUT: 69.67
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on ninco dataset...
+Computing metrics on ninco dataset...
+FPR@95: 60.17, AUROC: 81.02 AUPR_IN: 96.83, AUPR_OUT: 35.13
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 69.13, AUROC: 75.73 AUPR_IN: 82.96, AUPR_OUT: 52.40
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Performing inference on inaturalist dataset...
+Computing metrics on inaturalist dataset...
+FPR@95: 42.32, AUROC: 90.56 AUPR_IN: 97.56, AUPR_OUT: 71.10
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on textures dataset...
+Computing metrics on textures dataset...
+FPR@95: 57.41, AUROC: 86.52 AUPR_IN: 97.75, AUPR_OUT: 52.64
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on openimage_o dataset...
+Computing metrics on openimage_o dataset...
+FPR@95: 45.66, AUROC: 88.76 AUPR_IN: 95.52, AUPR_OUT: 74.32
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 48.46, AUROC: 88.61 AUPR_IN: 96.94, AUPR_OUT: 66.02
+──────────────────────────────────────────────────────────────────────
+
+             FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+ssb_hard      78.10  70.44    69.09     69.67 76.18
+ninco         60.17  81.02    96.83     35.13 76.18
+nearood       69.13  75.73    82.96     52.40 76.18
+inaturalist   42.32  90.56    97.56     71.10 76.18
+textures      57.41  86.52    97.75     52.64 76.18
+openimage_o   45.66  88.76    95.52     74.32 76.18
+farood        48.46  88.61    96.94     66.02 76.18
+[Timing] Eval:  569.1s
+
+[Timing Summary]
+  Setup: 333.6s ± 0.0s per seed
+  Eval:  569.1s ± 0.0s per seed
+  Total: 902.7s across 1 seeds
+=== Done | Sun Apr 19 05:13:03 PM EDT 2026 ===
+---------------------------------------
+Begin Slurm Epilog: Apr-19-2026 17:13:04
+Job ID:        5016169
+Array Job ID:  5016169_3
+User ID:       ksalzman3
+Account:       coc
+Job name:      clip_prior
+Resources:     cpu=4,gres/gpu:v100=1,mem=32G,node=1
+Rsrc Used:     cput=00:49:32,vmem=0,walltime=00:12:23,mem=5925348K,energy_used=0
+Partition:     ice-gpu
+QOS:           coc-ice
+Nodes:         atl1-1-01-002-6-0
+---------------------------------------

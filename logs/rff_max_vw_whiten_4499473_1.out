@@ -1,0 +1,459 @@
+---------------------------------------
+Begin Slurm Prolog: Mar-20-2026 14:29:58
+Job ID:    4508797
+User ID:   ksalzman3
+Account:   coc
+Job name:  rff_max_vw_whiten
+Partition: ice-gpu
+QOS:       coc-ice
+---------------------------------------
+=== rff_max_vw_whiten | cifar100 | Fri Mar 20 02:30:05 PM EDT 2026 ===
+
+==================================================
+Setting up RFF Kernel Attention OOD detector...
+  sigma (bandwidth): 0.5
+  D (RFF dimension): 1024
+  alpha (target FPR): 0.05
+  feature_space: penultimate
+  normalize: True
+  score_mode: max
+  variance_weighted: True
+==================================================
+Extracted 50000 train features of dim 512
+  Feature norm (mean): 12.7760
+  Number of classes: 100
+Extracted 1000 val features for threshold
+Per-class embedding norms (mean): 0.1986
+Per-class score variance (mean): 0.000093
+Threshold (max) at 5.0%: 2.9873
+Max threshold (for diagnostics) at 5.0%: 2.9873
+RFF setup complete.
+
+Starting automatic parameter search...
+Hyperparam: [0.1, 512, 0.025], auroc: 0.4823179012345679
+Hyperparam: [0.5, 512, 0.025], auroc: 0.5969017489711934
+Hyperparam: [1.0, 512, 0.025], auroc: 0.5078827160493827
+Hyperparam: [2.0, 512, 0.025], auroc: 0.5060694444444445
+Hyperparam: [0.1, 1024, 0.025], auroc: 0.5242998971193416
+Hyperparam: [0.5, 1024, 0.025], auroc: 0.607675925925926
+Hyperparam: [1.0, 1024, 0.025], auroc: 0.4979763374485596
+Hyperparam: [2.0, 1024, 0.025], auroc: 0.45050051440329214
+Hyperparam: [0.1, 2048, 0.025], auroc: 0.5090318930041152
+Hyperparam: [0.5, 2048, 0.025], auroc: 0.6068652263374485
+Hyperparam: [1.0, 2048, 0.025], auroc: 0.5000812757201646
+Hyperparam: [2.0, 2048, 0.025], auroc: 0.4614876543209876
+Hyperparam: [0.1, 512, 0.05], auroc: 0.4921975308641975
+Hyperparam: [0.5, 512, 0.05], auroc: 0.5709413580246914
+Hyperparam: [1.0, 512, 0.05], auroc: 0.5309763374485597
+Hyperparam: [2.0, 512, 0.05], auroc: 0.5053137860082304
+Hyperparam: [0.1, 1024, 0.05], auroc: 0.4920318930041152
+Hyperparam: [0.5, 1024, 0.05], auroc: 0.6192479423868313
+Hyperparam: [1.0, 1024, 0.05], auroc: 0.5163976337448559
+Hyperparam: [2.0, 1024, 0.05], auroc: 0.46923971193415637
+Hyperparam: [0.1, 2048, 0.05], auroc: 0.5006188271604938
+Hyperparam: [0.5, 2048, 0.05], auroc: 0.6221337448559671
+Hyperparam: [1.0, 2048, 0.05], auroc: 0.5126913580246913
+Hyperparam: [2.0, 2048, 0.05], auroc: 0.48887860082304524
+Hyperparam: [0.1, 512, 0.1], auroc: 0.5243616255144034
+Hyperparam: [0.5, 512, 0.1], auroc: 0.5952479423868312
+Hyperparam: [1.0, 512, 0.1], auroc: 0.5272088477366255
+Hyperparam: [2.0, 512, 0.1], auroc: 0.5192422839506172
+Hyperparam: [0.1, 1024, 0.1], auroc: 0.4837417695473251
+Hyperparam: [0.5, 1024, 0.1], auroc: 0.6210390946502058
+Hyperparam: [1.0, 1024, 0.1], auroc: 0.4635864197530864
+Hyperparam: [2.0, 1024, 0.1], auroc: 0.49027623456790126
+Hyperparam: [0.1, 2048, 0.1], auroc: 0.46538374485596706
+Hyperparam: [0.5, 2048, 0.1], auroc: 0.6167366255144033
+Hyperparam: [1.0, 2048, 0.1], auroc: 0.494977366255144
+Hyperparam: [2.0, 2048, 0.1], auroc: 0.48673405349794235
+Final hyperparam: [0.5, 2048, 0.05, True]
+Performing inference on cifar100 test set...
+Processing near ood...
+Performing inference on cifar10 dataset...
+Computing metrics on cifar10 dataset...
+FPR@95: 87.48, AUROC: 57.35 AUPR_IN: 56.84, AUPR_OUT: 57.50
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on tin dataset...
+Computing metrics on tin dataset...
+FPR@95: 86.32, AUROC: 58.69 AUPR_IN: 67.76, AUPR_OUT: 48.05
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 86.90, AUROC: 58.02 AUPR_IN: 62.30, AUPR_OUT: 52.77
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Performing inference on mnist dataset...
+Computing metrics on mnist dataset...
+FPR@95: 81.06, AUROC: 63.02 AUPR_IN: 25.06, AUPR_OUT: 91.92
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on svhn dataset...
+Computing metrics on svhn dataset...
+FPR@95: 82.89, AUROC: 62.54 AUPR_IN: 41.37, AUPR_OUT: 80.68
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on texture dataset...
+Computing metrics on texture dataset...
+FPR@95: 83.34, AUROC: 61.81 AUPR_IN: 73.60, AUPR_OUT: 46.55
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on places365 dataset...
+Computing metrics on places365 dataset...
+FPR@95: 84.63, AUROC: 60.30 AUPR_IN: 33.52, AUPR_OUT: 83.24
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 82.98, AUROC: 61.92 AUPR_IN: 43.39, AUPR_OUT: 75.60
+──────────────────────────────────────────────────────────────────────
+
+           FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+cifar10     87.48  57.35    56.84     57.50 77.18
+tin         86.32  58.69    67.76     48.05 77.18
+nearood     86.90  58.02    62.30     52.77 77.18
+mnist       81.06  63.02    25.06     91.92 77.18
+svhn        82.89  62.54    41.37     80.68 77.18
+texture     83.34  61.81    73.60     46.55 77.18
+places365   84.63  60.30    33.52     83.24 77.18
+farood      82.98  61.92    43.39     75.60 77.18
+
+--- RFF Diagnostics (231963 samples) ./results/cifar100_resnet18_32x32_base_e100_lr0.1_default/s0/diagnostics/rff_max_vw_whiten.npz ---
+  Classes above threshold: mean=8.7, zero=6.9%, one=11.7%, multi(>1)=81.4%
+  Max score: mean=12.2255, std=22.2867
+  Margin (max-2nd): mean=0.5931, std=1.1074
+
+--- RFF Per-Class Analysis → ./results/cifar100_resnet18_32x32_base_e100_lr0.1_default/s0/diagnostics/rff_max_vw_whiten_per_class.csv ---
+  id_test  multi_rate: mean=0.8565, max=1.0000
+  cifar10         multi_rate: mean=0.4424, max=1.0000
+  tin             multi_rate: mean=0.4184, max=1.0000
+  mnist           multi_rate: mean=0.2658, max=0.8946
+  svhn            multi_rate: mean=0.3051, max=1.0000
+  texture         multi_rate: mean=0.3168, max=1.0000
+  places365       multi_rate: mean=0.4614, max=1.0000
+
+--- RFF Debug Plots → ./results/cifar100_resnet18_32x32_base_e100_lr0.1_default/s0/diagnostics ---
+  Kernel dist: mean=0.0180, std=0.0227, min=-0.0487, max=0.0993
+  φ(x) stats per split:
+    train          : mean=0.00000, std=0.02210
+    val            : mean=0.00001, std=0.02209
+    id_test        : mean=0.00000, std=0.02210
+    cifar10        : mean=-0.00001, std=0.02210
+    tin            : mean=-0.00001, std=0.02210
+    mnist          : mean=0.00005, std=0.02209
+    svhn           : mean=0.00011, std=0.02210
+    texture        : mean=0.00002, std=0.02209
+    places365      : mean=-0.00001, std=0.02210
+  Score dist:
+    id_test        : mean=5.1784, std=0.9143, n=9000
+    cifar10        : mean=4.9306, std=0.7638, n=10000
+    tin            : mean=4.8913, std=0.7541, n=6526
+    mnist          : mean=4.7630, std=0.7033, n=70000
+    svhn           : mean=4.7801, std=0.7195, n=26032
+    texture        : mean=4.8047, std=0.7130, n=5640
+    places365      : mean=4.8456, std=0.7255, n=33773
+  Debug stats → ./results/cifar100_resnet18_32x32_base_e100_lr0.1_default/s0/diagnostics/rff_debug_stats.csv
+
+==================================================
+Setting up RFF Kernel Attention OOD detector...
+  sigma (bandwidth): 0.5
+  D (RFF dimension): 1024
+  alpha (target FPR): 0.05
+  feature_space: penultimate
+  normalize: True
+  score_mode: max
+  variance_weighted: True
+==================================================
+Extracted 50000 train features of dim 512
+  Feature norm (mean): 12.8982
+  Number of classes: 100
+Extracted 1000 val features for threshold
+Per-class embedding norms (mean): 0.1994
+Per-class score variance (mean): 0.000090
+Threshold (max) at 5.0%: 3.0503
+Max threshold (for diagnostics) at 5.0%: 3.0503
+RFF setup complete.
+
+Starting automatic parameter search...
+Hyperparam: [0.1, 512, 0.025], auroc: 0.49445576131687247
+Hyperparam: [0.5, 512, 0.025], auroc: 0.589246913580247
+Hyperparam: [1.0, 512, 0.025], auroc: 0.5320344650205762
+Hyperparam: [2.0, 512, 0.025], auroc: 0.5011234567901235
+Hyperparam: [0.1, 1024, 0.025], auroc: 0.5030720164609054
+Hyperparam: [0.5, 1024, 0.025], auroc: 0.6014223251028807
+Hyperparam: [1.0, 1024, 0.025], auroc: 0.5306980452674898
+Hyperparam: [2.0, 1024, 0.025], auroc: 0.5050442386831275
+Hyperparam: [0.1, 2048, 0.025], auroc: 0.5320715020576132
+Hyperparam: [0.5, 2048, 0.025], auroc: 0.6126707818930042
+Hyperparam: [1.0, 2048, 0.025], auroc: 0.47320833333333334
+Hyperparam: [2.0, 2048, 0.025], auroc: 0.4871656378600824
+Hyperparam: [0.1, 512, 0.05], auroc: 0.48645576131687246
+Hyperparam: [0.5, 512, 0.05], auroc: 0.5785915637860082
+Hyperparam: [1.0, 512, 0.05], auroc: 0.5159737654320988
+Hyperparam: [2.0, 512, 0.05], auroc: 0.5027716049382716
+Hyperparam: [0.1, 1024, 0.05], auroc: 0.5094372427983539
+Hyperparam: [0.5, 1024, 0.05], auroc: 0.6068816872427983
+Hyperparam: [1.0, 1024, 0.05], auroc: 0.5163930041152263
+Hyperparam: [2.0, 1024, 0.05], auroc: 0.461602366255144
+Hyperparam: [0.1, 2048, 0.05], auroc: 0.4847026748971194
+Hyperparam: [0.5, 2048, 0.05], auroc: 0.6356635802469136
+Hyperparam: [1.0, 2048, 0.05], auroc: 0.5071748971193415
+Hyperparam: [2.0, 2048, 0.05], auroc: 0.45164403292181077
+Hyperparam: [0.1, 512, 0.1], auroc: 0.5045205761316872
+Hyperparam: [0.5, 512, 0.1], auroc: 0.554227366255144
+Hyperparam: [1.0, 512, 0.1], auroc: 0.5304444444444445
+Hyperparam: [2.0, 512, 0.1], auroc: 0.5290375514403292
+Hyperparam: [0.1, 1024, 0.1], auroc: 0.49092952674897117
+Hyperparam: [0.5, 1024, 0.1], auroc: 0.6124465020576132
+Hyperparam: [1.0, 1024, 0.1], auroc: 0.5084110082304527
+Hyperparam: [2.0, 1024, 0.1], auroc: 0.47086008230452675
+Hyperparam: [0.1, 2048, 0.1], auroc: 0.5019094650205762
+Hyperparam: [0.5, 2048, 0.1], auroc: 0.5909655349794238
+Hyperparam: [1.0, 2048, 0.1], auroc: 0.48000720164609056
+Hyperparam: [2.0, 2048, 0.1], auroc: 0.5070802469135802
+Final hyperparam: [0.5, 2048, 0.05, True]
+Performing inference on cifar100 test set...
+Processing near ood...
+Performing inference on cifar10 dataset...
+Computing metrics on cifar10 dataset...
+FPR@95: 85.97, AUROC: 59.87 AUPR_IN: 58.91, AUPR_OUT: 60.18
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on tin dataset...
+Computing metrics on tin dataset...
+FPR@95: 85.52, AUROC: 59.67 AUPR_IN: 68.70, AUPR_OUT: 48.91
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 85.74, AUROC: 59.77 AUPR_IN: 63.80, AUPR_OUT: 54.54
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Performing inference on mnist dataset...
+Computing metrics on mnist dataset...
+FPR@95: 87.13, AUROC: 54.37 AUPR_IN: 18.06, AUPR_OUT: 89.29
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on svhn dataset...
+Computing metrics on svhn dataset...
+FPR@95: 80.89, AUROC: 62.37 AUPR_IN: 43.01, AUPR_OUT: 80.12
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on texture dataset...
+Computing metrics on texture dataset...
+FPR@95: 81.16, AUROC: 63.79 AUPR_IN: 75.20, AUPR_OUT: 49.25
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on places365 dataset...
+Computing metrics on places365 dataset...
+FPR@95: 82.97, AUROC: 61.91 AUPR_IN: 35.70, AUPR_OUT: 84.32
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 83.04, AUROC: 60.61 AUPR_IN: 42.99, AUPR_OUT: 75.75
+──────────────────────────────────────────────────────────────────────
+
+           FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+cifar10     85.97  59.87    58.91     60.18 77.38
+tin         85.52  59.67    68.70     48.91 77.38
+nearood     85.74  59.77    63.80     54.54 77.38
+mnist       87.13  54.37    18.06     89.29 77.38
+svhn        80.89  62.37    43.01     80.12 77.38
+texture     81.16  63.79    75.20     49.25 77.38
+places365   82.97  61.91    35.70     84.32 77.38
+farood      83.04  60.61    42.99     75.75 77.38
+
+--- RFF Diagnostics (231963 samples) ./results/cifar100_resnet18_32x32_base_e100_lr0.1_default/s1/diagnostics/rff_max_vw_whiten.npz ---
+  Classes above threshold: mean=8.0, zero=7.7%, one=12.8%, multi(>1)=79.5%
+  Max score: mean=12.3784, std=22.2810
+  Margin (max-2nd): mean=0.6190, std=1.1658
+
+--- RFF Per-Class Analysis → ./results/cifar100_resnet18_32x32_base_e100_lr0.1_default/s1/diagnostics/rff_max_vw_whiten_per_class.csv ---
+  id_test  multi_rate: mean=0.7958, max=0.9474
+  cifar10         multi_rate: mean=0.4120, max=1.0000
+  tin             multi_rate: mean=0.4431, max=1.0000
+  mnist           multi_rate: mean=0.2817, max=1.0000
+  svhn            multi_rate: mean=0.3151, max=1.0000
+  texture         multi_rate: mean=0.2884, max=1.0000
+  places365       multi_rate: mean=0.4343, max=1.0000
+
+--- RFF Debug Plots → ./results/cifar100_resnet18_32x32_base_e100_lr0.1_default/s1/diagnostics ---
+  Kernel dist: mean=0.0187, std=0.0229, min=-0.0502, max=0.1370
+  φ(x) stats per split:
+    train          : mean=-0.00004, std=0.02210
+    val            : mean=-0.00003, std=0.02210
+    id_test        : mean=-0.00005, std=0.02210
+    cifar10        : mean=-0.00004, std=0.02210
+    tin            : mean=-0.00005, std=0.02210
+    mnist          : mean=0.00013, std=0.02209
+    svhn           : mean=0.00003, std=0.02210
+    texture        : mean=-0.00004, std=0.02210
+    places365      : mean=-0.00003, std=0.02210
+  Score dist:
+    id_test        : mean=5.1858, std=0.9075, n=9000
+    cifar10        : mean=4.8642, std=0.7583, n=10000
+    tin            : mean=4.8703, std=0.7320, n=6526
+    mnist          : mean=5.0136, std=0.7081, n=70000
+    svhn           : mean=4.7957, std=0.6653, n=26032
+    texture        : mean=4.7508, std=0.7008, n=5640
+    places365      : mean=4.8020, std=0.7125, n=33773
+  Debug stats → ./results/cifar100_resnet18_32x32_base_e100_lr0.1_default/s1/diagnostics/rff_debug_stats.csv
+
+==================================================
+Setting up RFF Kernel Attention OOD detector...
+  sigma (bandwidth): 0.5
+  D (RFF dimension): 1024
+  alpha (target FPR): 0.05
+  feature_space: penultimate
+  normalize: True
+  score_mode: max
+  variance_weighted: True
+==================================================
+Extracted 50000 train features of dim 512
+  Feature norm (mean): 12.9293
+  Number of classes: 100
+Extracted 1000 val features for threshold
+Per-class embedding norms (mean): 0.1969
+Per-class score variance (mean): 0.000085
+Threshold (max) at 5.0%: 3.1172
+Max threshold (for diagnostics) at 5.0%: 3.1172
+RFF setup complete.
+
+Starting automatic parameter search...
+Hyperparam: [0.1, 512, 0.025], auroc: 0.485880658436214
+Hyperparam: [0.5, 512, 0.025], auroc: 0.5893343621399176
+Hyperparam: [1.0, 512, 0.025], auroc: 0.49756584362139916
+Hyperparam: [2.0, 512, 0.025], auroc: 0.516113683127572
+Hyperparam: [0.1, 1024, 0.025], auroc: 0.49891460905349794
+Hyperparam: [0.5, 1024, 0.025], auroc: 0.6009341563786008
+Hyperparam: [1.0, 1024, 0.025], auroc: 0.5047731481481481
+Hyperparam: [2.0, 1024, 0.025], auroc: 0.5182011316872428
+Hyperparam: [0.1, 2048, 0.025], auroc: 0.5429300411522634
+Hyperparam: [0.5, 2048, 0.025], auroc: 0.6187088477366255
+Hyperparam: [1.0, 2048, 0.025], auroc: 0.5142201646090535
+Hyperparam: [2.0, 2048, 0.025], auroc: 0.47966100823045266
+Hyperparam: [0.1, 512, 0.05], auroc: 0.5215745884773663
+Hyperparam: [0.5, 512, 0.05], auroc: 0.5664043209876544
+Hyperparam: [1.0, 512, 0.05], auroc: 0.46222067901234565
+Hyperparam: [2.0, 512, 0.05], auroc: 0.5199562757201647
+Hyperparam: [0.1, 1024, 0.05], auroc: 0.4850128600823045
+Hyperparam: [0.5, 1024, 0.05], auroc: 0.6133055555555555
+Hyperparam: [1.0, 1024, 0.05], auroc: 0.5076851851851851
+Hyperparam: [2.0, 1024, 0.05], auroc: 0.4611054526748971
+Hyperparam: [0.1, 2048, 0.05], auroc: 0.5043384773662551
+Hyperparam: [0.5, 2048, 0.05], auroc: 0.6230051440329218
+Hyperparam: [1.0, 2048, 0.05], auroc: 0.4914423868312757
+Hyperparam: [2.0, 2048, 0.05], auroc: 0.4996923868312757
+Hyperparam: [0.1, 512, 0.1], auroc: 0.5037911522633745
+Hyperparam: [0.5, 512, 0.1], auroc: 0.5809567901234568
+Hyperparam: [1.0, 512, 0.1], auroc: 0.5134963991769548
+Hyperparam: [2.0, 512, 0.1], auroc: 0.5223143004115226
+Hyperparam: [0.1, 1024, 0.1], auroc: 0.4899969135802469
+Hyperparam: [0.5, 1024, 0.1], auroc: 0.6262026748971194
+Hyperparam: [1.0, 1024, 0.1], auroc: 0.5122211934156379
+Hyperparam: [2.0, 1024, 0.1], auroc: 0.48479475308641984
+Hyperparam: [0.1, 2048, 0.1], auroc: 0.4948369341563786
+Hyperparam: [0.5, 2048, 0.1], auroc: 0.6041723251028807
+Hyperparam: [1.0, 2048, 0.1], auroc: 0.48254475308641975
+Hyperparam: [2.0, 2048, 0.1], auroc: 0.49235802469135803
+Final hyperparam: [0.5, 1024, 0.1, True]
+Performing inference on cifar100 test set...
+Processing near ood...
+Performing inference on cifar10 dataset...
+Computing metrics on cifar10 dataset...
+FPR@95: 85.79, AUROC: 59.73 AUPR_IN: 59.34, AUPR_OUT: 59.35
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on tin dataset...
+Computing metrics on tin dataset...
+FPR@95: 84.78, AUROC: 60.77 AUPR_IN: 69.72, AUPR_OUT: 49.79
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 85.28, AUROC: 60.25 AUPR_IN: 64.53, AUPR_OUT: 54.57
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Performing inference on mnist dataset...
+Computing metrics on mnist dataset...
+FPR@95: 83.91, AUROC: 61.70 AUPR_IN: 21.62, AUPR_OUT: 91.71
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on svhn dataset...
+Computing metrics on svhn dataset...
+FPR@95: 80.63, AUROC: 64.84 AUPR_IN: 44.01, AUPR_OUT: 81.95
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on texture dataset...
+Computing metrics on texture dataset...
+FPR@95: 83.31, AUROC: 62.44 AUPR_IN: 73.91, AUPR_OUT: 47.80
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on places365 dataset...
+Computing metrics on places365 dataset...
+FPR@95: 82.32, AUROC: 63.41 AUPR_IN: 36.33, AUPR_OUT: 84.94
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 82.54, AUROC: 63.10 AUPR_IN: 43.97, AUPR_OUT: 76.60
+──────────────────────────────────────────────────────────────────────
+
+           FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+cifar10     85.79  59.73    59.34     59.35 77.20
+tin         84.78  60.77    69.72     49.79 77.20
+nearood     85.28  60.25    64.53     54.57 77.20
+mnist       83.91  61.70    21.62     91.71 77.20
+svhn        80.63  64.84    44.01     81.95 77.20
+texture     83.31  62.44    73.91     47.80 77.20
+places365   82.32  63.41    36.33     84.94 77.20
+farood      82.54  63.10    43.97     76.60 77.20
+
+--- RFF Diagnostics (231963 samples) ./results/cifar100_resnet18_32x32_base_e100_lr0.1_default/s2/diagnostics/rff_max_vw_whiten.npz ---
+  Classes above threshold: mean=8.0, zero=13.6%, one=15.8%, multi(>1)=70.6%
+  Max score: mean=11.6567, std=22.2682
+  Margin (max-2nd): mean=0.5766, std=1.0077
+
+--- RFF Per-Class Analysis → ./results/cifar100_resnet18_32x32_base_e100_lr0.1_default/s2/diagnostics/rff_max_vw_whiten_per_class.csv ---
+  id_test  multi_rate: mean=0.7237, max=0.9500
+  cifar10         multi_rate: mean=0.4804, max=1.0000
+  tin             multi_rate: mean=0.5009, max=1.0000
+  mnist           multi_rate: mean=0.3966, max=0.8460
+  svhn            multi_rate: mean=0.3747, max=0.8126
+  texture         multi_rate: mean=0.4402, max=1.0000
+  places365       multi_rate: mean=0.4612, max=0.8069
+
+--- RFF Debug Plots → ./results/cifar100_resnet18_32x32_base_e100_lr0.1_default/s2/diagnostics ---
+  Kernel dist: mean=0.0180, std=0.0314, min=-0.0824, max=0.1615
+  φ(x) stats per split:
+    train          : mean=-0.00005, std=0.03125
+    val            : mean=-0.00003, std=0.03127
+    id_test        : mean=-0.00005, std=0.03125
+    cifar10        : mean=-0.00007, std=0.03125
+    tin            : mean=-0.00005, std=0.03125
+    mnist          : mean=-0.00003, std=0.03124
+    svhn           : mean=0.00021, std=0.03125
+    texture        : mean=-0.00003, std=0.03124
+    places365      : mean=-0.00003, std=0.03125
+  Score dist:
+    id_test        : mean=4.3382, std=0.8822, n=9000
+    cifar10        : mean=4.0333, std=0.7252, n=10000
+    tin            : mean=4.0021, std=0.7165, n=6526
+    mnist          : mean=3.9738, std=0.7232, n=70000
+    svhn           : mean=3.8900, std=0.6888, n=26032
+    texture        : mean=3.9549, std=0.7098, n=5640
+    places365      : mean=3.9283, std=0.7079, n=33773
+  Debug stats → ./results/cifar100_resnet18_32x32_base_e100_lr0.1_default/s2/diagnostics/rff_debug_stats.csv
+=== Done | Fri Mar 20 02:40:14 PM EDT 2026 ===
+---------------------------------------
+Begin Slurm Epilog: Mar-20-2026 14:40:14
+Job ID:        4508797
+Array Job ID:  4499473_1
+User ID:       ksalzman3
+Account:       coc
+Job name:      rff_max_vw_whiten
+Resources:     cpu=4,gres/gpu:a100=1,mem=32G,node=1
+Rsrc Used:     cput=00:41:04,vmem=0,walltime=00:10:16,mem=5071820K,energy_used=0
+Partition:     ice-gpu
+QOS:           coc-ice
+Nodes:         atl1-1-01-005-13-0
+---------------------------------------

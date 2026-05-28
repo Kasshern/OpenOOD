@@ -1,0 +1,227 @@
+---------------------------------------
+Begin Slurm Prolog: Apr-08-2026 18:02:50
+Job ID:    4628859
+User ID:   ksalzman3
+Account:   coc
+Job name:  rff_softmax_vw_mlpca_minmax
+Partition: ice-gpu
+QOS:       coc-ice
+---------------------------------------
+=== rff_softmax_vw_mlpca_minmax | imagenet200 | Wed Apr  8 06:02:59 PM EDT 2026 ===
+Postprocessor_name is ignored because postprocessor is passed
+[Timing] Setup: 0.5s
+Loaded pre-computed scores from file.
+Processing near ood...
+Inference has been performed on ssb_hard dataset...
+Computing metrics on ssb_hard dataset...
+FPR@95: 71.37, AUROC: 79.32 AUPR_IN: 41.25, AUPR_OUT: 94.63
+──────────────────────────────────────────────────────────────────────
+
+Inference has been performed on ninco dataset...
+Computing metrics on ninco dataset...
+FPR@95: 50.71, AUROC: 85.48 AUPR_IN: 89.89, AUPR_OUT: 77.06
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 61.04, AUROC: 82.40 AUPR_IN: 65.57, AUPR_OUT: 85.85
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Inference has been performed on inaturalist dataset...
+Computing metrics on inaturalist dataset...
+FPR@95: 21.02, AUROC: 94.47 AUPR_IN: 94.98, AUPR_OUT: 94.00
+──────────────────────────────────────────────────────────────────────
+
+Inference has been performed on textures dataset...
+Computing metrics on textures dataset...
+FPR@95: 28.82, AUROC: 92.87 AUPR_IN: 95.55, AUPR_OUT: 88.45
+──────────────────────────────────────────────────────────────────────
+
+Inference has been performed on openimage_o dataset...
+Computing metrics on openimage_o dataset...
+FPR@95: 33.48, AUROC: 90.08 AUPR_IN: 87.13, AUPR_OUT: 92.76
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 27.77, AUROC: 92.47 AUPR_IN: 92.55, AUPR_OUT: 91.74
+──────────────────────────────────────────────────────────────────────
+
+             FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+ssb_hard      71.37  79.32    41.25     94.63 86.39
+ninco         50.71  85.48    89.89     77.06 86.39
+nearood       61.04  82.40    65.57     85.85 86.39
+inaturalist   21.02  94.47    94.98     94.00 86.39
+textures      28.82  92.87    95.55     88.45 86.39
+openimage_o   33.48  90.08    87.13     92.76 86.39
+farood        27.77  92.47    92.55     91.74 86.39
+[Timing] Eval:  0.1s
+
+--- RFF Diagnostics (99468 samples) ./results/imagenet200_resnet18_224x224_base_e90_lr0.1_default/s0/diagnostics/rff_softmax_vw_mlpca_minmax.npz ---
+  Classes above threshold: mean=2.1, zero=12.5%, one=38.3%, multi(>1)=49.2%
+  Max score: mean=18.5782, std=23.5754
+  Margin (max-2nd): mean=2.1072, std=2.9956
+
+--- RFF Debug Plots → ./results/imagenet200_resnet18_224x224_base_e90_lr0.1_default/s0/diagnostics ---
+  Kernel dist: mean=0.0235, std=0.0335, min=-0.0468, max=0.4330
+  φ(x) stats per split:
+    train          : mean=-0.00008, std=0.02210
+    val            : mean=-0.00006, std=0.02210
+  Score dist:
+    id_test        : mean=3.1355, std=1.2897, n=9000
+    ssb_hard       : mean=1.7336, std=1.1032, n=49000
+    ninco          : mean=1.4140, std=0.8938, n=5879
+    inaturalist    : mean=0.8804, std=0.4950, n=10000
+    textures       : mean=0.9525, std=0.6844, n=5160
+    openimage_o    : mean=1.1596, std=0.6833, n=15869
+  Debug stats → ./results/imagenet200_resnet18_224x224_base_e90_lr0.1_default/s0/diagnostics/rff_debug_stats.csv
+Postprocessor_name is ignored because postprocessor is passed
+[Timing] Setup: 0.1s
+Loaded pre-computed scores from file.
+Processing near ood...
+Inference has been performed on ssb_hard dataset...
+Computing metrics on ssb_hard dataset...
+FPR@95: 71.70, AUROC: 79.31 AUPR_IN: 41.24, AUPR_OUT: 94.54
+──────────────────────────────────────────────────────────────────────
+
+Inference has been performed on ninco dataset...
+Computing metrics on ninco dataset...
+FPR@95: 49.92, AUROC: 85.17 AUPR_IN: 89.90, AUPR_OUT: 75.62
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 60.81, AUROC: 82.24 AUPR_IN: 65.57, AUPR_OUT: 85.08
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Inference has been performed on inaturalist dataset...
+Computing metrics on inaturalist dataset...
+FPR@95: 21.79, AUROC: 93.65 AUPR_IN: 94.39, AUPR_OUT: 92.34
+──────────────────────────────────────────────────────────────────────
+
+Inference has been performed on textures dataset...
+Computing metrics on textures dataset...
+FPR@95: 29.86, AUROC: 92.61 AUPR_IN: 95.46, AUPR_OUT: 87.20
+──────────────────────────────────────────────────────────────────────
+
+Inference has been performed on openimage_o dataset...
+Computing metrics on openimage_o dataset...
+FPR@95: 33.03, AUROC: 89.76 AUPR_IN: 87.13, AUPR_OUT: 92.13
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 28.23, AUROC: 92.01 AUPR_IN: 92.33, AUPR_OUT: 90.56
+──────────────────────────────────────────────────────────────────────
+
+             FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+ssb_hard      71.70  79.31    41.24     94.54 86.46
+ninco         49.92  85.17    89.90     75.62 86.46
+nearood       60.81  82.24    65.57     85.08 86.46
+inaturalist   21.79  93.65    94.39     92.34 86.46
+textures      29.86  92.61    95.46     87.20 86.46
+openimage_o   33.03  89.76    87.13     92.13 86.46
+farood        28.23  92.01    92.33     90.56 86.46
+[Timing] Eval:  0.1s
+
+--- RFF Diagnostics (99468 samples) ./results/imagenet200_resnet18_224x224_base_e90_lr0.1_default/s1/diagnostics/rff_softmax_vw_mlpca_minmax.npz ---
+  Classes above threshold: mean=2.3, zero=13.5%, one=30.0%, multi(>1)=56.5%
+  Max score: mean=18.0135, std=22.5940
+  Margin (max-2nd): mean=1.5100, std=2.0888
+
+--- RFF Debug Plots → ./results/imagenet200_resnet18_224x224_base_e90_lr0.1_default/s1/diagnostics ---
+  Kernel dist: mean=0.0236, std=0.0516, min=-0.1812, max=0.4608
+  φ(x) stats per split:
+    train          : mean=-0.00013, std=0.04421
+    val            : mean=-0.00011, std=0.04420
+  Score dist:
+    id_test        : mean=3.0457, std=1.2773, n=9000
+    ssb_hard       : mean=1.6571, std=1.0877, n=49000
+    ninco          : mean=1.3613, std=0.8731, n=5879
+    inaturalist    : mean=0.8741, std=0.4890, n=10000
+    textures       : mean=0.9061, std=0.6712, n=5160
+    openimage_o    : mean=1.1101, std=0.6619, n=15869
+  Debug stats → ./results/imagenet200_resnet18_224x224_base_e90_lr0.1_default/s1/diagnostics/rff_debug_stats.csv
+Postprocessor_name is ignored because postprocessor is passed
+[Timing] Setup: 0.1s
+Loaded pre-computed scores from file.
+Processing near ood...
+Inference has been performed on ssb_hard dataset...
+Computing metrics on ssb_hard dataset...
+FPR@95: 70.61, AUROC: 79.07 AUPR_IN: 40.97, AUPR_OUT: 94.50
+──────────────────────────────────────────────────────────────────────
+
+Inference has been performed on ninco dataset...
+Computing metrics on ninco dataset...
+FPR@95: 50.96, AUROC: 85.30 AUPR_IN: 89.81, AUPR_OUT: 76.20
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 60.78, AUROC: 82.19 AUPR_IN: 65.39, AUPR_OUT: 85.35
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Inference has been performed on inaturalist dataset...
+Computing metrics on inaturalist dataset...
+FPR@95: 24.10, AUROC: 93.56 AUPR_IN: 94.13, AUPR_OUT: 92.64
+──────────────────────────────────────────────────────────────────────
+
+Inference has been performed on textures dataset...
+Computing metrics on textures dataset...
+FPR@95: 29.77, AUROC: 92.67 AUPR_IN: 95.52, AUPR_OUT: 87.45
+──────────────────────────────────────────────────────────────────────
+
+Inference has been performed on openimage_o dataset...
+Computing metrics on openimage_o dataset...
+FPR@95: 33.74, AUROC: 89.81 AUPR_IN: 87.07, AUPR_OUT: 92.31
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 29.20, AUROC: 92.02 AUPR_IN: 92.24, AUPR_OUT: 90.80
+──────────────────────────────────────────────────────────────────────
+
+             FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+ssb_hard      70.61  79.07    40.97     94.50 86.27
+ninco         50.96  85.30    89.81     76.20 86.27
+nearood       60.78  82.19    65.39     85.35 86.27
+inaturalist   24.10  93.56    94.13     92.64 86.27
+textures      29.77  92.67    95.52     87.45 86.27
+openimage_o   33.74  89.81    87.07     92.31 86.27
+farood        29.20  92.02    92.24     90.80 86.27
+[Timing] Eval:  0.1s
+
+--- RFF Diagnostics (99468 samples) ./results/imagenet200_resnet18_224x224_base_e90_lr0.1_default/s2/diagnostics/rff_softmax_vw_mlpca_minmax.npz ---
+  Classes above threshold: mean=2.4, zero=13.3%, one=26.3%, multi(>1)=60.3%
+  Max score: mean=17.3660, std=21.5788
+  Margin (max-2nd): mean=1.2163, std=1.5703
+
+--- RFF Debug Plots → ./results/imagenet200_resnet18_224x224_base_e90_lr0.1_default/s2/diagnostics ---
+  Kernel dist: mean=0.0238, std=0.0512, min=-0.1352, max=0.5276
+  φ(x) stats per split:
+    train          : mean=0.00008, std=0.04419
+    val            : mean=0.00003, std=0.04417
+  Score dist:
+    id_test        : mean=3.0176, std=1.2732, n=9000
+    ssb_hard       : mean=1.6521, std=1.0852, n=49000
+    ninco          : mean=1.3365, std=0.8760, n=5879
+    inaturalist    : mean=0.8641, std=0.5237, n=10000
+    textures       : mean=0.8906, std=0.6667, n=5160
+    openimage_o    : mean=1.0940, std=0.6665, n=15869
+  Debug stats → ./results/imagenet200_resnet18_224x224_base_e90_lr0.1_default/s2/diagnostics/rff_debug_stats.csv
+
+[Timing Summary]
+  Setup: 0.2s ± 0.2s per seed
+  Eval:  0.1s ± 0.0s per seed
+  Total: 0.9s across 3 seeds
+=== Done | Wed Apr  8 06:03:25 PM EDT 2026 ===
+---------------------------------------
+Begin Slurm Epilog: Apr-08-2026 18:03:25
+Job ID:        4628859
+Array Job ID:  4628859_2
+User ID:       ksalzman3
+Account:       coc
+Job name:      rff_softmax_vw_mlpca_minmax
+Resources:     cpu=4,gres/gpu:v100=1,mem=32G,node=1
+Rsrc Used:     cput=00:11:00,vmem=0,walltime=00:02:45,mem=2946656K,energy_used=0
+Partition:     ice-gpu
+QOS:           coc-ice
+Nodes:         atl1-1-01-002-8-0
+---------------------------------------

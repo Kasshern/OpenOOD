@@ -1,0 +1,230 @@
+---------------------------------------
+Begin Slurm Prolog: Mar-31-2026 23:07:57
+Job ID:    4580720
+User ID:   ksalzman3
+Account:   coc
+Job name:  rff_predictor_aware_vw
+Partition: ice-gpu
+QOS:       coc-ice
+---------------------------------------
+=== rff_predictor_aware_vw | imagenet200 | Tue Mar 31 11:08:03 PM EDT 2026 ===
+
+==================================================
+Setting up RFF Kernel Attention OOD detector...
+  sigma (bandwidth): 0.5
+  D (RFF dimension): 1024
+  alpha (target FPR): 0.05
+  feature_space: penultimate
+  normalize: True
+  score_mode: predictor_aware
+  variance_weighted: True
+==================================================
+Extracted 258951 train features of dim 512
+  Feature norm (mean): 15.6564
+  Number of classes: 200
+Extracted 1000 val features for threshold
+Per-class embedding norms (mean): 0.6871
+Per-class score variance (mean): 0.007774
+Threshold (predictor_aware) at 5.0%: 0.7145
+Max threshold (for diagnostics) at 5.0%: 3.3590
+RFF setup complete.
+
+[Timing] Setup: 540.7s
+Performing inference on imagenet200 test set...
+Processing near ood...
+Performing inference on ssb_hard dataset...
+Computing metrics on ssb_hard dataset...
+FPR@95: 73.86, AUROC: 80.12 AUPR_IN: 41.06, AUPR_OUT: 94.99
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on ninco dataset...
+Computing metrics on ninco dataset...
+FPR@95: 54.34, AUROC: 85.73 AUPR_IN: 89.35, AUPR_OUT: 78.06
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 64.10, AUROC: 82.92 AUPR_IN: 65.20, AUPR_OUT: 86.53
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Performing inference on inaturalist dataset...
+Computing metrics on inaturalist dataset...
+FPR@95: 18.03, AUROC: 95.62 AUPR_IN: 95.97, AUPR_OUT: 95.46
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on textures dataset...
+Computing metrics on textures dataset...
+FPR@95: 30.47, AUROC: 92.40 AUPR_IN: 95.29, AUPR_OUT: 87.87
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on openimage_o dataset...
+Computing metrics on openimage_o dataset...
+FPR@95: 31.76, AUROC: 90.66 AUPR_IN: 86.71, AUPR_OUT: 93.36
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 26.75, AUROC: 92.90 AUPR_IN: 92.66, AUPR_OUT: 92.23
+──────────────────────────────────────────────────────────────────────
+
+             FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+ssb_hard      73.86  80.12    41.06     94.99 86.38
+ninco         54.34  85.73    89.35     78.06 86.38
+nearood       64.10  82.92    65.20     86.53 86.38
+inaturalist   18.03  95.62    95.97     95.46 86.38
+textures      30.47  92.40    95.29     87.87 86.38
+openimage_o   31.76  90.66    86.71     93.36 86.38
+farood        26.75  92.90    92.66     92.23 86.38
+[Timing] Eval:  196.2s
+
+==================================================
+Setting up RFF Kernel Attention OOD detector...
+  sigma (bandwidth): 0.5
+  D (RFF dimension): 1024
+  alpha (target FPR): 0.05
+  feature_space: penultimate
+  normalize: True
+  score_mode: predictor_aware
+  variance_weighted: True
+==================================================
+Extracted 258951 train features of dim 512
+  Feature norm (mean): 15.5766
+  Number of classes: 200
+Extracted 1000 val features for threshold
+Per-class embedding norms (mean): 0.6865
+Per-class score variance (mean): 0.007824
+Threshold (predictor_aware) at 5.0%: 0.4097
+Max threshold (for diagnostics) at 5.0%: 3.4355
+RFF setup complete.
+
+[Timing] Setup: 525.6s
+Performing inference on imagenet200 test set...
+Processing near ood...
+Performing inference on ssb_hard dataset...
+Computing metrics on ssb_hard dataset...
+FPR@95: 73.14, AUROC: 80.14 AUPR_IN: 40.13, AUPR_OUT: 94.99
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on ninco dataset...
+Computing metrics on ninco dataset...
+FPR@95: 52.20, AUROC: 85.84 AUPR_IN: 89.21, AUPR_OUT: 78.37
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 62.67, AUROC: 82.99 AUPR_IN: 64.67, AUPR_OUT: 86.68
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Performing inference on inaturalist dataset...
+Computing metrics on inaturalist dataset...
+FPR@95: 18.29, AUROC: 95.24 AUPR_IN: 95.60, AUPR_OUT: 95.02
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on textures dataset...
+Computing metrics on textures dataset...
+FPR@95: 32.86, AUROC: 91.96 AUPR_IN: 94.96, AUPR_OUT: 87.39
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on openimage_o dataset...
+Computing metrics on openimage_o dataset...
+FPR@95: 31.63, AUROC: 90.54 AUPR_IN: 87.00, AUPR_OUT: 93.21
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 27.59, AUROC: 92.58 AUPR_IN: 92.52, AUPR_OUT: 91.88
+──────────────────────────────────────────────────────────────────────
+
+             FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+ssb_hard      73.14  80.14    40.13     94.99 86.47
+ninco         52.20  85.84    89.21     78.37 86.47
+nearood       62.67  82.99    64.67     86.68 86.47
+inaturalist   18.29  95.24    95.60     95.02 86.47
+textures      32.86  91.96    94.96     87.39 86.47
+openimage_o   31.63  90.54    87.00     93.21 86.47
+farood        27.59  92.58    92.52     91.88 86.47
+[Timing] Eval:  190.2s
+
+==================================================
+Setting up RFF Kernel Attention OOD detector...
+  sigma (bandwidth): 0.5
+  D (RFF dimension): 1024
+  alpha (target FPR): 0.05
+  feature_space: penultimate
+  normalize: True
+  score_mode: predictor_aware
+  variance_weighted: True
+==================================================
+Extracted 258951 train features of dim 512
+  Feature norm (mean): 15.6761
+  Number of classes: 200
+Extracted 1000 val features for threshold
+Per-class embedding norms (mean): 0.6843
+Per-class score variance (mean): 0.007652
+Threshold (predictor_aware) at 5.0%: 0.6979
+Max threshold (for diagnostics) at 5.0%: 3.4737
+RFF setup complete.
+
+[Timing] Setup: 530.6s
+Performing inference on imagenet200 test set...
+Processing near ood...
+Performing inference on ssb_hard dataset...
+Computing metrics on ssb_hard dataset...
+FPR@95: 74.34, AUROC: 79.71 AUPR_IN: 39.74, AUPR_OUT: 94.85
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on ninco dataset...
+Computing metrics on ninco dataset...
+FPR@95: 54.49, AUROC: 85.54 AUPR_IN: 88.90, AUPR_OUT: 77.77
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 64.42, AUROC: 82.62 AUPR_IN: 64.32, AUPR_OUT: 86.31
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Performing inference on inaturalist dataset...
+Computing metrics on inaturalist dataset...
+FPR@95: 21.34, AUROC: 94.72 AUPR_IN: 95.00, AUPR_OUT: 94.47
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on textures dataset...
+Computing metrics on textures dataset...
+FPR@95: 31.63, AUROC: 92.19 AUPR_IN: 95.19, AUPR_OUT: 87.57
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on openimage_o dataset...
+Computing metrics on openimage_o dataset...
+FPR@95: 33.33, AUROC: 90.19 AUPR_IN: 86.31, AUPR_OUT: 93.00
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 28.77, AUROC: 92.36 AUPR_IN: 92.16, AUPR_OUT: 91.68
+──────────────────────────────────────────────────────────────────────
+
+             FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+ssb_hard      74.34  79.71    39.74     94.85 86.27
+ninco         54.49  85.54    88.90     77.77 86.27
+nearood       64.42  82.62    64.32     86.31 86.27
+inaturalist   21.34  94.72    95.00     94.47 86.27
+textures      31.63  92.19    95.19     87.57 86.27
+openimage_o   33.33  90.19    86.31     93.00 86.27
+farood        28.77  92.36    92.16     91.68 86.27
+[Timing] Eval:  192.2s
+
+[Timing Summary]
+  Setup: 532.3s ± 6.3s per seed
+  Eval:  192.9s ± 2.5s per seed
+  Total: 2175.6s across 3 seeds
+=== Done | Tue Mar 31 11:46:54 PM EDT 2026 ===
+---------------------------------------
+Begin Slurm Epilog: Mar-31-2026 23:46:55
+Job ID:        4580720
+Array Job ID:  4580720_2
+User ID:       ksalzman3
+Account:       coc
+Job name:      rff_predictor_aware_vw
+Resources:     cpu=4,gres/gpu:v100=1,mem=32G,node=1
+Rsrc Used:     cput=00:29:44,vmem=0,walltime=00:07:26,mem=5710804K,energy_used=0
+Partition:     ice-gpu
+QOS:           coc-ice
+Nodes:         atl1-1-02-009-32-0
+---------------------------------------

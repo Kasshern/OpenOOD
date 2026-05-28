@@ -7,6 +7,12 @@ import torch.nn as nn
 from tqdm import tqdm
 
 from .base_postprocessor import BasePostprocessor
+from .feature_selection import (
+    compute_id_layer_weights,
+    format_layer_scores,
+    format_layer_weights,
+    select_topk_layers,
+)
 
 try:
     import matplotlib.pyplot as plt
@@ -60,6 +66,11 @@ class RFFPostprocessor(BasePostprocessor):
         # Per-layer Fisher discriminant weighting for multilayer_pca
         self.fisher_weighting = getattr(self.args, 'fisher_weighting', False)
         self.layer_weights = None  # set during _fit_pca call in setup
+
+        # ID-only layer weighting for benchmark-fair multilayer selection.
+        self.layer_weighting = getattr(self.args, 'layer_weighting', None)
+        self.layer_weight_source = getattr(self.args, 'layer_weight_source', 'train')
+        self.layer_weight_normalize = getattr(self.args, 'layer_weight_normalize', 'sum')
 
         # Pre-specified layer weights from Yosinski probe (overridden by fisher_weighting at setup time)
         _yosinski = getattr(self.args, 'yosinski_weights', None)
@@ -117,6 +128,13 @@ class RFFPostprocessor(BasePostprocessor):
         # Multi-layer PCA
         self.pca_layers     = getattr(self.args, 'pca_layers', [2, 3, 4])
         self.pca_components = getattr(self.args, 'pca_components', 128)
+        self.layer_selection = getattr(self.args, 'layer_selection', None)
+        self.layer_selection_k = int(getattr(self.args, 'layer_selection_k', 2))
+        self.layer_selection_source = getattr(
+            self.args, 'layer_selection_source', 'train')
+        self.layer_selection_scores = None
+        self.layer_selection_original_layers = list(self.pca_layers)
+        self.layer_selection_selected_positions = None
         # Spatial pooling mode for multilayer_pca: 'avg' (default) or 'minmax' (concat min+max)
         self.pool_mode = getattr(self.args, 'pool_mode', 'avg')
         self.pca_W    = None   # list of [d_i, pca_components] projection matrices
@@ -220,6 +238,40 @@ class RFFPostprocessor(BasePostprocessor):
             features = torch.nn.functional.normalize(features, p=2, dim=1)
 
         return features
+
+    def _extract_features_with_output(self,
+                                      net: nn.Module,
+                                      data: torch.Tensor,
+                                      apply_normalize=None):
+        if apply_normalize is None:
+            apply_normalize = self.normalize
+
+        if self.feature_space == 'input':
+            output = net(data)
+            features = torch.flatten(data, start_dim=1)
+        elif self.feature_space == 'all':
+            output, all_features = net(data, return_feature_list=True)
+            features = torch.cat([f.flatten(start_dim=1) for f in all_features], dim=1)
+        elif self.feature_space == 'multilayer_pca':
+            output, feats = self._extract_multilayer_raw(net, data)
+            if self.pca_W is not None:
+                reduced = [(f - mu.to(f.device)) @ W.to(f.device)
+                           for f, mu, W in zip(feats, self.pca_mean, self.pca_W)]
+                features = self._apply_layer_weights(reduced)
+            else:
+                features = torch.cat(feats, dim=1)
+        elif self.feature_space == 'multilayer_kpca':
+            output, feats = self._extract_multilayer_raw(net, data)
+            features = self._project_kpca(feats)
+        elif self.feature_space == 'multilayer_minmax_concat':
+            output, feats = self._extract_multilayer_raw(net, data)
+            features = self._apply_layer_weights(feats)
+        else:
+            output, features = net(data, return_feature=True)
+
+        if apply_normalize:
+            features = torch.nn.functional.normalize(features, p=2, dim=1)
+        return output, features
 
     def _sample_rff_params(self, feature_dim: int, device: torch.device):
         """Sample Random Fourier Feature parameters for Gaussian kernel."""
@@ -349,9 +401,50 @@ class RFFPostprocessor(BasePostprocessor):
             f'layer{self.pca_layers[i]}={weights[i]:.3f}' for i in range(len(weights))))
         return weights
 
+    def _compute_id_layer_weights(self, layer_features: list, labels: torch.Tensor):
+        if self.layer_weighting is None:
+            return
+        if self.layer_weight_source != 'train':
+            raise ValueError('Only layer_weight_source="train" is supported.')
+        self.layer_weights = compute_id_layer_weights(
+            layer_features,
+            labels,
+            metric=self.layer_weighting,
+            normalize=self.layer_weight_normalize,
+        )
+        print('[ID layer weights] ' +
+              format_layer_weights(self.pca_layers, self.layer_weights))
+
+    def _select_id_layers(self, layer_features: list, labels: torch.Tensor):
+        if self.layer_selection is None:
+            return layer_features
+        if self.layer_selection_source != 'train':
+            raise ValueError('Only layer_selection_source="train" is supported.')
+        selected_layers, selected_positions, scores = select_topk_layers(
+            list(self.pca_layers),
+            layer_features,
+            labels,
+            k=self.layer_selection_k,
+            metric=self.layer_selection,
+        )
+        original_layers = list(self.pca_layers)
+        self.layer_selection_original_layers = original_layers
+        self.layer_selection_selected_positions = selected_positions
+        self.layer_selection_scores = scores
+        self.pca_layers = selected_layers
+        if self.layer_weights is not None and self.layer_weighting is None:
+            self.layer_weights = self.layer_weights[selected_positions]
+        print('[ID layer selection scores] ' +
+              format_layer_scores(original_layers, scores))
+        print('[ID selected layers] ' +
+              ', '.join(f'layer{layer_id}' for layer_id in selected_layers))
+        return [layer_features[i] for i in selected_positions]
+
     def _apply_layer_weights(self, reduced_feats: list) -> torch.Tensor:
         """Concatenate PCA-compressed layer features, optionally scaled by layer weights."""
         if self.layer_weights is not None:
+            if len(self.layer_weights) != len(reduced_feats):
+                raise ValueError('layer_weights length must match selected layers.')
             device = reduced_feats[0].device
             return torch.cat(
                 [f * self.layer_weights[i].to(device) for i, f in enumerate(reduced_feats)],
@@ -659,10 +752,14 @@ class RFFPostprocessor(BasePostprocessor):
                         for j, f in enumerate(feats):
                             layer_feats_accum[j].append(f.cpu())
                         train_labels.append(batch['label'].to(device))
+                self.y_train = torch.cat(train_labels, dim=0)
+                layer_feats = [torch.cat(acc, dim=0)
+                               for acc in layer_feats_accum]
+                layer_feats = self._select_id_layers(layer_feats, self.y_train)
                 # Fit PCA and project layer-by-layer to avoid GPU OOM on large datasets
                 reduced = []
                 for j in range(len(self.pca_layers)):
-                    X_j = torch.cat(layer_feats_accum[j], dim=0).to(device)  # [n, d_j]
+                    X_j = layer_feats[j].to(device)  # [n, d_j]
                     mu_j = X_j.mean(dim=0)
                     X_c  = X_j - mu_j
                     k    = min(self.pca_components, X_c.shape[1])
@@ -677,11 +774,12 @@ class RFFPostprocessor(BasePostprocessor):
                     reduced.append((X_c @ W_j).cpu())   # keep on CPU until concat
                     del X_j, X_c, Sigma, U
                     torch.cuda.empty_cache()
-                self.y_train = torch.cat(train_labels, dim=0)
-                if self.fisher_weighting:
+                reduced_dev = [r.to(device) for r in reduced]
+                if self.layer_weighting is not None:
+                    self._compute_id_layer_weights(reduced_dev, self.y_train)
+                elif self.fisher_weighting:
                     print('[Warning] fisher_weighting skipped in streaming PCA path '
                           '(requires all layers on GPU simultaneously).')
-                reduced_dev = [r.to(device) for r in reduced]
                 self.X_train_raw = self._apply_layer_weights(reduced_dev)
                 self.feature_dim = self.X_train_raw.shape[1]
                 self.num_classes = int(self.y_train.max().item()) + 1
@@ -735,10 +833,14 @@ class RFFPostprocessor(BasePostprocessor):
                         for j, f in enumerate(feats):
                             layer_feats_accum[j].append(f.cpu())
                         train_labels.append(batch['label'].to(device))
-                layer_feats = [torch.cat(acc, dim=0).to(device)
-                               for acc in layer_feats_accum]
                 self.y_train = torch.cat(train_labels, dim=0)
-                if self.fisher_weighting:
+                layer_feats = [torch.cat(acc, dim=0)
+                               for acc in layer_feats_accum]
+                layer_feats = self._select_id_layers(layer_feats, self.y_train)
+                layer_feats = [features.to(device) for features in layer_feats]
+                if self.layer_weighting is not None:
+                    self._compute_id_layer_weights(layer_feats, self.y_train)
+                elif self.fisher_weighting:
                     self.layer_weights = self._compute_layer_weights(layer_feats, self.y_train)
                 self.X_train_raw = self._apply_layer_weights(layer_feats)
                 self.feature_dim = self.X_train_raw.shape[1]
@@ -787,11 +889,15 @@ class RFFPostprocessor(BasePostprocessor):
                         for j, f in enumerate(feats):
                             layer_feats_accum[j].append(f.cpu())
                         train_labels.append(batch['label'].to(device))
-                layer_feats = [torch.cat(acc, dim=0).to(device)
-                               for acc in layer_feats_accum]
-                self._fit_kpca(layer_feats)
                 self.y_train = torch.cat(train_labels, dim=0)
-                if self.fisher_weighting:
+                layer_feats = [torch.cat(acc, dim=0)
+                               for acc in layer_feats_accum]
+                layer_feats = self._select_id_layers(layer_feats, self.y_train)
+                layer_feats = [features.to(device) for features in layer_feats]
+                self._fit_kpca(layer_feats)
+                if self.layer_weighting is not None:
+                    self._compute_id_layer_weights(layer_feats, self.y_train)
+                elif self.fisher_weighting:
                     self.layer_weights = self._compute_layer_weights(layer_feats, self.y_train)
                 self.X_train_raw = self._project_kpca(layer_feats)
                 self.feature_dim = self.X_train_raw.shape[1]

@@ -1,0 +1,167 @@
+---------------------------------------
+Begin Slurm Prolog: Apr-23-2026 04:17:57
+Job ID:    5040340
+User ID:   ksalzman3
+Account:   coc
+Job name:  rff_softmax_vw_mlpca_imagenet
+Partition: ice-gpu
+QOS:       coc-ice
+---------------------------------------
+=== rff_softmax_vw_mlpca | imagenet | Thu Apr 23 04:18:03 AM EDT 2026 ===
+Warning: no write permission to create /storage/ice1/9/5/ksalzman3/openood/src/OpenOOD/scripts/../data/images_largescale/imagenet_es, skipping.
+
+==================================================
+Setting up RFF Kernel Attention OOD detector...
+  sigma (bandwidth): 0.5
+  D (RFF dimension): 1024
+  alpha (target FPR): 0.05
+  feature_space: multilayer_pca
+  normalize: True
+  score_mode: softmax
+  variance_weighted: True
+==================================================
+Extracted 1281167 train features of dim 384 (multilayer_pca, 3 layers)
+  Feature norm (mean): 18.1825
+  Number of classes: 1000
+Extracted 5000 val features for threshold
+Per-class embedding norms (mean): 0.4298
+Per-class score variance (mean): 0.003629
+Threshold (softmax) at 5.0%: 1.2633
+Max threshold (for diagnostics) at 5.0%: 1.9369
+RFF setup complete.
+
+Starting automatic parameter search...
+Hyperparam: [0.1, 512, 0.025], auroc: 0.504611798071469
+Hyperparam: [0.5, 512, 0.025], auroc: 0.8600755530346001
+Hyperparam: [1.0, 512, 0.025], auroc: 0.8179682926829269
+Hyperparam: [2.0, 512, 0.025], auroc: 0.6705513896766875
+Hyperparam: [0.1, 1024, 0.025], auroc: 0.5050660238230289
+Hyperparam: [0.5, 1024, 0.025], auroc: 0.8613685762904141
+Hyperparam: [1.0, 1024, 0.025], auroc: 0.7989585365853658
+Hyperparam: [2.0, 1024, 0.025], auroc: 0.625771866137266
+Hyperparam: [0.1, 2048, 0.025], auroc: 0.486271355643789
+Hyperparam: [0.5, 2048, 0.025], auroc: 0.8653465683494044
+Hyperparam: [1.0, 2048, 0.025], auroc: 0.8101533749290981
+Hyperparam: [2.0, 2048, 0.025], auroc: 0.6132736245036868
+Hyperparam: [0.1, 512, 0.05], auroc: 0.5063255813953488
+Hyperparam: [0.5, 512, 0.05], auroc: 0.8540551900170165
+Hyperparam: [1.0, 512, 0.05], auroc: 0.8233965967101532
+Hyperparam: [2.0, 512, 0.05], auroc: 0.6282892796369824
+Hyperparam: [0.1, 1024, 0.05], auroc: 0.4972431083380602
+Hyperparam: [0.5, 1024, 0.05], auroc: 0.8577252410663643
+Hyperparam: [1.0, 1024, 0.05], auroc: 0.8089881452070334
+Hyperparam: [2.0, 1024, 0.05], auroc: 0.609418264322178
+Hyperparam: [0.1, 2048, 0.05], auroc: 0.500633579126489
+Hyperparam: [0.5, 2048, 0.05], auroc: 0.8665404424276801
+Hyperparam: [1.0, 2048, 0.05], auroc: 0.8282587067498582
+Hyperparam: [2.0, 2048, 0.05], auroc: 0.6106001701644923
+Hyperparam: [0.1, 512, 0.1], auroc: 0.48713000567214976
+Hyperparam: [0.5, 512, 0.1], auroc: 0.8587420306296086
+Hyperparam: [1.0, 512, 0.1], auroc: 0.7602916619398752
+Hyperparam: [2.0, 512, 0.1], auroc: 0.5618049347702779
+Hyperparam: [0.1, 1024, 0.1], auroc: 0.4977860465116279
+Hyperparam: [0.5, 1024, 0.1], auroc: 0.8610051616562677
+Hyperparam: [1.0, 1024, 0.1], auroc: 0.807698355076574
+Hyperparam: [2.0, 1024, 0.1], auroc: 0.66818644356211
+Hyperparam: [0.1, 2048, 0.1], auroc: 0.5082992626205332
+Hyperparam: [0.5, 2048, 0.1], auroc: 0.8684038570618264
+Hyperparam: [1.0, 2048, 0.1], auroc: 0.8012415768576291
+Hyperparam: [2.0, 2048, 0.1], auroc: 0.6563462847419171
+Final hyperparam: [0.5, 2048, 0.1, True]
+[Timing] Setup: 3470.8s
+Performing inference on imagenet test set...
+Processing near ood...
+Performing inference on ssb_hard dataset...
+Computing metrics on ssb_hard dataset...
+FPR@95: 82.18, AUROC: 68.43 AUPR_IN: 66.03, AUPR_OUT: 67.54
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on ninco dataset...
+Computing metrics on ninco dataset...
+FPR@95: 64.20, AUROC: 78.73 AUPR_IN: 96.41, AUPR_OUT: 29.30
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 73.19, AUROC: 73.58 AUPR_IN: 81.22, AUPR_OUT: 48.42
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Performing inference on inaturalist dataset...
+Computing metrics on inaturalist dataset...
+FPR@95: 29.30, AUROC: 91.23 AUPR_IN: 97.90, AUPR_OUT: 64.71
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on textures dataset...
+Computing metrics on textures dataset...
+FPR@95: 45.32, AUROC: 87.21 AUPR_IN: 98.25, AUPR_OUT: 45.99
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on openimage_o dataset...
+Computing metrics on openimage_o dataset...
+FPR@95: 41.04, AUROC: 87.13 AUPR_IN: 95.14, AUPR_OUT: 66.68
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 38.55, AUROC: 88.52 AUPR_IN: 97.09, AUPR_OUT: 59.13
+──────────────────────────────────────────────────────────────────────
+
+             FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+ssb_hard      82.18  68.43    66.03     67.54 76.19
+ninco         64.20  78.73    96.41     29.30 76.19
+nearood       73.19  73.58    81.22     48.42 76.19
+inaturalist   29.30  91.23    97.90     64.71 76.19
+textures      45.32  87.21    98.25     45.99 76.19
+openimage_o   41.04  87.13    95.14     66.68 76.19
+farood        38.55  88.52    97.09     59.13 76.19
+[Timing] Eval:  377.0s
+
+--- RFF Diagnostics (374376 samples) ./results/imagenet_resnet50_pretrained_v1/s0/diagnostics/rff_softmax_vw_mlpca.npz ---
+  Classes above threshold: mean=3.1, zero=13.8%, one=19.9%, multi(>1)=66.3%
+  Max score: mean=13.4728, std=19.8953
+  Margin (max-2nd): mean=0.7676, std=0.8938
+
+--- RFF Per-Class Analysis → ./results/imagenet_resnet50_pretrained_v1/s0/diagnostics/rff_softmax_vw_mlpca_per_class.csv ---
+  id_test  multi_rate: mean=0.6955, max=1.0000
+  ssb_hard        multi_rate: mean=0.3435, max=1.0000
+  ninco           multi_rate: mean=0.1474, max=1.0000
+  inaturalist     multi_rate: mean=0.0176, max=1.0000
+  textures        multi_rate: mean=0.0580, max=1.0000
+  openimage_o     multi_rate: mean=0.1715, max=1.0000
+
+--- RFF Debug Plots → ./results/imagenet_resnet50_pretrained_v1/s0/diagnostics ---
+  Kernel dist: mean=0.0208, std=0.0272, min=-0.0561, max=0.3139
+  φ(x) stats per split:
+    train          : mean=0.00007, std=0.02210
+    val            : mean=0.00008, std=0.02210
+    id_test        : mean=0.00007, std=0.02210
+    ssb_hard       : mean=0.00004, std=0.02210
+    ninco          : mean=0.00005, std=0.02210
+    inaturalist    : mean=0.00016, std=0.02209
+    textures       : mean=-0.00003, std=0.02209
+    openimage_o    : mean=0.00012, std=0.02210
+  Score dist:
+    id_test        : mean=3.1345, std=1.1178, n=45000
+    ssb_hard       : mean=2.4146, std=1.0011, n=49000
+    ninco          : mean=1.9989, std=0.8271, n=5879
+    inaturalist    : mean=1.4269, std=0.5260, n=10000
+    textures       : mean=1.5953, std=0.7035, n=5160
+    openimage_o    : mean=1.6222, std=0.6515, n=15869
+  Debug stats → ./results/imagenet_resnet50_pretrained_v1/s0/diagnostics/rff_debug_stats.csv
+
+[Timing Summary]
+  Setup: 3470.8s ± 0.0s per seed
+  Eval:  377.0s ± 0.0s per seed
+  Total: 3847.8s across 1 seeds
+=== Done | Thu Apr 23 05:24:40 AM EDT 2026 ===
+---------------------------------------
+Begin Slurm Epilog: Apr-23-2026 05:24:40
+Job ID:        5040340
+User ID:       ksalzman3
+Account:       coc
+Job name:      rff_softmax_vw_mlpca_imagenet
+Resources:     cpu=4,gres/gpu:h100=1,mem=64G,node=1
+Rsrc Used:     cput=04:26:56,vmem=0,walltime=01:06:44,mem=67078484K,energy_used=0
+Partition:     ice-gpu
+QOS:           coc-ice
+Nodes:         atl1-1-03-013-13-0
+---------------------------------------
