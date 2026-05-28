@@ -1,0 +1,23 @@
+---------------------------------------
+Begin Slurm Prolog: May-20-2026 14:12:14
+Job ID:    5301113
+User ID:   ksalzman3
+Account:   coc
+Job name:  rff_sm_mlmx_imgnet
+Partition: ice-gpu
+QOS:       coc-ice
+---------------------------------------
+=== rff_softmax_vw_mlminmax | imagenet | Wed May 20 02:12:20 PM EDT 2026 ===
+=== Done | Wed May 20 02:17:29 PM EDT 2026 ===
+---------------------------------------
+Begin Slurm Epilog: May-20-2026 14:17:29
+Job ID:        5301113
+User ID:       ksalzman3
+Account:       coc
+Job name:      rff_sm_mlmx_imgnet
+Resources:     cpu=4,gres/gpu:h100=1,mem=64G,node=1
+Rsrc Used:     cput=00:21:00,vmem=0,walltime=00:05:15,mem=786568K,energy_used=0
+Partition:     ice-gpu
+QOS:           coc-ice
+Nodes:         atl1-1-03-013-13-0
+---------------------------------------
