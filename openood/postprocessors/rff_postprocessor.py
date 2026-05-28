@@ -129,7 +129,7 @@ class RFFPostprocessor(BasePostprocessor):
         self.pca_layers     = getattr(self.args, 'pca_layers', [2, 3, 4])
         self.pca_components = getattr(self.args, 'pca_components', 128)
         self.layer_selection = getattr(self.args, 'layer_selection', None)
-        self.layer_selection_k = int(getattr(self.args, 'layer_selection_k', 2))
+        self.layer_selection_k = int(getattr(self.args, 'layer_selection_k', 2) or 2)
         self.layer_selection_source = getattr(
             self.args, 'layer_selection_source', 'train')
         self.layer_selection_scores = None
