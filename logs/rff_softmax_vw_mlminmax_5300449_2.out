@@ -1,0 +1,71 @@
+---------------------------------------
+Begin Slurm Prolog: May-19-2026 17:39:38
+Job ID:    5300449
+User ID:   ksalzman3
+Account:   coc
+Job name:  rff_sm_mlminmax
+Partition: ice-gpu
+QOS:       coc-ice
+---------------------------------------
+=== rff_softmax_vw_mlminmax | imagenet200 | Tue May 19 05:39:45 PM EDT 2026 ===
+Postprocessor_name is ignored because postprocessor is passed
+[Timing] Setup: 0.9s
+Performing inference on imagenet200 test set...
+Processing near ood...
+Performing inference on ssb_hard dataset...
+Computing metrics on ssb_hard dataset...
+FPR@95: 79.73, AUROC: 78.07 AUPR_IN: 35.70, AUPR_OUT: 94.63
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on ninco dataset...
+Computing metrics on ninco dataset...
+FPR@95: 64.21, AUROC: 84.19 AUPR_IN: 87.64, AUPR_OUT: 77.26
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 71.97, AUROC: 81.13 AUPR_IN: 61.67, AUPR_OUT: 85.94
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Performing inference on inaturalist dataset...
+Computing metrics on inaturalist dataset...
+FPR@95: 20.52, AUROC: 95.44 AUPR_IN: 95.23, AUPR_OUT: 95.63
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on textures dataset...
+Computing metrics on textures dataset...
+FPR@95: 32.33, AUROC: 93.49 AUPR_IN: 95.56, AUPR_OUT: 90.59
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on openimage_o dataset...
+Computing metrics on openimage_o dataset...
+FPR@95: 51.60, AUROC: 86.93 AUPR_IN: 79.38, AUPR_OUT: 91.27
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 34.82, AUROC: 91.95 AUPR_IN: 90.06, AUPR_OUT: 92.49
+──────────────────────────────────────────────────────────────────────
+
+             FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+ssb_hard      79.73  78.07    35.70     94.63 86.39
+ninco         64.21  84.19    87.64     77.26 86.39
+nearood       71.97  81.13    61.67     85.94 86.39
+inaturalist   20.52  95.44    95.23     95.63 86.39
+textures      32.33  93.49    95.56     90.59 86.39
+openimage_o   51.60  86.93    79.38     91.27 86.39
+farood        34.82  91.95    90.06     92.49 86.39
+[Timing] Eval:  276.5s
+=== Done | Tue May 19 05:48:58 PM EDT 2026 ===
+---------------------------------------
+Begin Slurm Epilog: May-19-2026 17:48:58
+Job ID:        5300449
+Array Job ID:  5300449_2
+User ID:       ksalzman3
+Account:       coc
+Job name:      rff_sm_mlminmax
+Resources:     cpu=4,gres/gpu:a100=1,mem=48G,node=1
+Rsrc Used:     cput=00:38:40,vmem=,walltime=00:09:40,mem=,energy_used=0
+Partition:     ice-gpu
+QOS:           coc-ice
+Nodes:         atl1-1-03-007-35-0
+---------------------------------------

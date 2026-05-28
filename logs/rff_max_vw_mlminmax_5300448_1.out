@@ -1,0 +1,77 @@
+---------------------------------------
+Begin Slurm Prolog: May-19-2026 17:39:26
+Job ID:    5300452
+User ID:   ksalzman3
+Account:   coc
+Job name:  rff_max_mlminmax
+Partition: ice-gpu
+QOS:       coc-ice
+---------------------------------------
+=== rff_max_vw_mlminmax | cifar100 | Tue May 19 05:39:34 PM EDT 2026 ===
+Postprocessor_name is ignored because postprocessor is passed
+[Timing] Setup: 0.5s
+Performing inference on cifar100 test set...
+Processing near ood...
+Performing inference on cifar10 dataset...
+Computing metrics on cifar10 dataset...
+FPR@95: 95.86, AUROC: 69.76 AUPR_IN: 60.91, AUPR_OUT: 69.80
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on tin dataset...
+Computing metrics on tin dataset...
+FPR@95: 61.97, AUROC: 79.12 AUPR_IN: 83.94, AUPR_OUT: 68.83
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 78.91, AUROC: 74.44 AUPR_IN: 72.42, AUPR_OUT: 69.32
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Performing inference on mnist dataset...
+Computing metrics on mnist dataset...
+FPR@95: 23.11, AUROC: 94.11 AUPR_IN: 83.24, AUPR_OUT: 98.92
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on svhn dataset...
+Computing metrics on svhn dataset...
+FPR@95: 17.98, AUROC: 96.68 AUPR_IN: 92.83, AUPR_OUT: 98.74
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on texture dataset...
+Computing metrics on texture dataset...
+FPR@95: 45.48, AUROC: 89.48 AUPR_IN: 92.67, AUPR_OUT: 85.63
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on places365 dataset...
+Computing metrics on places365 dataset...
+FPR@95: 64.82, AUROC: 78.76 AUPR_IN: 54.55, AUPR_OUT: 91.78
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 37.85, AUROC: 89.76 AUPR_IN: 80.82, AUPR_OUT: 93.77
+──────────────────────────────────────────────────────────────────────
+
+           FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+cifar10     95.86  69.76    60.91     69.80 77.18
+tin         61.97  79.12    83.94     68.83 77.18
+nearood     78.91  74.44    72.42     69.32 77.18
+mnist       23.11  94.11    83.24     98.92 77.18
+svhn        17.98  96.68    92.83     98.74 77.18
+texture     45.48  89.48    92.67     85.63 77.18
+places365   64.82  78.76    54.55     91.78 77.18
+farood      37.85  89.76    80.82     93.77 77.18
+[Timing] Eval:  457.3s
+=== Done | Tue May 19 05:51:59 PM EDT 2026 ===
+---------------------------------------
+Begin Slurm Epilog: May-19-2026 17:51:59
+Job ID:        5300452
+Array Job ID:  5300448_1
+User ID:       ksalzman3
+Account:       coc
+Job name:      rff_max_mlminmax
+Resources:     cpu=4,gres/gpu:a100=1,mem=48G,node=1
+Rsrc Used:     cput=00:50:44,vmem=0,walltime=00:12:41,mem=2760100K,energy_used=0
+Partition:     ice-gpu
+QOS:           coc-ice
+Nodes:         atl1-1-03-007-33-0
+---------------------------------------
