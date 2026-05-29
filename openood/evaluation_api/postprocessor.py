@@ -128,6 +128,12 @@ postprocessors = {
     'nystrom_predictor_aware_vw_idlw':  NystromOODPostprocessor,
     'nystrom_softmax_vw_idtopk':          NystromOODPostprocessor,
     'nystrom_predictor_aware_vw_idtopk':  NystromOODPostprocessor,
+    'nystrom_max_vw_mlpca':                     NystromOODPostprocessor,
+    'nystrom_softmax_vw_mlpca':                 NystromOODPostprocessor,
+    'nystrom_predictor_aware_vw_mlpca':         NystromOODPostprocessor,
+    'nystrom_max_vw_mlpca_minmax':              NystromOODPostprocessor,
+    'nystrom_softmax_vw_mlpca_minmax':          NystromOODPostprocessor,
+    'nystrom_predictor_aware_vw_mlpca_minmax':  NystromOODPostprocessor,
 }
 
 link_prefix = 'https://raw.githubusercontent.com/Jingkang50/OpenOOD/main/configs/postprocessors/'
