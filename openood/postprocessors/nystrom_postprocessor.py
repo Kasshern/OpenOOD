@@ -116,8 +116,9 @@ class NystromOODPostprocessor(RFFPostprocessor):
         print(f'  Fitting Nyström anchors (m={m}, init={self.anchor_init}, '
               f'λ={self.reg_lambda})...')
 
+        y_dev = self.y_train.to(device)
         for c in tqdm(range(C), desc='Nyström per-class fit'):
-            mask = (self.y_train.to(device) == c)
+            mask = (y_dev == c)
             X_c  = X[mask].float()
             n_c  = X_c.shape[0]
             if n_c == 0:
@@ -159,12 +160,16 @@ class NystromOODPostprocessor(RFFPostprocessor):
         n = X.shape[0]
         scores = torch.zeros(n, C, device=device)
 
-        anchors = self.anchors.to(device)   # [C, m, d]
-        gamma   = self.gamma.to(device)     # [C, m]
+        # Move anchors/gamma to device once (e.g., after pickle reload).
+        # Avoids per-inference-call copies (1.6GB for ImageNet-1k).
+        if self.anchors.device != device:
+            self.anchors = self.anchors.to(device)
+        if self.gamma.device != device:
+            self.gamma = self.gamma.to(device)
 
         for c in range(C):
-            K = self._kernel(X, anchors[c])  # [n, m]
-            scores[:, c] = K @ gamma[c]
+            K = self._kernel(X, self.anchors[c])  # [n, m]
+            scores[:, c] = K @ self.gamma[c]
 
         return scores
 
@@ -178,7 +183,12 @@ class NystromOODPostprocessor(RFFPostprocessor):
 
         val_scores_per_class = self._nystrom_scores(X_val, device)  # [n_val, C]
 
-        if self.score_mode == 'softmax' and self.softmax_val is not None:
+        if self.use_entropy:
+            pos   = torch.relu(val_scores_per_class)
+            denom = pos.sum(dim=1, keepdim=True).clamp(min=1e-10)
+            w     = pos / denom
+            scores = -(w * torch.log(w + 1e-10)).sum(dim=1)
+        elif self.score_mode == 'softmax' and self.softmax_val is not None:
             sm     = self.softmax_val.to(device)
             scores = (val_scores_per_class * sm).sum(dim=1)
         elif self.score_mode == 'predictor_aware' and self.softmax_val is not None:
