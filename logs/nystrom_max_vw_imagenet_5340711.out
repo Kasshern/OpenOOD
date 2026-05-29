@@ -1,0 +1,23 @@
+---------------------------------------
+Begin Slurm Prolog: May-28-2026 15:44:56
+Job ID:    5340711
+User ID:   ksalzman3
+Account:   coc
+Job name:  nystrom_max_imgnet
+Partition: ice-gpu
+QOS:       coc-ice
+---------------------------------------
+=== nystrom_max_vw | imagenet | Thu May 28 03:45:04 PM EDT 2026 ===
+=== Done | Thu May 28 03:45:24 PM EDT 2026 ===
+---------------------------------------
+Begin Slurm Epilog: May-28-2026 15:45:24
+Job ID:        5340711
+User ID:       ksalzman3
+Account:       coc
+Job name:      nystrom_max_imgnet
+Resources:     cpu=4,gres/gpu:rtx_6000=1,mem=64G,node=1
+Rsrc Used:     cput=00:01:52,vmem=0,walltime=00:00:28,mem=947436K,energy_used=0
+Partition:     ice-gpu
+QOS:           coc-ice
+Nodes:         atl1-1-01-005-5-0
+---------------------------------------

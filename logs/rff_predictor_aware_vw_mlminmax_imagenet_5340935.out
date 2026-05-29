@@ -1,0 +1,34 @@
+---------------------------------------
+Begin Slurm Prolog: May-28-2026 16:06:01
+Job ID:    5340935
+User ID:   ksalzman3
+Account:   coc
+Job name:  rff_pa_mlmx_imgnet
+Partition: ice-gpu
+QOS:       coc-ice
+---------------------------------------
+=== rff_predictor_aware_vw_mlminmax | imagenet | Thu May 28 04:06:07 PM EDT 2026 ===
+
+==================================================
+Setting up RFF Kernel Attention OOD detector...
+  sigma (bandwidth): 0.5
+  D (RFF dimension): 2048
+  alpha (target FPR): 0.05
+  feature_space: multilayer_minmax_concat
+  normalize: True
+  score_mode: predictor_aware
+  variance_weighted: True
+==================================================
+=== Done | Thu May 28 04:45:08 PM EDT 2026 ===
+---------------------------------------
+Begin Slurm Epilog: May-28-2026 16:45:10
+Job ID:        5340935
+User ID:       ksalzman3
+Account:       coc
+Job name:      rff_pa_mlmx_imgnet
+Resources:     cpu=4,gres/gpu:a100=1,mem=64G,node=1
+Rsrc Used:     cput=02:36:40,vmem=0,walltime=00:39:10,mem=67068344K,energy_used=0
+Partition:     ice-gpu
+QOS:           coc-ice
+Nodes:         atl1-1-03-007-35-0
+---------------------------------------
