@@ -1,0 +1,224 @@
+---------------------------------------
+Begin Slurm Prolog: May-29-2026 20:40:06
+Job ID:    5348321
+User ID:   ksalzman3
+Account:   coc
+Job name:  nys_pa_mlpca_mm
+Partition: ice-gpu
+QOS:       coc-ice
+---------------------------------------
+=== nystrom_predictor_aware_vw_mlpca_minmax | imagenet200 | Fri May 29 08:40:13 PM EDT 2026 ===
+
+==================================================
+Setting up Nyström Kernel-Attention OOD detector...
+  sigma:        0.5
+  n_anchors:    200
+  anchor_init:  kmeans
+  reg_lambda:   0.0001
+  alpha:        0.05
+  feature_space:multilayer_pca
+  normalize:    True
+  score_mode:   predictor_aware
+==================================================
+Extracted 258951 train features of dim 384
+Extracted 1000 val features for threshold
+  Fitting Nyström anchors (m=200, init=kmeans, λ=0.0001)...
+  Nyström fit complete. anchors: torch.Size([200, 200, 384]), gamma: torch.Size([200, 200])
+  Nyström threshold (predictor_aware) at 5.0%: -2.5640
+Nyström setup complete.
+
+[Timing] Setup: 571.5s
+Performing inference on imagenet200 test set...
+Processing near ood...
+Performing inference on ssb_hard dataset...
+Computing metrics on ssb_hard dataset...
+FPR@95: 69.63, AUROC: 80.44 AUPR_IN: 42.83, AUPR_OUT: 94.94
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on ninco dataset...
+Computing metrics on ninco dataset...
+FPR@95: 42.90, AUROC: 86.84 AUPR_IN: 91.68, AUPR_OUT: 77.89
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 56.27, AUROC: 83.64 AUPR_IN: 67.25, AUPR_OUT: 86.42
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Performing inference on inaturalist dataset...
+Computing metrics on inaturalist dataset...
+FPR@95: 21.58, AUROC: 94.07 AUPR_IN: 94.69, AUPR_OUT: 93.29
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on textures dataset...
+Computing metrics on textures dataset...
+FPR@95: 39.50, AUROC: 90.32 AUPR_IN: 93.69, AUPR_OUT: 85.07
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on openimage_o dataset...
+Computing metrics on openimage_o dataset...
+FPR@95: 33.13, AUROC: 90.37 AUPR_IN: 87.89, AUPR_OUT: 92.89
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 31.40, AUROC: 91.59 AUPR_IN: 92.09, AUPR_OUT: 90.42
+──────────────────────────────────────────────────────────────────────
+
+             FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+ssb_hard      69.63  80.44    42.83     94.94 86.39
+ninco         42.90  86.84    91.68     77.89 86.39
+nearood       56.27  83.64    67.25     86.42 86.39
+inaturalist   21.58  94.07    94.69     93.29 86.39
+textures      39.50  90.32    93.69     85.07 86.39
+openimage_o   33.13  90.37    87.89     92.89 86.39
+farood        31.40  91.59    92.09     90.42 86.39
+[Timing] Eval:  215.5s
+
+==================================================
+Setting up Nyström Kernel-Attention OOD detector...
+  sigma:        0.5
+  n_anchors:    200
+  anchor_init:  kmeans
+  reg_lambda:   0.0001
+  alpha:        0.05
+  feature_space:multilayer_pca
+  normalize:    True
+  score_mode:   predictor_aware
+==================================================
+Extracted 258951 train features of dim 384
+Extracted 1000 val features for threshold
+  Fitting Nyström anchors (m=200, init=kmeans, λ=0.0001)...
+  Nyström fit complete. anchors: torch.Size([200, 200, 384]), gamma: torch.Size([200, 200])
+  Nyström threshold (predictor_aware) at 5.0%: -2.4965
+Nyström setup complete.
+
+[Timing] Setup: 571.6s
+Performing inference on imagenet200 test set...
+Processing near ood...
+Performing inference on ssb_hard dataset...
+Computing metrics on ssb_hard dataset...
+FPR@95: 69.44, AUROC: 80.47 AUPR_IN: 42.54, AUPR_OUT: 94.90
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on ninco dataset...
+Computing metrics on ninco dataset...
+FPR@95: 41.18, AUROC: 87.08 AUPR_IN: 91.90, AUPR_OUT: 77.95
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 55.31, AUROC: 83.78 AUPR_IN: 67.22, AUPR_OUT: 86.43
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Performing inference on inaturalist dataset...
+Computing metrics on inaturalist dataset...
+FPR@95: 22.17, AUROC: 93.71 AUPR_IN: 94.42, AUPR_OUT: 92.78
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on textures dataset...
+Computing metrics on textures dataset...
+FPR@95: 38.70, AUROC: 90.39 AUPR_IN: 93.30, AUPR_OUT: 85.09
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on openimage_o dataset...
+Computing metrics on openimage_o dataset...
+FPR@95: 32.37, AUROC: 90.29 AUPR_IN: 87.97, AUPR_OUT: 92.65
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 31.08, AUROC: 91.46 AUPR_IN: 91.90, AUPR_OUT: 90.17
+──────────────────────────────────────────────────────────────────────
+
+             FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+ssb_hard      69.44  80.47    42.54     94.90 86.46
+ninco         41.18  87.08    91.90     77.95 86.46
+nearood       55.31  83.78    67.22     86.43 86.46
+inaturalist   22.17  93.71    94.42     92.78 86.46
+textures      38.70  90.39    93.30     85.09 86.46
+openimage_o   32.37  90.29    87.97     92.65 86.46
+farood        31.08  91.46    91.90     90.17 86.46
+[Timing] Eval:  208.9s
+
+==================================================
+Setting up Nyström Kernel-Attention OOD detector...
+  sigma:        0.5
+  n_anchors:    200
+  anchor_init:  kmeans
+  reg_lambda:   0.0001
+  alpha:        0.05
+  feature_space:multilayer_pca
+  normalize:    True
+  score_mode:   predictor_aware
+==================================================
+Extracted 258951 train features of dim 384
+Extracted 1000 val features for threshold
+  Fitting Nyström anchors (m=200, init=kmeans, λ=0.0001)...
+  Nyström fit complete. anchors: torch.Size([200, 200, 384]), gamma: torch.Size([200, 200])
+  Nyström threshold (predictor_aware) at 5.0%: -2.6349
+Nyström setup complete.
+
+[Timing] Setup: 572.3s
+Performing inference on imagenet200 test set...
+Processing near ood...
+Performing inference on ssb_hard dataset...
+Computing metrics on ssb_hard dataset...
+FPR@95: 70.22, AUROC: 80.40 AUPR_IN: 42.57, AUPR_OUT: 94.91
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on ninco dataset...
+Computing metrics on ninco dataset...
+FPR@95: 42.98, AUROC: 86.98 AUPR_IN: 91.78, AUPR_OUT: 77.91
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 56.60, AUROC: 83.69 AUPR_IN: 67.18, AUPR_OUT: 86.41
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Performing inference on inaturalist dataset...
+Computing metrics on inaturalist dataset...
+FPR@95: 23.59, AUROC: 93.49 AUPR_IN: 94.21, AUPR_OUT: 92.44
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on textures dataset...
+Computing metrics on textures dataset...
+FPR@95: 39.40, AUROC: 90.27 AUPR_IN: 93.46, AUPR_OUT: 84.98
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on openimage_o dataset...
+Computing metrics on openimage_o dataset...
+FPR@95: 32.80, AUROC: 90.28 AUPR_IN: 87.89, AUPR_OUT: 92.69
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 31.93, AUROC: 91.35 AUPR_IN: 91.85, AUPR_OUT: 90.04
+──────────────────────────────────────────────────────────────────────
+
+             FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+ssb_hard      70.22  80.40    42.57     94.91 86.27
+ninco         42.98  86.98    91.78     77.91 86.27
+nearood       56.60  83.69    67.18     86.41 86.27
+inaturalist   23.59  93.49    94.21     92.44 86.27
+textures      39.40  90.27    93.46     84.98 86.27
+openimage_o   32.80  90.28    87.89     92.69 86.27
+farood        31.93  91.35    91.85     90.04 86.27
+[Timing] Eval:  209.9s
+
+[Timing Summary]
+  Setup: 571.8s ± 0.4s per seed
+  Eval:  211.4s ± 2.9s per seed
+  Total: 2349.6s across 3 seeds
+=== Done | Fri May 29 09:21:15 PM EDT 2026 ===
+---------------------------------------
+Begin Slurm Epilog: May-29-2026 21:21:15
+Job ID:        5348321
+Array Job ID:  5348321_2
+User ID:       ksalzman3
+Account:       coc
+Job name:      nys_pa_mlpca_mm
+Resources:     cpu=4,gres/gpu:l40s=1,mem=32G,node=1
+Rsrc Used:     cput=00:47:00,vmem=0,walltime=00:11:45,mem=4042368K,energy_used=0
+Partition:     ice-gpu
+QOS:           coc-ice
+Nodes:         atl1-1-03-004-21-0
+---------------------------------------
