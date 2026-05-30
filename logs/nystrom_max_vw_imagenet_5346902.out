@@ -1,0 +1,37 @@
+---------------------------------------
+Begin Slurm Prolog: May-29-2026 14:31:11
+Job ID:    5346902
+User ID:   ksalzman3
+Account:   coc
+Job name:  nystrom_max_imgnet
+Partition: ice-gpu
+QOS:       coc-ice
+---------------------------------------
+=== nystrom_max_vw | imagenet | Fri May 29 02:31:19 PM EDT 2026 ===
+
+==================================================
+Setting up Nyström Kernel-Attention OOD detector...
+  sigma:        0.5
+  n_anchors:    200
+  anchor_init:  kmeans
+  reg_lambda:   0.0001
+  alpha:        0.05
+  feature_space:penultimate
+  normalize:    True
+  score_mode:   max
+==================================================
+Extracted 1281167 train features of dim 2048
+Extracted 5000 val features for threshold
+=== Done | Fri May 29 03:40:13 PM EDT 2026 ===
+---------------------------------------
+Begin Slurm Epilog: May-29-2026 15:40:13
+Job ID:        5346902
+User ID:       ksalzman3
+Account:       coc
+Job name:      nystrom_max_imgnet
+Resources:     cpu=4,gres/gpu:v100=1,mem=64G,node=1
+Rsrc Used:     cput=04:36:16,vmem=0,walltime=01:09:04,mem=67078896K,energy_used=0
+Partition:     ice-gpu
+QOS:           coc-ice
+Nodes:         atl1-1-02-009-31-0
+---------------------------------------

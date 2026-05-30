@@ -1,0 +1,75 @@
+---------------------------------------
+Begin Slurm Prolog: May-29-2026 14:31:11
+Job ID:    5346904
+User ID:   ksalzman3
+Account:   coc
+Job name:  nystrom_pa_imgnet
+Partition: ice-gpu
+QOS:       coc-ice
+---------------------------------------
+=== nystrom_predictor_aware_vw | imagenet | Fri May 29 02:31:18 PM EDT 2026 ===
+Postprocessor_name is ignored because postprocessor is passed
+[Timing] Setup: 0.4s
+Loaded pre-computed scores from file.
+Processing near ood...
+Inference has been performed on ssb_hard dataset...
+Computing metrics on ssb_hard dataset...
+FPR@95: 79.39, AUROC: 72.41 AUPR_IN: 69.66, AUPR_OUT: 70.80
+──────────────────────────────────────────────────────────────────────
+
+Inference has been performed on ninco dataset...
+Computing metrics on ninco dataset...
+FPR@95: 53.44, AUROC: 82.31 AUPR_IN: 97.24, AUPR_OUT: 33.16
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 66.42, AUROC: 77.36 AUPR_IN: 83.45, AUPR_OUT: 51.98
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Inference has been performed on inaturalist dataset...
+Computing metrics on inaturalist dataset...
+FPR@95: 34.93, AUROC: 91.48 AUPR_IN: 97.90, AUPR_OUT: 69.62
+──────────────────────────────────────────────────────────────────────
+
+Inference has been performed on textures dataset...
+Computing metrics on textures dataset...
+FPR@95: 52.17, AUROC: 87.19 AUPR_IN: 98.22, AUPR_OUT: 50.03
+──────────────────────────────────────────────────────────────────────
+
+Inference has been performed on openimage_o dataset...
+Computing metrics on openimage_o dataset...
+FPR@95: 43.96, AUROC: 88.31 AUPR_IN: 95.58, AUPR_OUT: 70.26
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 43.69, AUROC: 88.99 AUPR_IN: 97.23, AUPR_OUT: 63.30
+──────────────────────────────────────────────────────────────────────
+
+             FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+ssb_hard      79.39  72.41    69.66     70.80 76.19
+ninco         53.44  82.31    97.24     33.16 76.19
+nearood       66.42  77.36    83.45     51.98 76.19
+inaturalist   34.93  91.48    97.90     69.62 76.19
+textures      52.17  87.19    98.22     50.03 76.19
+openimage_o   43.96  88.31    95.58     70.26 76.19
+farood        43.69  88.99    97.23     63.30 76.19
+[Timing] Eval:  0.6s
+
+[Timing Summary]
+  Setup: 0.4s ± 0.0s per seed
+  Eval:  0.6s ± 0.0s per seed
+  Total: 1.0s across 1 seeds
+=== Done | Fri May 29 02:36:05 PM EDT 2026 ===
+---------------------------------------
+Begin Slurm Epilog: May-29-2026 14:36:05
+Job ID:        5346904
+User ID:       ksalzman3
+Account:       coc
+Job name:      nystrom_pa_imgnet
+Resources:     cpu=4,gres/gpu:v100=1,mem=64G,node=1
+Rsrc Used:     cput=00:19:44,vmem=0,walltime=00:04:56,mem=5424052K,energy_used=0
+Partition:     ice-gpu
+QOS:           coc-ice
+Nodes:         atl1-1-02-009-33-0
+---------------------------------------

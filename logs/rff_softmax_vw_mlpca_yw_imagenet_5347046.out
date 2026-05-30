@@ -1,0 +1,53 @@
+---------------------------------------
+Begin Slurm Prolog: May-29-2026 15:04:35
+Job ID:    5347046
+User ID:   ksalzman3
+Account:   coc
+Job name:  rff_softmax_vw_mlpca_yw_imagenet
+Partition: ice-gpu
+QOS:       coc-ice
+---------------------------------------
+=== rff_softmax_vw_mlpca_yw | imagenet | Fri May 29 03:04:43 PM EDT 2026 ===
+
+==================================================
+Setting up RFF Kernel Attention OOD detector...
+  sigma (bandwidth): 0.5
+  D (RFF dimension): 1024
+  alpha (target FPR): 0.05
+  feature_space: multilayer_pca
+  normalize: True
+  score_mode: softmax
+  variance_weighted: True
+==================================================
+Extracted 1281167 train features of dim 384 (multilayer_pca, 3 layers)
+  Feature norm (mean): 6.3617
+  Number of classes: 1000
+Extracted 5000 val features for threshold
+Per-class embedding norms (mean): 0.4302
+Per-class score variance (mean): 0.003655
+Threshold (softmax) at 5.0%: 1.2446
+Max threshold (for diagnostics) at 5.0%: 1.8894
+RFF setup complete.
+
+Starting automatic parameter search...
+Hyperparam: [0.1, 512, 0.025], auroc: 0.5001126488939308
+Hyperparam: [0.5, 512, 0.025], auroc: 0.861819512195122
+Hyperparam: [1.0, 512, 0.025], auroc: 0.7739829835507658
+Hyperparam: [2.0, 512, 0.025], auroc: 0.6184447532614861
+Hyperparam: [0.1, 1024, 0.025], auroc: 0.4958718094157685
+Hyperparam: [0.5, 1024, 0.025], auroc: 0.8663835507657403
+Hyperparam: [1.0, 1024, 0.025], auroc: 0.8129850822461713
+Hyperparam: [2.0, 1024, 0.025], auroc: 0.6849434486670448
+=== Done | Fri May 29 04:13:44 PM EDT 2026 ===
+---------------------------------------
+Begin Slurm Epilog: May-29-2026 16:13:44
+Job ID:        5347046
+User ID:       ksalzman3
+Account:       coc
+Job name:      rff_softmax_vw_mlpca_yw_imagenet
+Resources:     cpu=4,gres/gpu:rtx_6000=1,mem=64G,node=1
+Rsrc Used:     cput=04:36:36,vmem=0,walltime=01:09:09,mem=67079692K,energy_used=0
+Partition:     ice-gpu
+QOS:           coc-ice
+Nodes:         atl1-1-01-005-5-0
+---------------------------------------
