@@ -1,12 +1,13 @@
 #!/bin/bash
 #SBATCH --job-name=nys_max_mlpca_mm_img
-#SBATCH --output=logs/nystrom_max_vw_mlpca_minmax_imagenet_%j.out
-#SBATCH --error=logs/nystrom_max_vw_mlpca_minmax_imagenet_%j.err
+#SBATCH --output=logs/nystrom_max_novw_mlpca_minmax_imagenet_%j.out
+#SBATCH --error=logs/nystrom_max_novw_mlpca_minmax_imagenet_%j.err
 #SBATCH --time=08:00:00
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
-#SBATCH --gres=gpu:v100:1
+#SBATCH --gres=gpu:l40s:1
 #SBATCH --exclude=atl1-1-01-005-17-0,atl1-1-01-005-19-0
+#SBATCH --constraint=nvidia-gpu
 #SBATCH --mem=64G
 #SBATCH --partition=ice-gpu
 
@@ -26,12 +27,12 @@ fi
 
 cd ~/scratch/openood/src/OpenOOD
 
-echo "=== nystrom_max_vw_mlpca_minmax | imagenet | $(date) ==="
+echo "=== nystrom_max_novw_mlpca_minmax | imagenet | $(date) ==="
 
 python scripts/eval_ood.py \
     --root "./results/imagenet_resnet50_pretrained_v1" \
     --id-data imagenet \
-    --postprocessor nystrom_max_vw_mlpca_minmax \
+    --postprocessor nystrom_max_novw_mlpca_minmax \
     --save-csv \
     --save-score
 

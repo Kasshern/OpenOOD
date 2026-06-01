@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=nys_soft_mlpca
-#SBATCH --output=logs/nystrom_softmax_vw_mlpca_%A_%a.out
-#SBATCH --error=logs/nystrom_softmax_vw_mlpca_%A_%a.err
+#SBATCH --output=logs/nystrom_softmax_novw_mlpca_%A_%a.out
+#SBATCH --error=logs/nystrom_softmax_novw_mlpca_%A_%a.err
 #SBATCH --time=08:00:00
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
@@ -39,12 +39,12 @@ ROOTS=(
 DATASET=${DATASETS[$SLURM_ARRAY_TASK_ID]}
 ROOT=${ROOTS[$SLURM_ARRAY_TASK_ID]}
 
-echo "=== nystrom_softmax_vw_mlpca | $DATASET | $(date) ==="
+echo "=== nystrom_softmax_novw_mlpca | $DATASET | $(date) ==="
 
 python scripts/eval_ood.py \
     --root "$ROOT" \
     --id-data "$DATASET" \
-    --postprocessor nystrom_softmax_vw_mlpca \
+    --postprocessor nystrom_softmax_novw_mlpca \
     --save-csv \
     --save-score
 

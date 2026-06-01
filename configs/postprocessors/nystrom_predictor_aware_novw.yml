@@ -1,5 +1,5 @@
 postprocessor:
-  name: nystrom_predictor_aware_vw
+  name: nystrom_predictor_aware_novw
   APS_mode: False
   postprocessor_args:
     sigma: 0.5

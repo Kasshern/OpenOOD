@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=nys_pa_idlw
-#SBATCH --output=logs/nystrom_predictor_aware_vw_idlw_%A_%a.out
-#SBATCH --error=logs/nystrom_predictor_aware_vw_idlw_%A_%a.err
+#SBATCH --output=logs/nystrom_predictor_aware_novw_idlw_%A_%a.out
+#SBATCH --error=logs/nystrom_predictor_aware_novw_idlw_%A_%a.err
 #SBATCH --time=08:00:00
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
@@ -39,12 +39,12 @@ ROOTS=(
 DATASET=${DATASETS[$SLURM_ARRAY_TASK_ID]}
 ROOT=${ROOTS[$SLURM_ARRAY_TASK_ID]}
 
-echo "=== nystrom_predictor_aware_vw_idlw | $DATASET | $(date) ==="
+echo "=== nystrom_predictor_aware_novw_idlw | $DATASET | $(date) ==="
 
 python scripts/eval_ood.py \
     --root "$ROOT" \
     --id-data "$DATASET" \
-    --postprocessor nystrom_predictor_aware_vw_idlw \
+    --postprocessor nystrom_predictor_aware_novw_idlw \
     --save-csv \
     --save-score
 

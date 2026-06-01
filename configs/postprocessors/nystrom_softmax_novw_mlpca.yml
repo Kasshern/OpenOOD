@@ -1,5 +1,5 @@
 postprocessor:
-  name: nystrom_softmax_vw_mlpca
+  name: nystrom_softmax_novw_mlpca
   APS_mode: False
   postprocessor_args:
     sigma: 0.5
