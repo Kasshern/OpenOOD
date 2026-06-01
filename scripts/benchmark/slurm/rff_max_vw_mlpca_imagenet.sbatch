@@ -5,7 +5,7 @@
 #SBATCH --time=08:00:00
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
-#SBATCH --gres=gpu:1
+#SBATCH --gres=gpu:l40s:1
 #SBATCH --exclude=atl1-1-01-005-17-0,atl1-1-01-005-19-0
 #SBATCH --constraint=nvidia-gpu
 #SBATCH --mem=64G
