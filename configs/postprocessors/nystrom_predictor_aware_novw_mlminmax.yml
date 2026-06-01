@@ -1,0 +1,18 @@
+postprocessor:
+  name: nystrom_predictor_aware_novw_mlminmax
+  APS_mode: False
+  postprocessor_args:
+    sigma: 0.5
+    n_anchors: 200
+    anchor_init: kmeans
+    reg_lambda: 1.0e-4
+    kmeans_iter: 50
+    alpha: 0.05
+    normalize: True
+    score_mode: predictor_aware
+    variance_weighted: False
+    feature_space: multilayer_minmax_concat
+    pca_layers: [1, 2, 3, 4]
+    pool_mode: minmax
+    yosinski_weights: [0.712, 0.734, 0.771, 0.790]
+  postprocessor_sweep: {}
