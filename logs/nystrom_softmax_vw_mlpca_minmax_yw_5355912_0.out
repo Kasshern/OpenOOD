@@ -1,0 +1,245 @@
+---------------------------------------
+Begin Slurm Prolog: Jun-01-2026 14:43:50
+Job ID:    5355925
+User ID:   ksalzman3
+Account:   coc
+Job name:  nystrom_softmax_vw_mlpca_minmax_yw
+Partition: ice-gpu
+QOS:       coc-ice
+---------------------------------------
+=== nystrom_softmax_vw_mlpca_minmax_yw | cifar10 | Mon Jun  1 02:43:57 PM EDT 2026 ===
+
+==================================================
+Setting up Nyström Kernel-Attention OOD detector...
+  sigma:        0.5
+  n_anchors:    200
+  anchor_init:  kmeans
+  reg_lambda:   0.0001
+  alpha:        0.05
+  feature_space:multilayer_pca
+  normalize:    True
+  score_mode:   softmax
+==================================================
+Extracted 50000 train features of dim 384
+Extracted 1000 val features for threshold
+  Fitting Nyström anchors (m=200, init=kmeans, λ=0.0001)...
+  Nyström fit complete. anchors: torch.Size([10, 200, 384]), gamma: torch.Size([10, 200])
+  Per-class score variance (mean): 0.002709
+  Nyström threshold (softmax) at 5.0%: 2.6765
+Nyström setup complete.
+
+[Timing] Setup: 15.6s
+Performing inference on cifar10 test set...
+Processing near ood...
+Performing inference on cifar100 dataset...
+Computing metrics on cifar100 dataset...
+FPR@95: 48.11, AUROC: 88.45 AUPR_IN: 87.79, AUPR_OUT: 87.58
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on tin dataset...
+Computing metrics on tin dataset...
+FPR@95: 40.62, AUROC: 90.39 AUPR_IN: 91.77, AUPR_OUT: 88.14
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 44.37, AUROC: 89.42 AUPR_IN: 89.78, AUPR_OUT: 87.86
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Performing inference on mnist dataset...
+Computing metrics on mnist dataset...
+FPR@95: 14.16, AUROC: 96.48 AUPR_IN: 88.62, AUPR_OUT: 99.43
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on svhn dataset...
+Computing metrics on svhn dataset...
+FPR@95: 12.49, AUROC: 96.31 AUPR_IN: 93.36, AUPR_OUT: 98.30
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on texture dataset...
+Computing metrics on texture dataset...
+FPR@95: 21.84, AUROC: 94.32 AUPR_IN: 96.68, AUPR_OUT: 90.10
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on places365 dataset...
+Computing metrics on places365 dataset...
+FPR@95: 41.48, AUROC: 90.32 AUPR_IN: 74.67, AUPR_OUT: 96.91
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 22.49, AUROC: 94.36 AUPR_IN: 88.33, AUPR_OUT: 96.19
+──────────────────────────────────────────────────────────────────────
+
+           FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+cifar100    48.11  88.45    87.79     87.58 95.22
+tin         40.62  90.39    91.77     88.14 95.22
+nearood     44.37  89.42    89.78     87.86 95.22
+mnist       14.16  96.48    88.62     99.43 95.22
+svhn        12.49  96.31    93.36     98.30 95.22
+texture     21.84  94.32    96.68     90.10 95.22
+places365   41.48  90.32    74.67     96.91 95.22
+farood      22.49  94.36    88.33     96.19 95.22
+[Timing] Eval:  70.0s
+
+==================================================
+Setting up Nyström Kernel-Attention OOD detector...
+  sigma:        0.5
+  n_anchors:    200
+  anchor_init:  kmeans
+  reg_lambda:   0.0001
+  alpha:        0.05
+  feature_space:multilayer_pca
+  normalize:    True
+  score_mode:   softmax
+==================================================
+Extracted 50000 train features of dim 384
+Extracted 1000 val features for threshold
+  Fitting Nyström anchors (m=200, init=kmeans, λ=0.0001)...
+  Nyström fit complete. anchors: torch.Size([10, 200, 384]), gamma: torch.Size([10, 200])
+  Per-class score variance (mean): 0.003165
+  Nyström threshold (softmax) at 5.0%: 2.2980
+Nyström setup complete.
+
+[Timing] Setup: 16.1s
+Performing inference on cifar10 test set...
+Processing near ood...
+Performing inference on cifar100 dataset...
+Computing metrics on cifar100 dataset...
+FPR@95: 45.49, AUROC: 88.51 AUPR_IN: 87.66, AUPR_OUT: 87.41
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on tin dataset...
+Computing metrics on tin dataset...
+FPR@95: 37.09, AUROC: 90.28 AUPR_IN: 91.86, AUPR_OUT: 87.52
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 41.29, AUROC: 89.40 AUPR_IN: 89.76, AUPR_OUT: 87.46
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Performing inference on mnist dataset...
+Computing metrics on mnist dataset...
+FPR@95: 12.91, AUROC: 96.77 AUPR_IN: 90.56, AUPR_OUT: 99.45
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on svhn dataset...
+Computing metrics on svhn dataset...
+FPR@95: 14.40, AUROC: 96.30 AUPR_IN: 92.99, AUPR_OUT: 98.44
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on texture dataset...
+Computing metrics on texture dataset...
+FPR@95: 23.58, AUROC: 93.96 AUPR_IN: 96.46, AUPR_OUT: 89.64
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on places365 dataset...
+Computing metrics on places365 dataset...
+FPR@95: 45.89, AUROC: 89.10 AUPR_IN: 70.33, AUPR_OUT: 96.50
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 24.19, AUROC: 94.03 AUPR_IN: 87.58, AUPR_OUT: 96.01
+──────────────────────────────────────────────────────────────────────
+
+           FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+cifar100    45.49  88.51    87.66     87.41 94.63
+tin         37.09  90.28    91.86     87.52 94.63
+nearood     41.29  89.40    89.76     87.46 94.63
+mnist       12.91  96.77    90.56     99.45 94.63
+svhn        14.40  96.30    92.99     98.44 94.63
+texture     23.58  93.96    96.46     89.64 94.63
+places365   45.89  89.10    70.33     96.50 94.63
+farood      24.19  94.03    87.58     96.01 94.63
+[Timing] Eval:  69.5s
+
+==================================================
+Setting up Nyström Kernel-Attention OOD detector...
+  sigma:        0.5
+  n_anchors:    200
+  anchor_init:  kmeans
+  reg_lambda:   0.0001
+  alpha:        0.05
+  feature_space:multilayer_pca
+  normalize:    True
+  score_mode:   softmax
+==================================================
+Extracted 50000 train features of dim 384
+Extracted 1000 val features for threshold
+  Fitting Nyström anchors (m=200, init=kmeans, λ=0.0001)...
+  Nyström fit complete. anchors: torch.Size([10, 200, 384]), gamma: torch.Size([10, 200])
+  Per-class score variance (mean): 0.002670
+  Nyström threshold (softmax) at 5.0%: 2.8749
+Nyström setup complete.
+
+[Timing] Setup: 15.3s
+Performing inference on cifar10 test set...
+Processing near ood...
+Performing inference on cifar100 dataset...
+Computing metrics on cifar100 dataset...
+FPR@95: 52.97, AUROC: 87.91 AUPR_IN: 86.57, AUPR_OUT: 87.31
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on tin dataset...
+Computing metrics on tin dataset...
+FPR@95: 43.58, AUROC: 89.86 AUPR_IN: 91.00, AUPR_OUT: 87.68
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 48.27, AUROC: 88.88 AUPR_IN: 88.79, AUPR_OUT: 87.50
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Performing inference on mnist dataset...
+Computing metrics on mnist dataset...
+FPR@95: 15.77, AUROC: 95.51 AUPR_IN: 87.49, AUPR_OUT: 99.22
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on svhn dataset...
+Computing metrics on svhn dataset...
+FPR@95: 14.44, AUROC: 95.93 AUPR_IN: 92.71, AUPR_OUT: 98.22
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on texture dataset...
+Computing metrics on texture dataset...
+FPR@95: 22.90, AUROC: 94.17 AUPR_IN: 96.53, AUPR_OUT: 90.22
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on places365 dataset...
+Computing metrics on places365 dataset...
+FPR@95: 60.91, AUROC: 87.10 AUPR_IN: 63.50, AUPR_OUT: 95.98
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 28.51, AUROC: 93.18 AUPR_IN: 85.06, AUPR_OUT: 95.91
+──────────────────────────────────────────────────────────────────────
+
+           FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+cifar100    52.97  87.91    86.57     87.31 95.32
+tin         43.58  89.86    91.00     87.68 95.32
+nearood     48.27  88.88    88.79     87.50 95.32
+mnist       15.77  95.51    87.49     99.22 95.32
+svhn        14.44  95.93    92.71     98.22 95.32
+texture     22.90  94.17    96.53     90.22 95.32
+places365   60.91  87.10    63.50     95.98 95.32
+farood      28.51  93.18    85.06     95.91 95.32
+[Timing] Eval:  67.9s
+
+[Timing Summary]
+  Setup: 15.7s ± 0.3s per seed
+  Eval:  69.2s ± 0.9s per seed
+  Total: 254.5s across 3 seeds
+=== Done | Mon Jun  1 02:48:52 PM EDT 2026 ===
+---------------------------------------
+Begin Slurm Epilog: Jun-01-2026 14:48:52
+Job ID:        5355925
+Array Job ID:  5355912_0
+User ID:       ksalzman3
+Account:       coc
+Job name:      nystrom_softmax_vw_mlpca_minmax_yw
+Resources:     cpu=4,gres/gpu:h200=1,mem=32G,node=1
+Rsrc Used:     cput=00:20:08,vmem=0,walltime=00:05:02,mem=4074604K,energy_used=0
+Partition:     ice-gpu
+QOS:           coc-ice
+Nodes:         atl1-1-03-017-23-0
+---------------------------------------
