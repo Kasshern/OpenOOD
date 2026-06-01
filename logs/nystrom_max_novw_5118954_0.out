@@ -7,7 +7,7 @@ Job name:  nystrom_max
 Partition: ice-gpu
 QOS:       coc-ice
 ---------------------------------------
-=== nystrom_max_vw | cifar10 | Wed Apr 29 02:44:57 PM EDT 2026 ===
+=== nystrom_max_novw | cifar10 | Wed Apr 29 02:44:57 PM EDT 2026 ===
 
 ==================================================
 Setting up Nyström Kernel-Attention OOD detector...

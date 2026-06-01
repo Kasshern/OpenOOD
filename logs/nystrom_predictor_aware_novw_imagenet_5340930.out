@@ -7,7 +7,7 @@ Job name:  nystrom_pa_imgnet
 Partition: ice-gpu
 QOS:       coc-ice
 ---------------------------------------
-=== nystrom_predictor_aware_vw | imagenet | Thu May 28 04:05:53 PM EDT 2026 ===
+=== nystrom_predictor_aware_novw | imagenet | Thu May 28 04:05:53 PM EDT 2026 ===
 
 ==================================================
 Setting up Nyström Kernel-Attention OOD detector...

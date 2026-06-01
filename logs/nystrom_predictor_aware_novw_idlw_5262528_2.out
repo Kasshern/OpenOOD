@@ -7,7 +7,7 @@ Job name:  nys_pa_idlw
 Partition: ice-gpu
 QOS:       coc-ice
 ---------------------------------------
-=== nystrom_predictor_aware_vw_idlw | imagenet200 | Wed May  6 02:53:09 AM EDT 2026 ===
+=== nystrom_predictor_aware_novw_idlw | imagenet200 | Wed May  6 02:53:09 AM EDT 2026 ===
 
 ==================================================
 Setting up Nyström Kernel-Attention OOD detector...

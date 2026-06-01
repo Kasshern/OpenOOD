@@ -7,7 +7,7 @@ Job name:  nystrom_pa_imgnet
 Partition: ice-gpu
 QOS:       coc-ice
 ---------------------------------------
-=== nystrom_predictor_aware_vw | imagenet | Fri May 29 02:31:18 PM EDT 2026 ===
+=== nystrom_predictor_aware_novw | imagenet | Fri May 29 02:31:18 PM EDT 2026 ===
 Postprocessor_name is ignored because postprocessor is passed
 [Timing] Setup: 0.4s
 Loaded pre-computed scores from file.

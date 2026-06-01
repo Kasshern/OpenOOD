@@ -7,7 +7,7 @@ Job name:  nystrom_sm_imgnet
 Partition: ice-gpu
 QOS:       coc-ice
 ---------------------------------------
-=== nystrom_softmax_vw | imagenet | Thu May 28 03:45:05 PM EDT 2026 ===
+=== nystrom_softmax_novw | imagenet | Thu May 28 03:45:05 PM EDT 2026 ===
 === Done | Thu May 28 03:45:24 PM EDT 2026 ===
 ---------------------------------------
 Begin Slurm Epilog: May-28-2026 15:45:24

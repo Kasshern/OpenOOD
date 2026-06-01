@@ -7,7 +7,7 @@ Job name:  nys_max_mlpca
 Partition: ice-gpu
 QOS:       coc-ice
 ---------------------------------------
-=== nystrom_max_vw_mlpca | cifar100 | Fri May 29 08:40:12 PM EDT 2026 ===
+=== nystrom_max_novw_mlpca | cifar100 | Fri May 29 08:40:12 PM EDT 2026 ===
 
 ==================================================
 Setting up Nyström Kernel-Attention OOD detector...

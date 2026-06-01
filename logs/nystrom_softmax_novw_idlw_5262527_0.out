@@ -7,7 +7,7 @@ Job name:  nys_soft_idlw
 Partition: ice-gpu
 QOS:       coc-ice
 ---------------------------------------
-=== nystrom_softmax_vw_idlw | cifar10 | Wed May  6 02:52:40 AM EDT 2026 ===
+=== nystrom_softmax_novw_idlw | cifar10 | Wed May  6 02:52:40 AM EDT 2026 ===
 
 ==================================================
 Setting up Nyström Kernel-Attention OOD detector...

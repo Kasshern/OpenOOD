@@ -7,7 +7,7 @@ Job name:  nystrom_sm_imgnet
 Partition: ice-gpu
 QOS:       coc-ice
 ---------------------------------------
-=== nystrom_softmax_vw | imagenet | Fri May 29 02:31:19 PM EDT 2026 ===
+=== nystrom_softmax_novw | imagenet | Fri May 29 02:31:19 PM EDT 2026 ===
 
 ==================================================
 Setting up Nyström Kernel-Attention OOD detector...
