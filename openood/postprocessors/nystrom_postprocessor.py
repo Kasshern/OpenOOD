@@ -47,6 +47,7 @@ class NystromOODPostprocessor(RFFPostprocessor):
         # Learned parameters (set during setup)
         self.anchors = None   # [C, m, d] — per-class anchor keys
         self.gamma   = None   # [C, m]   — per-class Nyström weights
+        self.var_hat = None   # [C]      — per-class score variance (set during _fit_nystrom)
 
     # ── Gaussian kernel ────────────────────────────────────────────────────
 
@@ -142,8 +143,22 @@ class NystromOODPostprocessor(RFFPostprocessor):
             self.anchors[c, :m_c] = Z_c
             self.gamma[c,   :m_c] = gamma_c
 
+        # Per-class score variance for normalization (mirrors RFF _compute_rff_embedding).
+        # Always populate so downstream code can read it; only nontrivial when flag is True.
+        self.var_hat = torch.ones(C, device=device)
+        if self.variance_weighted:
+            for c in range(C):
+                mask = (y_dev == c)
+                if mask.sum() > 1:
+                    X_c = X[mask].float()
+                    K_c = self._kernel(X_c, self.anchors[c])  # [n_c, m]
+                    scores_c = K_c @ self.gamma[c]            # [n_c]
+                    self.var_hat[c] = scores_c.var().clamp(min=1e-8)
+
         print(f'  Nyström fit complete. anchors: {self.anchors.shape}, '
               f'gamma: {self.gamma.shape}')
+        if self.variance_weighted:
+            print(f'  Per-class score variance (mean): {self.var_hat.mean():.6f}')
 
     # ── scoring ────────────────────────────────────────────────────────────
 
@@ -170,6 +185,11 @@ class NystromOODPostprocessor(RFFPostprocessor):
         for c in range(C):
             K = self._kernel(X, self.anchors[c])  # [n, m]
             scores[:, c] = K @ self.gamma[c]
+
+        if self.variance_weighted and self.var_hat is not None:
+            if self.var_hat.device != device:
+                self.var_hat = self.var_hat.to(device)
+            scores = scores / torch.sqrt(self.var_hat)
 
         return scores
 
