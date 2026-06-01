@@ -147,6 +147,22 @@ postprocessors = {
     'nystrom_max_vw_mlpca_minmax':              NystromOODPostprocessor,
     'nystrom_softmax_vw_mlpca_minmax':          NystromOODPostprocessor,
     'nystrom_predictor_aware_vw_mlpca_minmax':  NystromOODPostprocessor,
+    # Tier 2 — MRL via Tej-style mlminmax (Yosinski 4-layer)
+    'nystrom_max_novw_mlminmax':                NystromOODPostprocessor,
+    'nystrom_softmax_novw_mlminmax':            NystromOODPostprocessor,
+    'nystrom_predictor_aware_novw_mlminmax':    NystromOODPostprocessor,
+    'nystrom_max_vw_mlminmax':                  NystromOODPostprocessor,
+    'nystrom_softmax_vw_mlminmax':              NystromOODPostprocessor,
+    'nystrom_predictor_aware_vw_mlminmax':      NystromOODPostprocessor,
+    # Tier 2 — MRL via Yosinski-weighted mlpca (softmax only)
+    'nystrom_softmax_novw_mlpca_yw':                  NystromOODPostprocessor,
+    'nystrom_softmax_vw_mlpca_yw':                    NystromOODPostprocessor,
+    'nystrom_softmax_novw_mlpca_minmax_yw':           NystromOODPostprocessor,
+    'nystrom_softmax_vw_mlpca_minmax_yw':             NystromOODPostprocessor,
+    'nystrom_softmax_novw_mlpca_l1234':               NystromOODPostprocessor,
+    'nystrom_softmax_vw_mlpca_l1234':                 NystromOODPostprocessor,
+    'nystrom_softmax_novw_mlpca_minmax_l1234':        NystromOODPostprocessor,
+    'nystrom_softmax_vw_mlpca_minmax_l1234':          NystromOODPostprocessor,
 }
 
 link_prefix = 'https://raw.githubusercontent.com/Jingkang50/OpenOOD/main/configs/postprocessors/'

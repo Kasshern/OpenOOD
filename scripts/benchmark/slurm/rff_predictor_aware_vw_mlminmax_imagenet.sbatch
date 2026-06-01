@@ -8,7 +8,7 @@
 #SBATCH --gres=gpu:1
 #SBATCH --exclude=atl1-1-01-005-17-0,atl1-1-01-005-19-0
 #SBATCH --constraint=nvidia-gpu
-#SBATCH --mem=64G
+#SBATCH --mem=128G
 #SBATCH --partition=ice-gpu
 
 # RFF (predictor_aware, variance_weighted, multilayer minmax concat 1920-d) — ImageNet-1K only
