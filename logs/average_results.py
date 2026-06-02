@@ -140,7 +140,7 @@ raw = defaultdict(lambda: defaultdict(list))
 out_files = sorted(f for f in os.listdir(LOG_DIR) if f.endswith(".out"))
 
 # Extract job ID from filename: rff_variant_JOBID_ARRAYID.out → JOBID
-JOB_ID_RE = re.compile(r'_(\d{5,})_\d+\.out$')
+JOB_ID_RE = re.compile(r'_(\d{5,})(?:_\d+)?\.out$')
 
 parse_errors = []
 total_blocks = 0

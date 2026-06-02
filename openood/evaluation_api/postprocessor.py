@@ -163,6 +163,13 @@ postprocessors = {
     'nystrom_softmax_vw_mlpca_l1234':                 NystromOODPostprocessor,
     'nystrom_softmax_novw_mlpca_minmax_l1234':        NystromOODPostprocessor,
     'nystrom_softmax_vw_mlpca_minmax_l1234':          NystromOODPostprocessor,
+    # Tier 3 — gap fillers: max-score idlw/idtopk + mlpca_kpca
+    'nystrom_max_novw_idlw':                          NystromOODPostprocessor,
+    'nystrom_max_vw_idlw':                            NystromOODPostprocessor,
+    'nystrom_max_novw_idtopk':                        NystromOODPostprocessor,
+    'nystrom_max_vw_idtopk':                          NystromOODPostprocessor,
+    'nystrom_softmax_novw_mlpca_kpca':                NystromOODPostprocessor,
+    'nystrom_softmax_vw_mlpca_kpca':                  NystromOODPostprocessor,
 }
 
 link_prefix = 'https://raw.githubusercontent.com/Jingkang50/OpenOOD/main/configs/postprocessors/'

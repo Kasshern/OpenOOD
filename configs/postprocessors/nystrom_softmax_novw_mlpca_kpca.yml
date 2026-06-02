@@ -1,0 +1,20 @@
+postprocessor:
+  name: nystrom_softmax_novw_mlpca_kpca
+  APS_mode: False
+  postprocessor_args:
+    sigma: 0.5
+    n_anchors: 200
+    anchor_init: kmeans
+    reg_lambda: 1.0e-4
+    kmeans_iter: 50
+    alpha: 0.05
+    normalize: True
+    score_mode: softmax
+    variance_weighted: False
+    feature_space: multilayer_kpca
+    pca_layers: [2, 3, 4]
+    pca_components: 128
+    kpca_kernel: rbf
+    kpca_gamma: null
+    kpca_subsample: 5000
+  postprocessor_sweep: {}
