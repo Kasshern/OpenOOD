@@ -1,0 +1,35 @@
+---------------------------------------
+Begin Slurm Prolog: Jun-02-2026 09:53:31
+Job ID:    5357378
+User ID:   ksalzman3
+Account:   coc
+Job name:  nystrom_max_novw_mlminmax_imagenet
+Partition: ice-gpu
+QOS:       coc-ice
+---------------------------------------
+=== nystrom_max_novw_mlminmax | imagenet | Tue Jun  2 09:53:38 AM EDT 2026 ===
+
+==================================================
+Setting up Nyström Kernel-Attention OOD detector...
+  sigma:        0.5
+  n_anchors:    200
+  anchor_init:  kmeans
+  reg_lambda:   0.0001
+  alpha:        0.05
+  feature_space:multilayer_minmax_concat
+  normalize:    True
+  score_mode:   max
+==================================================
+=== Done | Tue Jun  2 10:46:25 AM EDT 2026 ===
+---------------------------------------
+Begin Slurm Epilog: Jun-02-2026 10:47:08
+Job ID:        5357378
+User ID:       ksalzman3
+Account:       coc
+Job name:      nystrom_max_novw_mlminmax_imagenet
+Resources:     cpu=4,gres/gpu:l40s=1,mem=128G,node=1
+Rsrc Used:     cput=03:32:28,vmem=0,walltime=00:53:07,mem=81491440K,energy_used=0
+Partition:     ice-gpu
+QOS:           coc-ice
+Nodes:         atl1-1-03-004-21-0
+---------------------------------------

@@ -1,0 +1,30 @@
+---------------------------------------
+Begin Slurm Prolog: Jun-01-2026 17:11:12
+Job ID:    5356081
+User ID:   ksalzman3
+Account:   coc
+Job name:  rff_pa_mlmx_cl_imgnet
+Partition: ice-gpu
+QOS:       coc-ice
+---------------------------------------
+=== rff_predictor_aware_vw_mlminmax_clip | imagenet | Mon Jun  1 05:11:19 PM EDT 2026 ===
+
+==================================================
+Setting up RFFCLIPConcat OOD detector (ResNet + CLIP feature concat)...
+  sigma=0.5  D=2048  alpha=0.05
+  clip_backbone=ViT-B/16  score_mode=predictor_aware
+==================================================
+[CLIPConcat] Loading CLIP ViT-B/16 with 1000 classes (imagenet)...
+=== Done | Mon Jun  1 06:03:11 PM EDT 2026 ===
+---------------------------------------
+Begin Slurm Epilog: Jun-01-2026 18:03:11
+Job ID:        5356081
+User ID:       ksalzman3
+Account:       coc
+Job name:      rff_pa_mlmx_cl_imgnet
+Resources:     cpu=4,gres/gpu:l40s=1,mem=64G,node=1
+Rsrc Used:     cput=03:27:56,vmem=0,walltime=00:51:59,mem=67075092K,energy_used=0
+Partition:     ice-gpu
+QOS:           coc-ice
+Nodes:         atl1-1-03-004-21-0
+---------------------------------------

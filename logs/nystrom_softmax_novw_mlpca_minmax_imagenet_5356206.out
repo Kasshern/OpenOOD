@@ -1,0 +1,35 @@
+---------------------------------------
+Begin Slurm Prolog: Jun-01-2026 18:20:00
+Job ID:    5356206
+User ID:   ksalzman3
+Account:   coc
+Job name:  nys_soft_mlpca_mm_img
+Partition: ice-gpu
+QOS:       coc-ice
+---------------------------------------
+=== nystrom_softmax_novw_mlpca_minmax | imagenet | Mon Jun  1 06:20:07 PM EDT 2026 ===
+
+==================================================
+Setting up Nyström Kernel-Attention OOD detector...
+  sigma:        0.5
+  n_anchors:    200
+  anchor_init:  kmeans
+  reg_lambda:   0.0001
+  alpha:        0.05
+  feature_space:multilayer_pca
+  normalize:    True
+  score_mode:   softmax
+==================================================
+=== Done | Mon Jun  1 07:12:12 PM EDT 2026 ===
+---------------------------------------
+Begin Slurm Epilog: Jun-01-2026 19:12:12
+Job ID:        5356206
+User ID:       ksalzman3
+Account:       coc
+Job name:      nys_soft_mlpca_mm_img
+Resources:     cpu=4,gres/gpu:l40s=1,mem=64G,node=1
+Rsrc Used:     cput=03:28:48,vmem=0,walltime=00:52:12,mem=67073036K,energy_used=0
+Partition:     ice-gpu
+QOS:           coc-ice
+Nodes:         atl1-1-03-004-21-0
+---------------------------------------

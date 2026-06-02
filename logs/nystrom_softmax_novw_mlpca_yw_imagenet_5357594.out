@@ -1,0 +1,93 @@
+---------------------------------------
+Begin Slurm Prolog: Jun-02-2026 12:15:47
+Job ID:    5357594
+User ID:   ksalzman3
+Account:   coc
+Job name:  nystrom_softmax_novw_mlpca_yw_imagenet
+Partition: ice-gpu
+QOS:       coc-ice
+---------------------------------------
+=== nystrom_softmax_novw_mlpca_yw | imagenet | Tue Jun  2 12:15:55 PM EDT 2026 ===
+
+==================================================
+Setting up Nyström Kernel-Attention OOD detector...
+  sigma:        0.5
+  n_anchors:    200
+  anchor_init:  kmeans
+  reg_lambda:   0.0001
+  alpha:        0.05
+  feature_space:multilayer_pca
+  normalize:    True
+  score_mode:   softmax
+==================================================
+Extracted 1281167 train features of dim 384
+Extracted 5000 val features for threshold
+  Fitting Nyström anchors (m=200, init=kmeans, λ=0.0001)...
+  Nyström fit complete. anchors: torch.Size([1000, 200, 384]), gamma: torch.Size([1000, 200])
+  Nyström threshold (softmax) at 5.0%: 0.0588
+Nyström setup complete.
+
+[Timing] Setup: 2866.5s
+Performing inference on imagenet test set...
+Processing near ood...
+Performing inference on ssb_hard dataset...
+Computing metrics on ssb_hard dataset...
+FPR@95: 86.73, AUROC: 62.34 AUPR_IN: 60.60, AUPR_OUT: 60.88
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on ninco dataset...
+Computing metrics on ninco dataset...
+FPR@95: 69.29, AUROC: 75.06 AUPR_IN: 95.76, AUPR_OUT: 24.18
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 78.01, AUROC: 68.70 AUPR_IN: 78.18, AUPR_OUT: 42.53
+──────────────────────────────────────────────────────────────────────
+
+Processing far ood...
+Performing inference on inaturalist dataset...
+Computing metrics on inaturalist dataset...
+FPR@95: 47.64, AUROC: 83.13 AUPR_IN: 95.64, AUPR_OUT: 42.68
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on textures dataset...
+Computing metrics on textures dataset...
+FPR@95: 46.78, AUROC: 87.64 AUPR_IN: 98.23, AUPR_OUT: 45.76
+──────────────────────────────────────────────────────────────────────
+
+Performing inference on openimage_o dataset...
+Computing metrics on openimage_o dataset...
+FPR@95: 52.00, AUROC: 83.32 AUPR_IN: 93.30, AUPR_OUT: 59.87
+──────────────────────────────────────────────────────────────────────
+
+Computing mean metrics...
+FPR@95: 48.81, AUROC: 84.70 AUPR_IN: 95.72, AUPR_OUT: 49.44
+──────────────────────────────────────────────────────────────────────
+
+             FPR@95  AUROC  AUPR_IN  AUPR_OUT   ACC
+ssb_hard      86.73  62.34    60.60     60.88 76.19
+ninco         69.29  75.06    95.76     24.18 76.19
+nearood       78.01  68.70    78.18     42.53 76.19
+inaturalist   47.64  83.13    95.64     42.68 76.19
+textures      46.78  87.64    98.23     45.76 76.19
+openimage_o   52.00  83.32    93.30     59.87 76.19
+farood        48.81  84.70    95.72     49.44 76.19
+[Timing] Eval:  452.2s
+
+[Timing Summary]
+  Setup: 2866.5s ± 0.0s per seed
+  Eval:  452.2s ± 0.0s per seed
+  Total: 3318.7s across 1 seeds
+=== Done | Tue Jun  2 01:11:38 PM EDT 2026 ===
+---------------------------------------
+Begin Slurm Epilog: Jun-02-2026 13:11:38
+Job ID:        5357594
+User ID:       ksalzman3
+Account:       coc
+Job name:      nystrom_softmax_novw_mlpca_yw_imagenet
+Resources:     cpu=4,gres/gpu:l40s=1,mem=64G,node=1
+Rsrc Used:     cput=03:43:24,vmem=0,walltime=00:55:51,mem=53245284K,energy_used=0
+Partition:     ice-gpu
+QOS:           coc-ice
+Nodes:         atl1-1-03-004-21-0
+---------------------------------------
