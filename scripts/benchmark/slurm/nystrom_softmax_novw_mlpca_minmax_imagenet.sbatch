@@ -8,7 +8,7 @@
 #SBATCH --gres=gpu:l40s:1
 #SBATCH --exclude=atl1-1-01-005-17-0,atl1-1-01-005-19-0
 #SBATCH --constraint=nvidia-gpu
-#SBATCH --mem=64G
+#SBATCH --mem=128G
 #SBATCH --partition=ice-gpu
 
 # Nyström softmax with multilayer PCA features + minmax pooling (no MRL) — ImageNet-1K only

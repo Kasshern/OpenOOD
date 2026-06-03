@@ -1,4 +1,4 @@
-Generated: 2026-06-01 16:45:04
+Generated: 2026-06-02 13:48:08
 
 ==========================================================================================================================================
   DATASET: CIFAR10  (one block per job file, averaged over seeds within file)
@@ -2242,6 +2242,22 @@ nystrom_predictor_aware_novw                      5340930         1  ssb_hard   
                                                                      openimage_o     43.96    88.31    95.58    70.26    76.19
                                                                      farood          43.69    88.99    97.23    63.30    76.19
 
+nystrom_predictor_aware_vw                        5356014         1  ssb_hard        81.34    71.99    68.60    72.05    76.19    1:01:06
+                                                                     ninco           61.95    82.58    96.96    38.43    76.19
+                                                                     nearood         71.65    77.28    82.78    55.24    76.19
+                                                                     inaturalist     17.90    95.72    99.00    83.72    76.19
+                                                                     textures        26.33    93.49    99.15    67.39    76.19
+                                                                     openimage_o     36.15    90.66    96.17    77.19    76.19
+                                                                     farood          26.79    93.29    98.11    76.10    76.19
+
+nystrom_predictor_aware_novw_mlpca                5356204         1  ssb_hard        79.60    72.37    69.71    70.69    76.19    1:00:13
+                                                                     ninco           54.53    81.92    97.14    32.50    76.19
+                                                                     nearood         67.06    77.15    83.43    51.59    76.19
+                                                                     inaturalist     36.86    90.97    97.69    68.02    76.19
+                                                                     textures        56.00    86.13    97.99    47.89    76.19
+                                                                     openimage_o     45.29    87.83    95.26    69.30    76.19
+                                                                     farood          46.05    88.31    96.98    61.74    76.19
+
 rff_dual_gated_vw                                 5023540         1  ssb_hard        82.38    71.29    67.60    71.81    76.19    0:07:16
                                                                      ninco           64.47    82.05    96.83    39.03    76.19
                                                                      nearood         73.42    76.67    82.21    55.42    76.19
@@ -2249,6 +2265,14 @@ rff_dual_gated_vw                                 5023540         1  ssb_hard   
                                                                      textures        20.91    94.91    99.35    71.81    76.19
                                                                      openimage_o     38.57    90.82    96.19    78.12    76.19
                                                                      farood          24.63    94.07    98.24    78.67    76.19
+
+nystrom_softmax_vw                                5356013         1  ssb_hard        82.42    70.52    67.19    71.58    76.19    1:00:32
+                                                                     ninco           65.68    81.62    96.71    41.05    76.19
+                                                                     nearood         74.05    76.07    81.95    56.32    76.19
+                                                                     inaturalist     12.27    97.51    99.40    91.23    76.19
+                                                                     textures        19.95    96.03    99.46    80.83    76.19
+                                                                     openimage_o     40.19    91.26    96.17    81.15    76.19
+                                                                     farood          24.14    94.93    98.34    84.41    76.19
 
 rff_predictor_aware_vw_allpca                     5040338         1  ssb_hard        81.59    70.60    67.41    69.55    76.19    0:51:02
                                                                      ninco           60.41    81.25    96.89    32.22    76.19
@@ -2266,6 +2290,14 @@ clip_prior                                        5016169         1  ssb_hard   
                                                                      openimage_o     45.66    88.76    95.52    74.32    76.18
                                                                      farood          48.46    88.61    96.94    66.02    76.18
 
+nystrom_softmax_vw_mlpca_l1234                    5357709         1  ssb_hard        82.35    68.35    65.88    67.56    76.19    0:55:45
+                                                                     ninco           64.31    78.82    96.42    29.57    76.19
+                                                                     nearood         73.33    73.59    81.15    48.57    76.19
+                                                                     inaturalist     29.67    91.11    97.87    65.15    76.19
+                                                                     textures        44.81    87.33    98.26    45.77    76.19
+                                                                     openimage_o     41.23    87.14    95.14    66.81    76.19
+                                                                     farood          38.57    88.53    97.09    59.24    76.19
+
 rff_softmax_vw_mlpca                              5040340         1  ssb_hard        82.18    68.43    66.03    67.54    76.19    1:06:44
                                                                      ninco           64.20    78.73    96.41    29.30    76.19
                                                                      nearood         73.19    73.58    81.22    48.42    76.19
@@ -2274,6 +2306,14 @@ rff_softmax_vw_mlpca                              5040340         1  ssb_hard   
                                                                      openimage_o     41.04    87.13    95.14    66.68    76.19
                                                                      farood          38.55    88.52    97.09    59.13    76.19
 
+nystrom_softmax_vw_mlpca_yw                       5357598         1  ssb_hard        82.40    68.34    65.85    67.55    76.19    0:55:50
+                                                                     ninco           64.32    78.83    96.42    29.59    76.19
+                                                                     nearood         73.36    73.58    81.14    48.57    76.19
+                                                                     inaturalist     29.61    91.10    97.87    65.15    76.19
+                                                                     textures        44.83    87.30    98.25    45.70    76.19
+                                                                     openimage_o     41.33    87.13    95.13    66.79    76.19
+                                                                     farood          38.59    88.51    97.09    59.21    76.19
+
 rff_softmax_vw_mlpca_l1234                        5061382         1  ssb_hard        82.59    68.13    65.68    66.90    76.19    1:06:30
                                                                      ninco           64.72    78.59    96.38    28.62    76.19
                                                                      nearood         73.65    73.36    81.03    47.76    76.19
@@ -2281,6 +2321,14 @@ rff_softmax_vw_mlpca_l1234                        5061382         1  ssb_hard   
                                                                      textures        45.88    86.57    98.15    42.32    76.19
                                                                      openimage_o     42.20    86.74    95.00    65.01    76.19
                                                                      farood          39.39    87.95    96.96    56.12    76.19
+
+nystrom_softmax_novw                              5356011         1  ssb_hard        85.63    63.65    61.65    64.54    76.19    1:00:44
+                                                                     ninco           57.68    81.02    96.93    37.56    76.19
+                                                                     nearood         71.65    72.34    79.29    51.05    76.19
+                                                                     inaturalist     27.01    94.04    98.40    82.04    76.19
+                                                                     textures        17.22    97.01    99.59    87.69    76.19
+                                                                     openimage_o     37.64    91.11    96.44    80.04    76.19
+                                                                     farood          27.29    94.06    98.15    83.26    76.19
 
 rff_centroid_vw_mlpca                             5023590         1  ssb_hard        84.66    67.74    64.23    68.43    76.19    1:05:43
                                                                      ninco           70.62    76.43    95.84    29.70    76.19
@@ -2314,38 +2362,86 @@ rff_max_vw_mlpca_minmax                           5040286         1  ssb_hard   
                                                                      openimage_o     53.35    82.02    92.92    57.32    76.19
                                                                      farood          50.26    83.00    95.71    48.89    76.19
 
+nystrom_max_vw                                    5356012         1  ssb_hard        87.86    67.56    62.68    70.00    76.19    1:00:30
+                                                                     ninco           87.40    73.82    94.25    34.17    76.19
+                                                                     nearood         87.63    70.69    78.46    52.09    76.19
+                                                                     inaturalist     19.06    96.45    99.09    89.19    76.19
+                                                                     textures        32.11    93.60    99.04    73.94    76.19
+                                                                     openimage_o     79.70    80.34    89.48    68.17    76.19
+                                                                     farood          43.62    90.13    95.87    77.10    76.19
+
+nystrom_max_novw                                  5356010         1  ssb_hard        86.47    60.56    59.55    61.00    76.19    1:01:17
+                                                                     ninco           60.42    78.80    96.55    32.83    76.19
+                                                                     nearood         73.44    69.68    78.05    46.91    76.19
+                                                                     inaturalist     35.62    91.29    97.70    74.21    76.19
+                                                                     textures        18.74    96.84    99.57    87.10    76.19
+                                                                     openimage_o     44.76    87.99    95.22    73.67    76.19
+                                                                     farood          33.04    92.04    97.50    78.33    76.19
+
+nystrom_softmax_novw_mlpca                        5356203         1  ssb_hard        86.71    62.34    60.60    60.88    76.19    1:00:13
+                                                                     ninco           69.17    75.06    95.76    24.19    76.19
+                                                                     nearood         77.94    68.70    78.18    42.53    76.19
+                                                                     inaturalist     47.59    83.13    95.64    42.69    76.19
+                                                                     textures        46.70    87.66    98.23    45.82    76.19
+                                                                     openimage_o     51.98    83.33    93.31    59.89    76.19
+                                                                     farood          48.75    84.71    95.73    49.47    76.19
+
+nystrom_softmax_novw_mlpca_yw                     5357594         1  ssb_hard        86.73    62.34    60.60    60.88    76.19    0:55:51
+                                                                     ninco           69.29    75.06    95.76    24.18    76.19
+                                                                     nearood         78.01    68.70    78.18    42.53    76.19
+                                                                     inaturalist     47.64    83.13    95.64    42.68    76.19
+                                                                     textures        46.78    87.64    98.23    45.76    76.19
+                                                                     openimage_o     52.00    83.32    93.30    59.87    76.19
+                                                                     farood          48.81    84.70    95.72    49.44    76.19
+
+nystrom_softmax_novw_mlpca_l1234                  5357596         1  ssb_hard        86.68    62.34    60.61    60.88    76.19    0:55:47
+                                                                     ninco           69.16    75.06    95.76    24.19    76.19
+                                                                     nearood         77.92    68.70    78.18    42.54    76.19
+                                                                     inaturalist     47.64    83.13    95.64    42.67    76.19
+                                                                     textures        46.69    87.69    98.24    45.92    76.19
+                                                                     openimage_o     51.96    83.34    93.31    59.90    76.19
+                                                                     farood          48.76    84.72    95.73    49.50    76.19
+
+nystrom_max_novw_mlpca                            5356202         1  ssb_hard        87.60    58.59    58.16    56.52    76.19    1:00:13
+                                                                     ninco           72.67    70.43    94.90    19.97    76.19
+                                                                     nearood         80.13    64.51    76.53    38.24    76.19
+                                                                     inaturalist     59.56    72.76    92.99    27.49    76.19
+                                                                     textures        56.59    81.78    97.37    28.72    76.19
+                                                                     openimage_o     64.82    75.32    89.88    46.73    76.19
+                                                                     farood          60.32    76.62    93.42    34.31    76.19
+
   TOP-10 by Near AUROC:
     1. [5340930] nystrom_predictor_aware_novw                   Near=77.36  Far=88.99
     2. [5346904] nystrom_predictor_aware_novw                   Near=77.36  Far=88.99
-    3. [5023540] rff_dual_gated_vw                              Near=76.67  Far=94.07
-    4. [5040338] rff_predictor_aware_vw_allpca                  Near=75.93  Far=89.18
-    5. [5016169] clip_prior                                     Near=75.73  Far=88.61
-    6. [5040340] rff_softmax_vw_mlpca                           Near=73.58  Far=88.52
-    7. [5061382] rff_softmax_vw_mlpca_l1234                     Near=73.36  Far=87.95
-    8. [5023590] rff_centroid_vw_mlpca                          Near=72.09  Far=83.83
-    9. [5023592] rff_centroid_vw_mlpca_minmax                   Near=72.04  Far=83.92
-    10. [4889199] rff_centroid_vw                                Near=71.69  Far=91.89
+    3. [5356014] nystrom_predictor_aware_vw                     Near=77.28  Far=93.29
+    4. [5356204] nystrom_predictor_aware_novw_mlpca             Near=77.15  Far=88.31
+    5. [5023540] rff_dual_gated_vw                              Near=76.67  Far=94.07
+    6. [5356013] nystrom_softmax_vw                             Near=76.07  Far=94.93
+    7. [5040338] rff_predictor_aware_vw_allpca                  Near=75.93  Far=89.18
+    8. [5016169] clip_prior                                     Near=75.73  Far=88.61
+    9. [5357709] nystrom_softmax_vw_mlpca_l1234                 Near=73.59  Far=88.53
+    10. [5040340] rff_softmax_vw_mlpca                           Near=73.58  Far=88.52
 
   TOP-10 by Far AUROC:
-    1. [5023540] rff_dual_gated_vw                              Near=76.67  Far=94.07
-    2. [4889199] rff_centroid_vw                                Near=71.69  Far=91.89
-    3. [5040338] rff_predictor_aware_vw_allpca                  Near=75.93  Far=89.18
-    4. [5340930] nystrom_predictor_aware_novw                   Near=77.36  Far=88.99
-    5. [5346904] nystrom_predictor_aware_novw                   Near=77.36  Far=88.99
-    6. [5016169] clip_prior                                     Near=75.73  Far=88.61
-    7. [5040340] rff_softmax_vw_mlpca                           Near=73.58  Far=88.52
-    8. [5061382] rff_softmax_vw_mlpca_l1234                     Near=73.36  Far=87.95
-    9. [5023592] rff_centroid_vw_mlpca_minmax                   Near=72.04  Far=83.92
-    10. [5023590] rff_centroid_vw_mlpca                          Near=72.09  Far=83.83
+    1. [5356013] nystrom_softmax_vw                             Near=76.07  Far=94.93
+    2. [5023540] rff_dual_gated_vw                              Near=76.67  Far=94.07
+    3. [5356011] nystrom_softmax_novw                           Near=72.34  Far=94.06
+    4. [5356014] nystrom_predictor_aware_vw                     Near=77.28  Far=93.29
+    5. [5356010] nystrom_max_novw                               Near=69.68  Far=92.04
+    6. [4889199] rff_centroid_vw                                Near=71.69  Far=91.89
+    7. [5356012] nystrom_max_vw                                 Near=70.69  Far=90.13
+    8. [5040338] rff_predictor_aware_vw_allpca                  Near=75.93  Far=89.18
+    9. [5340930] nystrom_predictor_aware_novw                   Near=77.36  Far=88.99
+    10. [5346904] nystrom_predictor_aware_novw                   Near=77.36  Far=88.99
 
 
 ======================================================================
   DIAGNOSTICS
 ======================================================================
-  .out files read     : 278
-  Total blocks found  : 278
-  Blocks parsed OK    : 257
-  Blocks w/ no table  : 21
+  .out files read     : 306
+  Total blocks found  : 306
+  Blocks parsed OK    : 269
+  Blocks w/ no table  : 37
   -- Failed blocks --
   No table in layer_probe_diagnostic_4592830_0.out: === layer_probe_diagnostic | cifar10 | Thu Apr  2 04:04:07 PM EDT 2026 ===
   No table in layer_probe_diagnostic_4592830_1.out: === layer_probe_diagnostic | cifar100 | Thu Apr  2 04:04:07 PM EDT 2026 ===
@@ -2354,27 +2450,44 @@ rff_max_vw_mlpca_minmax                           5040286         1  ssb_hard   
   No table in nystrom_max_novw_imagenet_5340797.out: === nystrom_max_novw | imagenet | Thu May 28 04:00:28 PM EDT 2026 ===
   No table in nystrom_max_novw_imagenet_5340928.out: === nystrom_max_novw | imagenet | Thu May 28 04:05:56 PM EDT 2026 ===
   No table in nystrom_max_novw_imagenet_5346902.out: === nystrom_max_novw | imagenet | Fri May 29 02:31:19 PM EDT 2026 ===
+  No table in nystrom_max_novw_mlminmax_imagenet_5357378.out: === nystrom_max_novw_mlminmax | imagenet | Tue Jun  2 09:53:38 AM EDT 2026 ===
+  No table in nystrom_max_novw_mlpca_minmax_imagenet_5356205.out: === nystrom_max_novw_mlpca_minmax | imagenet | Mon Jun  1 06:20:08 PM EDT 2026 =
+  No table in nystrom_max_vw_mlminmax_imagenet_5357381.out: === nystrom_max_vw_mlminmax | imagenet | Tue Jun  2 09:53:38 AM EDT 2026 ===
   No table in nystrom_predictor_aware_novw_imagenet_5340713.out: === nystrom_predictor_aware_novw | imagenet | Thu May 28 03:45:04 PM EDT 2026 ==
   No table in nystrom_predictor_aware_novw_imagenet_5340799.out: === nystrom_predictor_aware_novw | imagenet | Thu May 28 04:00:26 PM EDT 2026 ==
+  No table in nystrom_predictor_aware_novw_mlminmax_imagenet_5357380.out: === nystrom_predictor_aware_novw_mlminmax | imagenet | Tue Jun  2 09:53:38 AM ED
+  No table in nystrom_predictor_aware_novw_mlpca_minmax_imagenet_5356207.out: === nystrom_predictor_aware_novw_mlpca_minmax | imagenet | Mon Jun  1 06:20:08 P
+  No table in nystrom_predictor_aware_vw_mlminmax_imagenet_5357383.out: === nystrom_predictor_aware_vw_mlminmax | imagenet | Tue Jun  2 09:53:48 AM EDT 
   No table in nystrom_softmax_novw_imagenet_5340712.out: === nystrom_softmax_novw | imagenet | Thu May 28 03:45:05 PM EDT 2026 ===
   No table in nystrom_softmax_novw_imagenet_5340798.out: === nystrom_softmax_novw | imagenet | Thu May 28 04:00:28 PM EDT 2026 ===
   No table in nystrom_softmax_novw_imagenet_5340929.out: === nystrom_softmax_novw | imagenet | Thu May 28 04:05:56 PM EDT 2026 ===
   No table in nystrom_softmax_novw_imagenet_5346903.out: === nystrom_softmax_novw | imagenet | Fri May 29 02:31:19 PM EDT 2026 ===
+  No table in nystrom_softmax_novw_mlminmax_imagenet_5357379.out: === nystrom_softmax_novw_mlminmax | imagenet | Tue Jun  2 09:53:38 AM EDT 2026 =
+  No table in nystrom_softmax_novw_mlpca_minmax_imagenet_5356206.out: === nystrom_softmax_novw_mlpca_minmax | imagenet | Mon Jun  1 06:20:07 PM EDT 20
+  No table in nystrom_softmax_novw_mlpca_minmax_l1234_imagenet_5357597.out: === nystrom_softmax_novw_mlpca_minmax_l1234 | imagenet | Tue Jun  2 12:15:54 PM 
+  No table in nystrom_softmax_novw_mlpca_minmax_yw_imagenet_5357595.out: === nystrom_softmax_novw_mlpca_minmax_yw | imagenet | Tue Jun  2 12:15:54 PM EDT
+  No table in nystrom_softmax_vw_mlminmax_imagenet_5357382.out: === nystrom_softmax_vw_mlminmax | imagenet | Tue Jun  2 09:53:38 AM EDT 2026 ===
+  No table in nystrom_softmax_vw_mlpca_minmax_l1234_imagenet_5357710.out: === nystrom_softmax_vw_mlpca_minmax_l1234 | imagenet | Tue Jun  2 01:50:21 PM ED
+  No table in nystrom_softmax_vw_mlpca_minmax_yw_imagenet_5357708.out: === nystrom_softmax_vw_mlpca_minmax_yw | imagenet | Tue Jun  2 01:50:21 PM EDT 2
+  No table in rff_max_vw_mlminmax_clip_imagenet_5356079.out: === rff_max_vw_mlminmax_clip | imagenet | Mon Jun  1 05:11:19 PM EDT 2026 ===
   No table in rff_max_vw_mlminmax_imagenet_5340933.out: === rff_max_vw_mlminmax | imagenet | Thu May 28 04:06:07 PM EDT 2026 ===
   No table in rff_max_vw_mlpca_imagenet_5347044.out: === rff_max_vw_mlpca | imagenet | Fri May 29 03:04:43 PM EDT 2026 ===
+  No table in rff_predictor_aware_vw_mlminmax_clip_imagenet_5356081.out: === rff_predictor_aware_vw_mlminmax_clip | imagenet | Mon Jun  1 05:11:19 PM EDT
   No table in rff_predictor_aware_vw_mlminmax_imagenet_5340935.out: === rff_predictor_aware_vw_mlminmax | imagenet | Thu May 28 04:06:07 PM EDT 2026
+  No table in rff_softmax_vw_mlminmax_clip_imagenet_5356080.out: === rff_softmax_vw_mlminmax_clip | imagenet | Mon Jun  1 05:11:20 PM EDT 2026 ==
   No table in rff_softmax_vw_mlminmax_imagenet_5340934.out: === rff_softmax_vw_mlminmax | imagenet | Thu May 28 04:06:07 PM EDT 2026 ===
   No table in rff_softmax_vw_mlpca_minmax_imagenet_5347045.out: === rff_softmax_vw_mlpca_minmax | imagenet | Fri May 29 03:04:43 PM EDT 2026 ===
   No table in rff_softmax_vw_mlpca_minmax_l1234_imagenet_5347102.out: === rff_softmax_vw_mlpca_minmax_l1234 | imagenet | Fri May 29 03:11:49 PM EDT 20
   No table in rff_softmax_vw_mlpca_minmax_yw_imagenet_5347101.out: === rff_softmax_vw_mlpca_minmax_yw | imagenet | Fri May 29 03:11:50 PM EDT 2026 
   No table in rff_softmax_vw_mlpca_yw_imagenet_5347046.out: === rff_softmax_vw_mlpca_yw | imagenet | Fri May 29 03:04:43 PM EDT 2026 ===
 
-  Unique variants: 75
+  Unique variants: 78
     clip_prior: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs), imagenet(1s/1runs)
-    nystrom_max_novw: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs)
+    nystrom_max_novw: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs), imagenet(1s/1runs)
     nystrom_max_novw_mlminmax: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs)
-    nystrom_max_novw_mlpca: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs)
+    nystrom_max_novw_mlpca: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs), imagenet(1s/1runs)
     nystrom_max_novw_mlpca_minmax: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs)
+    nystrom_max_vw: imagenet(1s/1runs)
     nystrom_max_vw_mlminmax: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs)
     nystrom_max_vw_mlpca: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs)
     nystrom_max_vw_mlpca_minmax: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs)
@@ -2382,28 +2495,30 @@ rff_max_vw_mlpca_minmax                           5040286         1  ssb_hard   
     nystrom_predictor_aware_novw_idlw: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs)
     nystrom_predictor_aware_novw_idtopk: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs)
     nystrom_predictor_aware_novw_mlminmax: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs)
-    nystrom_predictor_aware_novw_mlpca: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs)
+    nystrom_predictor_aware_novw_mlpca: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs), imagenet(1s/1runs)
     nystrom_predictor_aware_novw_mlpca_minmax: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs)
+    nystrom_predictor_aware_vw: imagenet(1s/1runs)
     nystrom_predictor_aware_vw_mlminmax: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs)
     nystrom_predictor_aware_vw_mlpca: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs)
     nystrom_predictor_aware_vw_mlpca_minmax: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs)
-    nystrom_softmax_novw: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs)
+    nystrom_softmax_novw: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs), imagenet(1s/1runs)
     nystrom_softmax_novw_idlw: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs)
     nystrom_softmax_novw_idtopk: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs)
     nystrom_softmax_novw_mlminmax: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs)
-    nystrom_softmax_novw_mlpca: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs)
-    nystrom_softmax_novw_mlpca_l1234: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs)
+    nystrom_softmax_novw_mlpca: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs), imagenet(1s/1runs)
+    nystrom_softmax_novw_mlpca_l1234: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs), imagenet(1s/1runs)
     nystrom_softmax_novw_mlpca_minmax: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs)
     nystrom_softmax_novw_mlpca_minmax_l1234: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs)
     nystrom_softmax_novw_mlpca_minmax_yw: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs)
-    nystrom_softmax_novw_mlpca_yw: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs)
+    nystrom_softmax_novw_mlpca_yw: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs), imagenet(1s/1runs)
+    nystrom_softmax_vw: imagenet(1s/1runs)
     nystrom_softmax_vw_mlminmax: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs)
     nystrom_softmax_vw_mlpca: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs)
-    nystrom_softmax_vw_mlpca_l1234: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs)
+    nystrom_softmax_vw_mlpca_l1234: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs), imagenet(1s/1runs)
     nystrom_softmax_vw_mlpca_minmax: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs)
     nystrom_softmax_vw_mlpca_minmax_l1234: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs)
     nystrom_softmax_vw_mlpca_minmax_yw: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs)
-    nystrom_softmax_vw_mlpca_yw: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs)
+    nystrom_softmax_vw_mlpca_yw: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs), imagenet(1s/1runs)
     rff_centroid_vw: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs), imagenet(1s/1runs)
     rff_centroid_vw_mlpca: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs), imagenet(1s/1runs)
     rff_centroid_vw_mlpca_minmax: cifar10(3s/1runs), cifar100(3s/1runs), imagenet200(3s/1runs), imagenet(1s/1runs)
