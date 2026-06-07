@@ -1,0 +1,16 @@
+postprocessor:
+  name: nystrom_predictor_aware_vw_concat
+  APS_mode: False
+  postprocessor_args:
+    sigma: 0.5
+    n_anchors: 200
+    anchor_init: kmeans
+    reg_lambda: 1.0e-4
+    kmeans_iter: 50
+    alpha: 0.05
+    normalize: True
+    score_mode: predictor_aware
+    variance_weighted: True
+    clip_backbone: ViT-B/16
+    data_root: ./data
+  postprocessor_sweep: {}

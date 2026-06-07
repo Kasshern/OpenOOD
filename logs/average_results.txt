@@ -1,4 +1,4 @@
-Generated: 2026-06-02 13:48:08
+Generated: 2026-06-02 19:39:40
 
 ==========================================================================================================================================
   DATASET: CIFAR10  (one block per job file, averaged over seeds within file)
@@ -2438,10 +2438,10 @@ nystrom_max_novw_mlpca                            5356202         1  ssb_hard   
 ======================================================================
   DIAGNOSTICS
 ======================================================================
-  .out files read     : 306
-  Total blocks found  : 306
+  .out files read     : 296
+  Total blocks found  : 296
   Blocks parsed OK    : 269
-  Blocks w/ no table  : 37
+  Blocks w/ no table  : 27
   -- Failed blocks --
   No table in layer_probe_diagnostic_4592830_0.out: === layer_probe_diagnostic | cifar10 | Thu Apr  2 04:04:07 PM EDT 2026 ===
   No table in layer_probe_diagnostic_4592830_1.out: === layer_probe_diagnostic | cifar100 | Thu Apr  2 04:04:07 PM EDT 2026 ===
@@ -2451,30 +2451,20 @@ nystrom_max_novw_mlpca                            5356202         1  ssb_hard   
   No table in nystrom_max_novw_imagenet_5340928.out: === nystrom_max_novw | imagenet | Thu May 28 04:05:56 PM EDT 2026 ===
   No table in nystrom_max_novw_imagenet_5346902.out: === nystrom_max_novw | imagenet | Fri May 29 02:31:19 PM EDT 2026 ===
   No table in nystrom_max_novw_mlminmax_imagenet_5357378.out: === nystrom_max_novw_mlminmax | imagenet | Tue Jun  2 09:53:38 AM EDT 2026 ===
-  No table in nystrom_max_novw_mlpca_minmax_imagenet_5356205.out: === nystrom_max_novw_mlpca_minmax | imagenet | Mon Jun  1 06:20:08 PM EDT 2026 =
   No table in nystrom_max_vw_mlminmax_imagenet_5357381.out: === nystrom_max_vw_mlminmax | imagenet | Tue Jun  2 09:53:38 AM EDT 2026 ===
   No table in nystrom_predictor_aware_novw_imagenet_5340713.out: === nystrom_predictor_aware_novw | imagenet | Thu May 28 03:45:04 PM EDT 2026 ==
   No table in nystrom_predictor_aware_novw_imagenet_5340799.out: === nystrom_predictor_aware_novw | imagenet | Thu May 28 04:00:26 PM EDT 2026 ==
   No table in nystrom_predictor_aware_novw_mlminmax_imagenet_5357380.out: === nystrom_predictor_aware_novw_mlminmax | imagenet | Tue Jun  2 09:53:38 AM ED
-  No table in nystrom_predictor_aware_novw_mlpca_minmax_imagenet_5356207.out: === nystrom_predictor_aware_novw_mlpca_minmax | imagenet | Mon Jun  1 06:20:08 P
   No table in nystrom_predictor_aware_vw_mlminmax_imagenet_5357383.out: === nystrom_predictor_aware_vw_mlminmax | imagenet | Tue Jun  2 09:53:48 AM EDT 
   No table in nystrom_softmax_novw_imagenet_5340712.out: === nystrom_softmax_novw | imagenet | Thu May 28 03:45:05 PM EDT 2026 ===
   No table in nystrom_softmax_novw_imagenet_5340798.out: === nystrom_softmax_novw | imagenet | Thu May 28 04:00:28 PM EDT 2026 ===
   No table in nystrom_softmax_novw_imagenet_5340929.out: === nystrom_softmax_novw | imagenet | Thu May 28 04:05:56 PM EDT 2026 ===
   No table in nystrom_softmax_novw_imagenet_5346903.out: === nystrom_softmax_novw | imagenet | Fri May 29 02:31:19 PM EDT 2026 ===
   No table in nystrom_softmax_novw_mlminmax_imagenet_5357379.out: === nystrom_softmax_novw_mlminmax | imagenet | Tue Jun  2 09:53:38 AM EDT 2026 =
-  No table in nystrom_softmax_novw_mlpca_minmax_imagenet_5356206.out: === nystrom_softmax_novw_mlpca_minmax | imagenet | Mon Jun  1 06:20:07 PM EDT 20
-  No table in nystrom_softmax_novw_mlpca_minmax_l1234_imagenet_5357597.out: === nystrom_softmax_novw_mlpca_minmax_l1234 | imagenet | Tue Jun  2 12:15:54 PM 
-  No table in nystrom_softmax_novw_mlpca_minmax_yw_imagenet_5357595.out: === nystrom_softmax_novw_mlpca_minmax_yw | imagenet | Tue Jun  2 12:15:54 PM EDT
   No table in nystrom_softmax_vw_mlminmax_imagenet_5357382.out: === nystrom_softmax_vw_mlminmax | imagenet | Tue Jun  2 09:53:38 AM EDT 2026 ===
-  No table in nystrom_softmax_vw_mlpca_minmax_l1234_imagenet_5357710.out: === nystrom_softmax_vw_mlpca_minmax_l1234 | imagenet | Tue Jun  2 01:50:21 PM ED
-  No table in nystrom_softmax_vw_mlpca_minmax_yw_imagenet_5357708.out: === nystrom_softmax_vw_mlpca_minmax_yw | imagenet | Tue Jun  2 01:50:21 PM EDT 2
-  No table in rff_max_vw_mlminmax_clip_imagenet_5356079.out: === rff_max_vw_mlminmax_clip | imagenet | Mon Jun  1 05:11:19 PM EDT 2026 ===
   No table in rff_max_vw_mlminmax_imagenet_5340933.out: === rff_max_vw_mlminmax | imagenet | Thu May 28 04:06:07 PM EDT 2026 ===
   No table in rff_max_vw_mlpca_imagenet_5347044.out: === rff_max_vw_mlpca | imagenet | Fri May 29 03:04:43 PM EDT 2026 ===
-  No table in rff_predictor_aware_vw_mlminmax_clip_imagenet_5356081.out: === rff_predictor_aware_vw_mlminmax_clip | imagenet | Mon Jun  1 05:11:19 PM EDT
   No table in rff_predictor_aware_vw_mlminmax_imagenet_5340935.out: === rff_predictor_aware_vw_mlminmax | imagenet | Thu May 28 04:06:07 PM EDT 2026
-  No table in rff_softmax_vw_mlminmax_clip_imagenet_5356080.out: === rff_softmax_vw_mlminmax_clip | imagenet | Mon Jun  1 05:11:20 PM EDT 2026 ==
   No table in rff_softmax_vw_mlminmax_imagenet_5340934.out: === rff_softmax_vw_mlminmax | imagenet | Thu May 28 04:06:07 PM EDT 2026 ===
   No table in rff_softmax_vw_mlpca_minmax_imagenet_5347045.out: === rff_softmax_vw_mlpca_minmax | imagenet | Fri May 29 03:04:43 PM EDT 2026 ===
   No table in rff_softmax_vw_mlpca_minmax_l1234_imagenet_5347102.out: === rff_softmax_vw_mlpca_minmax_l1234 | imagenet | Fri May 29 03:11:49 PM EDT 20

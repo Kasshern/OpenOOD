@@ -20,7 +20,8 @@ from openood.postprocessors import (
     VRAPostprocessor, GrOODPostprocessor, RFFPostprocessor,
     CLIPPriorPostprocessor, RFFCLIPPostprocessor,
     RFFCLIPConcatPostprocessor, RFFCLIPMlMinmaxPostprocessor,
-    NystromOODPostprocessor)
+    NystromOODPostprocessor,
+    NystromCLIPConcatPostprocessor, NystromCLIPMlMinmaxPostprocessor)
 from openood.utils.config import Config, merge_configs
 
 postprocessors = {
@@ -170,6 +171,20 @@ postprocessors = {
     'nystrom_max_vw_idtopk':                          NystromOODPostprocessor,
     'nystrom_softmax_novw_mlpca_kpca':                NystromOODPostprocessor,
     'nystrom_softmax_vw_mlpca_kpca':                  NystromOODPostprocessor,
+    # Tier 4 — CLIP fusion (penultimate + CLIP concat)
+    'nystrom_max_novw_concat':                        NystromCLIPConcatPostprocessor,
+    'nystrom_max_vw_concat':                          NystromCLIPConcatPostprocessor,
+    'nystrom_softmax_novw_concat':                    NystromCLIPConcatPostprocessor,
+    'nystrom_softmax_vw_concat':                      NystromCLIPConcatPostprocessor,
+    'nystrom_predictor_aware_novw_concat':            NystromCLIPConcatPostprocessor,
+    'nystrom_predictor_aware_vw_concat':              NystromCLIPConcatPostprocessor,
+    # Tier 4 — CLIP fusion (mlminmax + CLIP concat)
+    'nystrom_max_novw_mlminmax_clip':                 NystromCLIPMlMinmaxPostprocessor,
+    'nystrom_max_vw_mlminmax_clip':                   NystromCLIPMlMinmaxPostprocessor,
+    'nystrom_softmax_novw_mlminmax_clip':             NystromCLIPMlMinmaxPostprocessor,
+    'nystrom_softmax_vw_mlminmax_clip':               NystromCLIPMlMinmaxPostprocessor,
+    'nystrom_predictor_aware_novw_mlminmax_clip':     NystromCLIPMlMinmaxPostprocessor,
+    'nystrom_predictor_aware_vw_mlminmax_clip':       NystromCLIPMlMinmaxPostprocessor,
 }
 
 link_prefix = 'https://raw.githubusercontent.com/Jingkang50/OpenOOD/main/configs/postprocessors/'

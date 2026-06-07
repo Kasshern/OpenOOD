@@ -52,6 +52,8 @@ from .vra_postprocessor import VRAPostprocessor
 from .cfood_postprocessor import CFOODPostprocessor
 from .rff_postprocessor import RFFPostprocessor
 from .nystrom_postprocessor import NystromOODPostprocessor
+from .nystrom_clip_concat_postprocessor import NystromCLIPConcatPostprocessor
+from .nystrom_clip_mlminmax_postprocessor import NystromCLIPMlMinmaxPostprocessor
 from .rff_clip_postprocessor import RFFCLIPPostprocessor
 from .rff_clip_concat_postprocessor import RFFCLIPConcatPostprocessor
 from .rff_clip_mlminmax_postprocessor import RFFCLIPMlMinmaxPostprocessor
